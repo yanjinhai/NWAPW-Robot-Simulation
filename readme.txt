@@ -2,6 +2,6 @@ Hello Team!
 
 I'm Jinhai Yan and I know what any of you look like.
 
-Let's meet up in person and work something out.
+Let's meet up online and work out.
 
 Jason was Peter
