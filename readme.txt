@@ -1,4 +1,4 @@
-A simple robot simulation which can do things and interact with the environment.
+A simple robot simulation which can do sense and interact with its environment.
 
 Authors:
 
