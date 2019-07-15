@@ -1,3 +1,7 @@
-Hello Team!
-I'm Jinhai Yan and like working out.
-Jason was Peter
+Team Members:
+
+Jinhai Yan
+Robert Young
+Jason Zhang
+Peter Jin
+
