@@ -1,7 +1,5 @@
 Hello Team!
 
-I'm Jinhai Yan and I know what any of you look like.
-
-Let's meet up online and work out.
+I'm Jinhai Yan.
 
 Jason was Peter
