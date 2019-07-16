@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 // Hopefully this causes a merge error and screws up camera
-null
+
 public class RobotMovement : MonoBehaviour
 {
     Vector3 neededMove;
@@ -16,6 +16,7 @@ public class RobotMovement : MonoBehaviour
     void Start()
     {
         goGo = false;
+        null;
     }
 
     void Update()
