@@ -21,17 +21,17 @@ public class RobotMovement : MonoBehaviour
     {
         if (goGo)
         {
-            neededMove = goal - transform.position;
+            neededMove = goal - this.transform.position;
             if (neededMove.magnitude <= .5)
             {
                 goGo = false;
                 return;
             }
-            float angle = Vector3.Angle(neededMove, transform.forward);
+            float angle = Vector3.Angle(neededMove, this.transform.forward);
             if (angle >= 5)
             {
-                transform.Rotate(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
-                float checkAngle = Vector3.Angle(neededMove, transform.forward);
+                this.transform.Rotate(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
+                float checkAngle = Vector3.Angle(neededMove, this.transform.forward);
                 if (angle < checkAngle)
                 {
                     rotateDir = rotateDir * -1;
@@ -40,7 +40,7 @@ public class RobotMovement : MonoBehaviour
             }
             else
             {
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
             }
         }
     }
