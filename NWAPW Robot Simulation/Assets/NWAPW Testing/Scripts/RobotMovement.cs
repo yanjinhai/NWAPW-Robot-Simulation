@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class RobotMovement : MonoBehaviour
 {
-    public Vector3 neededMove;
-    public Vector3 goal= new Vector3(0.0f,0.5f,0.0f);
+    Vector3 neededMove;
+    public float positionDeadband = 1.05f;
+    Vector3 goal;
     public float rotateSpeed = 20.0f;
-    public int rotateDir = 1;
     public float moveSpeed = 2.0f;
-    public bool goGo = false;
-    // Start is called before the first frame update
+    int rotateDir = 1;// clockwise/counterclockwise
+    bool goGo;
+
     void Start()
     {
-        
+        goGo = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (goGo)
         {
             neededMove = goal - this.transform.position;
-            if (neededMove.magnitude <= .5)
+            if (neededMove.magnitude <= positionDeadband)
             {
                 goGo = false;
                 return;
