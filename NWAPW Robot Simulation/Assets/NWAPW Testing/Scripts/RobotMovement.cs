@@ -16,7 +16,7 @@ public class RobotMovement : MonoBehaviour
     void Start()
     {
         goGo = false;
-        null;
+        
     }
 
     void Update()
