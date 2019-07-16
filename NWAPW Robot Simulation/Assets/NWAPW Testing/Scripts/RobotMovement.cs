@@ -22,6 +22,11 @@ public class RobotMovement : MonoBehaviour
         if (goGo)
         {
             neededMove = goal - transform.position;
+            if (neededMove.magnitude <= .5)
+            {
+                goGo = false;
+                return;
+            }
             float angle = Vector3.Angle(neededMove, transform.forward);
             if (angle >= 5)
             {
@@ -36,10 +41,6 @@ public class RobotMovement : MonoBehaviour
             else
             {
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-                if(neededMove.magnitude <= .5)
-                {
-                    goGo = false;
-                }
             }
         }
     }
