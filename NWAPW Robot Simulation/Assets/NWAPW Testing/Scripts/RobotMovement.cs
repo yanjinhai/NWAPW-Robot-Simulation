@@ -10,7 +10,7 @@ public class RobotMovement : MonoBehaviour
     public float rotateSpeed = 20.0f;
     public float moveSpeed = 2.0f;
     int rotateDir = 1;// clockwise/counterclockwise
-    bool goGo;
+    public bool goGo;
 
     void Start()
     {
