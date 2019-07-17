@@ -16,4 +16,9 @@ public class GrabRelease : MonoBehaviour
     {
         
     }
+
+    void Grab()
+    {
+
+    }
 }

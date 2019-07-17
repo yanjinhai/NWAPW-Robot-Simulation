@@ -58,7 +58,7 @@ public class RobotAI : MonoBehaviour
             return;
         }
         isHoldingCollectableObject = true;
-
+        gameObject.GetComponent<GrabRelease>().Grab();
         // Unfinished. Needs to actually pick up object.
 
     }
