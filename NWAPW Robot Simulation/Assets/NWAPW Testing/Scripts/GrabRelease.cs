@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrabRelease : MonoBehaviour
 {
     public GameObject grabbedObj;
-    public GameObject grabbableObjs;
+    public GameObject[] grabbableObjs;
     public GameObject releasedObjs;
     
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
@@ -26,34 +26,35 @@ public class GrabRelease : MonoBehaviour
 
     public void Grab()
     {
-        Transform[] grabbableObjsTrans = grabbableObjs.GetComponentsInChildren<Transform>();
-        grabbedObj = FindNearestTrans(grabbableObjsTrans).gameObject;
+        grabbableObjs = GameObject.FindGameObjectsWithTag("CollectableObject");
+        grabbedObj = FindNearest(grabbableObjs);
         grabbedObj.transform.parent = this.transform;
         grabbedObj.GetComponent<Rigidbody>().useGravity = false;
         
     }
-    Transform FindNearestTrans(Transform[] transforms)
+    GameObject FindNearest(GameObject[] gameObjects)
     {
-        Transform closestTrans = transforms[0];
-        float shortestDistance = (transforms[0].position - this.transform.position).magnitude;
-        foreach (Transform comparableTransform in transforms)
+        GameObject closest = gameObjects[0];
+        float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
+        foreach (GameObject obj in gameObjects)
         {
-            Vector3 currPos = comparableTransform.position;    
+            Vector3 currPos = obj.transform.position;    
             float relativeDistance = (currPos - this.transform.position).magnitude;
 
             if (relativeDistance < shortestDistance)
             {
                 shortestDistance = relativeDistance;
-                closestTrans = comparableTransform;
+                closest = obj;
             }
         }
 
-        return closestTrans;
+        return closest;
     }
     public void Release()
     {
         grabbedObj.transform.parent = releasedObjs.transform;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj = null;
+        this.GetComponent<RobotAI>().isHoldingCollectableObject = false;
     }
 }
