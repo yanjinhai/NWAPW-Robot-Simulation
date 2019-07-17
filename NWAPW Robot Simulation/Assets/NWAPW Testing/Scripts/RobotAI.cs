@@ -13,6 +13,7 @@ public class RobotAI : MonoBehaviour
         isHoldingCollectableObject = false;
     }
 
+    /*
     void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
 
@@ -42,11 +43,8 @@ public class RobotAI : MonoBehaviour
                 //hitInfo.transform.localScale.z;
             }
         }
-
-
-        
     }
-
+    */
     Vector3 FindNearest(GameObject[] gameObjects) {
         Vector3 closestPosition = gameObjects[0].transform.position;
         float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
@@ -55,7 +53,7 @@ public class RobotAI : MonoBehaviour
 
             float relativeDistance = (currPos - this.transform.position).magnitude;
 
-            CalculateRoute(currPos);
+//            CalculateRoute(currPos);
 
             if (relativeDistance < shortestDistance) {
                 shortestDistance = relativeDistance;
