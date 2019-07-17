@@ -55,6 +55,6 @@ public class GrabRelease : MonoBehaviour
         grabbedObj.transform.parent = releasedObjs.transform;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj = null;
-        this.GetComponent<RobotAI>().isHoldingCollectableObject = false;
+
     }
 }
