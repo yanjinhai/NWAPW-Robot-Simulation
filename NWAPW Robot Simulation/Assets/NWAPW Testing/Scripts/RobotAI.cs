@@ -15,13 +15,36 @@ public class RobotAI : MonoBehaviour
 
     void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
+
         float relativeDistance = (targetPos - this.transform.position).magnitude;
+
         Vector3 relativePos = targetPos - this.transform.position;
-        bool raycast = Physics.Raycast(transform.position, relativePos, out hitInfo);
+
+        Physics.Raycast(transform.position, relativePos, out hitInfo);
+
         Debug.DrawRay(transform.position, relativePos, Color.red);
-        if (hitInfo.distance < relativeDistance - 0.5) {
-            Debug.Log(hitInfo.transform + " obstacle blocking path at " + targetPos);
+
+        if (hitInfo.distance < relativeDistance - 0.5)
+        {
+            if (hitInfo.transform.tag != "CollectableObject")
+            {
+                Transform obstacle = hitInfo.transform;
+                Quaternion angle = this.transform.rotation;
+                while (hitInfo.transform.Equals(obstacle)) {
+                    Physics.Raycast(transform.position, angle.eulerAngles, out hitInfo);
+                    Vector3 newAngle = angle.eulerAngles;
+                    newAngle.y += 5;
+                    angle.eulerAngles = newAngle;
+                }
+                Debug.DrawRay(transform.position, angle.eulerAngles, Color.green);
+                //hitInfo.collider.bounds;
+                //hitInfo.transform.localScale.x;
+                //hitInfo.transform.localScale.z;
+            }
         }
+
+
+        
     }
 
     Vector3 FindNearest(GameObject[] gameObjects) {
