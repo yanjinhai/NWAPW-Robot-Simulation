@@ -1743,7 +1743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectableObjectParent: {fileID: 2107009491}
 --- !u!114 &1630158171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1757,8 +1756,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionDeadband: 1.05
-  rotateSpeed: 20
-  moveSpeed: 2
+  rotateSpeed: 50
+  moveSpeed: 5
   goGo: 0
 --- !u!1 &1644312135
 GameObject:

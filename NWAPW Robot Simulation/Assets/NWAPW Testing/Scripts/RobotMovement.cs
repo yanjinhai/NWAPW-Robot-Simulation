@@ -8,8 +8,8 @@ public class RobotMovement : MonoBehaviour
     Vector3 neededMove;
     public float positionDeadband = 1.05f;
     Vector3 goal;
-    public float rotateSpeed = 20.0f;
-    public float moveSpeed = 2.0f;
+    public float rotateSpeed = 50.0f;
+    public float moveSpeed = 5.0f;
     int rotateDir = 1;// clockwise/counterclockwise
     public bool goGo;
 

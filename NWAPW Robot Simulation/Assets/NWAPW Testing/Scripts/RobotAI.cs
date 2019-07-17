@@ -5,9 +5,6 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-    public GameObject collectableObjectParent;
-
-
     private bool isHoldingCollectableObject;
     
 
@@ -16,19 +13,26 @@ public class RobotAI : MonoBehaviour
         isHoldingCollectableObject = false;
     }
 
-    void CalculateRoute(Vector3 targetPos, float relativeDistance) {
+    void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
-        bool raycast = Physics.Raycast(transform.position, targetPos, out hitInfo, relativeDistance);
-
+        float relativeDistance = (targetPos - this.transform.position).magnitude;
+        Vector3 relativePos = targetPos - this.transform.position;
+        bool raycast = Physics.Raycast(transform.position, relativePos, out hitInfo);
+        Debug.DrawRay(transform.position, relativePos, Color.red);
+        if (hitInfo.distance < relativeDistance - 0.5) {
+            Debug.Log(hitInfo.transform + " obstacle blocking path at " + targetPos);
+        }
     }
 
-    Vector3 FindNearest(Transform[] transforms) {
-        Vector3 closestPosition = transforms[0].position;
-        float shortestDistance = (transforms[0].position - this.transform.position).magnitude;
-        foreach (Transform comparableTransform in transforms) {
-            Vector3 currPos = comparableTransform.position;
+    Vector3 FindNearest(GameObject[] gameObjects) {
+        Vector3 closestPosition = gameObjects[0].transform.position;
+        float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
+        foreach (GameObject obj in gameObjects) {
+            Vector3 currPos = obj.transform.position;
 
             float relativeDistance = (currPos - this.transform.position).magnitude;
+
+            CalculateRoute(currPos);
 
             if (relativeDistance < shortestDistance) {
                 shortestDistance = relativeDistance;
@@ -43,9 +47,9 @@ public class RobotAI : MonoBehaviour
     {
         if (!isHoldingCollectableObject) {
 
-            Transform[] collectableObjectTransforms = collectableObjectParent.GetComponentsInChildren<Transform>();
+            GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-            Vector3 targetPos = FindNearest(collectableObjectTransforms);
+            Vector3 targetPos = FindNearest(collectableObjects);
 
             Move(targetPos);
 
