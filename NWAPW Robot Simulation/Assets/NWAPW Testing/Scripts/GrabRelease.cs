@@ -52,8 +52,8 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj.transform.parent = releasedObjs.transform;
+        grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj = null;
     }
 }

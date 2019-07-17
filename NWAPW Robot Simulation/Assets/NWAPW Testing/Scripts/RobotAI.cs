@@ -40,6 +40,7 @@ public class RobotAI : MonoBehaviour
         if (justReleased)
         {
             gameObject.GetComponent<RobotMovement>().goGo = true;
+            justReleased = false;
         }
         if (!isHoldingCollectableObject) {
 
@@ -80,6 +81,7 @@ public class RobotAI : MonoBehaviour
         {
             return;
         }
+        justReleased = true;
         isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
 
