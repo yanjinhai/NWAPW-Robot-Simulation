@@ -42,7 +42,6 @@ public class RobotAI : MonoBehaviour
             Vector3 targetPos = FindNearest(collectableObjectTransforms);
 
            
-            Debug.Log(gameObject.GetComponent<RobotMovement>().goGo);
             if (!gameObject.GetComponent<RobotMovement>().goGo) {
                 Grab();
             }

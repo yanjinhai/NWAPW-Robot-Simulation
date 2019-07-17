@@ -6,6 +6,7 @@ public class GrabRelease : MonoBehaviour
 {
     public GameObject grabbedObj;
     public GameObject grabbableObjs;
+    Vector3 offset = new Vector3(0, 0.1f, 1.05f);
     // Start is called before the first frame update
     void Start()
     {
@@ -15,13 +16,17 @@ public class GrabRelease : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        grabbedObj.transform.localPosition = offset;
     }
 
     public void Grab()
     {
         Transform[] grabbableObjsTrans = grabbableObjs.GetComponentsInChildren<Transform>();
         grabbedObj = FindNearestTrans(grabbableObjsTrans).gameObject;
+        grabbedObj.transform.parent = this.transform;
+        Debug.Log("Parent: " + grabbedObj.transform.parent.name);
+        grabbedObj.GetComponent<Rigidbody>().useGravity = false;
+        
     }
     Transform FindNearestTrans(Transform[] transforms)
     {
