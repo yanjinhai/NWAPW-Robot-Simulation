@@ -47,9 +47,12 @@ public class RobotAI : MonoBehaviour
                 Grab();
             }
             Move(targetPos);
-        } else
-        {
-            
+        } 
+        if (isHoldingCollectableObject) {// Gogo needs to be true the first time this is run to skip release, so I'm taking advantage of Move().
+            if (!gameObject.GetComponent<RobotMovement>().goGo)
+            {
+                Release();
+            }
             Move(new Vector3(goalArea.transform.position.x,0.5f, goalArea.transform.position.z));
         }
     }
