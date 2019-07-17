@@ -1042,6 +1042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObjectParent: {fileID: 2107009491}
+  goalArea: {fileID: 793194857}
 --- !u!114 &1630158171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1071,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb3ee5593855f8458249189b1fc03d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabbedObj: {fileID: 0}
+  grabbableObjs: {fileID: 2107009491}
 --- !u!1 &1713841124
 GameObject:
   m_ObjectHideFlags: 0

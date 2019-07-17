@@ -6,7 +6,7 @@ public class RobotAI : MonoBehaviour
 {
 
     public GameObject collectableObjectParent;
-
+    public GameObject goalArea;
 
     private bool isHoldingCollectableObject;
     
@@ -17,7 +17,7 @@ public class RobotAI : MonoBehaviour
     }
 
     Vector3 FindNearest(Transform[] transforms) {
-        Vector3 closestPosition = new Vector3(0.0f, 0.5f, 0.0f);
+        Vector3 closestPosition = transforms[0].position;
         float shortestDistance = (transforms[0].position - this.transform.position).magnitude;
         foreach (Transform comparableTransform in transforms) {
             Vector3 currPos = comparableTransform.position;
@@ -41,11 +41,16 @@ public class RobotAI : MonoBehaviour
 
             Vector3 targetPos = FindNearest(collectableObjectTransforms);
 
-            Move(targetPos);
-
+           
+            Debug.Log(gameObject.GetComponent<RobotMovement>().goGo);
             if (!gameObject.GetComponent<RobotMovement>().goGo) {
                 Grab();
             }
+            Move(targetPos);
+        } else
+        {
+            
+            Move(new Vector3(goalArea.transform.position.x,0.5f, goalArea.transform.position.z));
         }
     }
 
