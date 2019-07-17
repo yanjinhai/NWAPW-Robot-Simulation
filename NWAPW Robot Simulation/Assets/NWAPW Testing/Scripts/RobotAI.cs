@@ -8,11 +8,13 @@ public class RobotAI : MonoBehaviour
     public GameObject collectableObjectParent;
     public GameObject goalArea;
 
-    private bool isHoldingCollectableObject;
+    public bool isHoldingCollectableObject;
+    private bool justReleased;
     
 
     void Start()
     {
+        justReleased = false;
         isHoldingCollectableObject = false;
     }
 
@@ -35,6 +37,10 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (justReleased)
+        {
+            gameObject.GetComponent<RobotMovement>().goGo = true;
+        }
         if (!isHoldingCollectableObject) {
 
             Transform[] collectableObjectTransforms = collectableObjectParent.GetComponentsInChildren<Transform>();
@@ -66,10 +72,16 @@ public class RobotAI : MonoBehaviour
         }
         isHoldingCollectableObject = true;
         gameObject.GetComponent<GrabRelease>().Grab();
-        // Unfinished. Needs to actually pick up object.
 
     }
 
     void Release() {
+        if (!isHoldingCollectableObject)
+        {
+            return;
+        }
+        isHoldingCollectableObject = false;
+        gameObject.GetComponent<GrabRelease>().Release();
+
     }
 }
