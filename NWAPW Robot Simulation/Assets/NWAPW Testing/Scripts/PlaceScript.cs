@@ -34,7 +34,9 @@ public class PlaceScript : MonoBehaviour
 
             if (Physics.Raycast(Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), out rayInfo))
             {
-                Instantiate(Sphere, rayInfo.point, Quaternion.identity);
+                Vector3 vectorHit = rayInfo.point;
+                vectorHit = new Vector3(vectorHit.x, vectorHit.y + 0.5f, vectorHit.z);
+                Instantiate(Sphere, vectorHit, Quaternion.identity);
             }
         }
 
