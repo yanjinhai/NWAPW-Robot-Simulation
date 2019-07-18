@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CameraSwitch : MonoBehaviour
 {
-    public GameObject FirstPerson;
-    public GameObject ThirdPerson;
-    public GameObject TopView;
-    public int camMode;
-    public int test;
+    public GameObject[] Cameras;
+    public GameObject CurrentCam;
     // Start is called before the first frame update
     void Start()
     {
-        camMode = 1;
+        CurrentCam = Cameras[0];
+        foreach (GameObject cam in Cameras)
+        {
+            cam.SetActive(false);
+        }
+        Cameras[0].SetActive(true);
     }
 
     // Update is called once per frame
@@ -23,30 +25,15 @@ public class CameraSwitch : MonoBehaviour
     }
     void switchCamera() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            camMode++;
-            if (camMode > 2) {
-                camMode = 0;
+            int index = System.Array.IndexOf(Cameras, CurrentCam);
+            if (index == Cameras.Length - 1) {
+                index = -1;
             }
-            if (camMode == 0)
-            {
-                
-                TopView.SetActive(true);
-                ThirdPerson.SetActive(false);
-                FirstPerson.SetActive(false);
+            CurrentCam = Cameras[index + 1];
+            foreach (GameObject cam in Cameras) {
+                cam.SetActive(false);
             }
-            else if (camMode == 1)
-            {
-                FirstPerson.SetActive(false);
-                ThirdPerson.SetActive(true);
-                TopView.SetActive(false);
-            }
-            else if (camMode == 2)
-            {
-                FirstPerson.SetActive(true);
-                ThirdPerson.SetActive(false);
-                TopView.SetActive(false);
-
-            }
+            Cameras[index + 1].SetActive(true);
         }
     }
 }

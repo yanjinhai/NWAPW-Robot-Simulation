@@ -341,6 +341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
+      propertyPath: Cameras.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
       propertyPath: FirstPerson
       value: 
       objectReference: {fileID: 1388074023}
@@ -354,6 +359,21 @@ PrefabInstance:
       propertyPath: TopView
       value: 
       objectReference: {fileID: 773570332}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 773570332}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: Cameras.Array.data[1]
+      value: 
+      objectReference: {fileID: 1271093605}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: Cameras.Array.data[2]
+      value: 
+      objectReference: {fileID: 1388074023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7d791d4f75ab647b814185f767ff62, type: 3}
 --- !u!1 &773570332 stripped
@@ -361,6 +381,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5173397963112433785, guid: 003d2424cf49e62499d0f6ca5f103374,
     type: 3}
   m_PrefabInstance: {fileID: 5173397962810750821}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &986751781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8973889257444598830, guid: de7d791d4f75ab647b814185f767ff62,
+    type: 3}
+  m_PrefabInstance: {fileID: 763810184}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &994134087
 PrefabInstance:
@@ -991,5 +1017,21 @@ PrefabInstance:
       propertyPath: Camera3
       value: 
       objectReference: {fileID: 1388074023}
+    - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
+        type: 3}
+      propertyPath: CameraSwitcher
+      value: 
+      objectReference: {fileID: 986751781}
+    - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
+        type: 3}
+      propertyPath: CollectablesParent
+      value: 
+      objectReference: {fileID: 2107009491}
+    - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
+        type: 3}
+      propertyPath: Collectable
+      value: 
+      objectReference: {fileID: 6192613494680834717, guid: e0176f6eab41f4943ad6ad8309064389,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6006308ece287a0499125c43762a69aa, type: 3}
