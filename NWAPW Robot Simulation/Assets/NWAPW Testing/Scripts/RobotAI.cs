@@ -139,6 +139,7 @@ public class RobotAI : MonoBehaviour
                     Release();
                 }
                 GameObject closestGoal = FindNearest(goalAreas);
+                List<NavPoint> route = CalculateRouteMain(closestGoal.GetComponent<NavPoint>());
                 Move(new Vector3(closestGoal.transform.position.x, 0.5f, closestGoal.transform.position.z));
             }
         }

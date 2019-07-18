@@ -11,13 +11,13 @@ public class NavPoint : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        point = this.transform.position;
+        point = new Vector3 (this.transform.position.x,.5f, this.transform.position.y);
         from = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        point = this.transform.position;
+        point = new Vector3(this.transform.position.x, .5f, this.transform.position.y);
     }
 }
