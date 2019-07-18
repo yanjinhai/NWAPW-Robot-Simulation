@@ -12,7 +12,7 @@ public class NavPoint : MonoBehaviour
     void Awake()
     {
         point = this.transform.position;
-        from = this;
+        from = this.gameObject;
     }
 
     // Update is called once per frame
