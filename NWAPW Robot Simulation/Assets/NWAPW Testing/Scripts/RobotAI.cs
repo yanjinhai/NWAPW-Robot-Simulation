@@ -5,7 +5,6 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-
     public GameObject goalArea;
 
     public bool isHoldingCollectableObject;
@@ -90,8 +89,6 @@ public class RobotAI : MonoBehaviour
 
                 Vector3 targetPos = FindNearest(collectableObjects);
 
-
-
                 if (!gameObject.GetComponent<RobotMovement>().goGo)
                 {
                     Grab();
@@ -130,6 +127,5 @@ public class RobotAI : MonoBehaviour
         justReleased = true;
         isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
-
     }
 }
