@@ -5,6 +5,7 @@ public class PlaceScript : MonoBehaviour
 {
 
     public GameObject Sphere;
+    public GameObject AssetType;
     public GameObject Camera1;
     public GameObject Camera2;
     public GameObject Camera3;
@@ -36,7 +37,8 @@ public class PlaceScript : MonoBehaviour
             {
                 Vector3 vectorHit = rayInfo.point;
                 vectorHit = new Vector3(vectorHit.x, vectorHit.y + 0.5f, vectorHit.z);
-                Instantiate(Sphere, vectorHit, Quaternion.identity);
+                GameObject newSphere = Instantiate(Sphere, vectorHit, Quaternion.identity);
+                newSphere.transform.parent = AssetType.transform;
             }
         }
 
