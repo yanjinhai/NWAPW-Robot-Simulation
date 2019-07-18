@@ -339,6 +339,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: FirstPerson
+      value: 
+      objectReference: {fileID: 1388074023}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: ThirdPerson
+      value: 
+      objectReference: {fileID: 1271093605}
+    - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
+        type: 3}
+      propertyPath: TopView
+      value: 
+      objectReference: {fileID: 773570332}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7d791d4f75ab647b814185f767ff62, type: 3}
 --- !u!1 &773570332 stripped
@@ -593,6 +608,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThirdPerson
       objectReference: {fileID: 0}
+    - target: {fileID: 3829629162656117423, guid: 833ac4ee3bd33dc4caf8dc348c27e74a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3829629162656117420, guid: 833ac4ee3bd33dc4caf8dc348c27e74a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -662,6 +682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstPerson
       objectReference: {fileID: 0}
+    - target: {fileID: 5077795050577455842, guid: 1ebc6cd2563f5e643884327aa57f32b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5077795050577455855, guid: 1ebc6cd2563f5e643884327aa57f32b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -730,6 +755,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TopView
+      objectReference: {fileID: 0}
+    - target: {fileID: 5173397963112433785, guid: 003d2424cf49e62499d0f6ca5f103374,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5173397963112433786, guid: 003d2424cf49e62499d0f6ca5f103374,
         type: 3}
