@@ -18,6 +18,6 @@ public class NavPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        point = this.transform.position;
     }
 }

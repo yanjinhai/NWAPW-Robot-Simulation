@@ -16,23 +16,48 @@ public class RobotAI : MonoBehaviour
         justReleased = false;
         isHoldingCollectableObject = false;
     }
-    
-    void CalculateRoute(Vector3 targetPos) {
+
+    void CalculateRouteMain(NavPoint target)
+    {
+        List<NavPoint> searchStack = new List<NavPoint>();
+
+        
+    }
+
+    void CalculateRouteRecursion(NavPoint target, NavPoint root = this.gameObject.GetComponent<NavPoint>) {
         RaycastHit hitInfo;
+        Vector3 targetPos = target.point;
+        float relativeDistance = (targetPos - root.point).magnitude;
 
-        float relativeDistance = (targetPos - this.transform.position).magnitude;
+        Vector3 relativePos = targetPos - root.point;
 
-        Vector3 relativePos = targetPos - this.transform.position;
+        Physics.Raycast(root.point, relativePos, out hitInfo);
 
-        Physics.Raycast(transform.position, relativePos, out hitInfo);
-
-        Debug.DrawRay(transform.position, relativePos, Color.red);
+        Debug.DrawRay(root.point, relativePos, Color.red);
 
         if ((hitInfo.distance < relativeDistance - 0.5)&& (hitInfo.transform.tag != "CollectableObject"))
         {
 
             GameObject obstacle = hitInfo.transform.gameObject;
             NavPoint[] obstVerts = obstacle.GetComponentsInChildren<NavPoint>();
+            foreach(NavPoint current in obstVerts)
+            {
+                relativeDistance = (NavPoint.point - root.point).magnitude;
+
+                if ((relativeDistance).magnitude+root.gCost < NavPoint.gCost) //If G cost is higher no point already more optomised
+                {
+                    relativePos = NavPoint.point - root.point;
+                    Physics.Raycast(root.point, relativePos, out hitInfo);
+                    if (hitInfo.distance < relativeDistance)
+                    {
+                        NavPoint.gCost = (relativeDistance).magnitude + root.gCost;
+                        NavPoint.fCost = NavPoint.gCost + (NavPoint.point - target.point).magnitude;
+                    }
+                }
+            }
+
+        } else
+        {
 
         }
     }
