@@ -19,6 +19,7 @@ public class RobotAI : MonoBehaviour
     }
 
 
+
     /*
     void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
@@ -57,6 +58,7 @@ public class RobotAI : MonoBehaviour
         float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
         foreach (GameObject obj in gameObjects) {
             Vector3 currPos = obj.transform.position;
+
 
             float relativeDistance = (currPos - this.transform.position).magnitude;
 
