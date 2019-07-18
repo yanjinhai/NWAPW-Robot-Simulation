@@ -16,10 +16,7 @@ public class RobotAI : MonoBehaviour
         justReleased = false;
         isHoldingCollectableObject = false;
     }
-
-
-
-    /*
+    
     void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
 
@@ -50,7 +47,7 @@ public class RobotAI : MonoBehaviour
             }
         }
     }
-    */
+    
 
     Vector3 FindNearest(GameObject[] gameObjects) {
         Vector3 closestPosition = gameObjects[0].transform.position;
@@ -83,8 +80,6 @@ public class RobotAI : MonoBehaviour
             }
             if (!isHoldingCollectableObject)
             {
-
-
                 GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
                 Vector3 targetPos = FindNearest(collectableObjects);
@@ -118,7 +113,6 @@ public class RobotAI : MonoBehaviour
         {
             isHoldingCollectableObject = true;
         }
-
     }
 
     void Release() {
