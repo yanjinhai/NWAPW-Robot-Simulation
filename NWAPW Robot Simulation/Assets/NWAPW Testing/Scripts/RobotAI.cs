@@ -10,6 +10,8 @@ public class RobotAI : MonoBehaviour
     public bool isHoldingCollectableObject;
     private bool justReleased;
     int collectables = 1;
+    bool found = false;
+    List<NavPoint> searchStack = new List<NavPoint>();
 
     void Start()
     {
@@ -17,14 +19,32 @@ public class RobotAI : MonoBehaviour
         isHoldingCollectableObject = false;
     }
 
-    void CalculateRouteMain(NavPoint target)
+    List<NavPoint> CalculateRouteMain(NavPoint target)
     {
-        List<NavPoint> searchStack = new List<NavPoint>();
+        found = false;
+        searchStack = new List<NavPoint>();
 
-        
+        searchStack.Add(this.gameObject.GetComponent<NavPoint>());
+
+        while (searchStack.Count > 0 && !found) {
+            searchStack.Sort(delegate (NavPoint a, NavPoint b)
+            {
+                return (a.fCost).CompareTo(b.fCost);
+            });
+            CalculateRouteRecursion(target, searchStack[0]);
+        }
+
+        NavPoint backTrack = target;
+        List<NavPoint> route = new List<NavPoint>();
+        do
+        {
+            route.Add(backTrack);
+            backTrack = backTrack.from;
+        } while (backTrack != this.gameObject.GetComponent<NavPoint>());
+        return route;
     }
 
-    void CalculateRouteRecursion(NavPoint target, NavPoint root = this.gameObject.GetComponent<NavPoint>) {
+    void CalculateRouteRecursion(NavPoint target, NavPoint root) {
         RaycastHit hitInfo;
         Vector3 targetPos = target.point;
         float relativeDistance = (targetPos - root.point).magnitude;
@@ -35,33 +55,40 @@ public class RobotAI : MonoBehaviour
 
         Debug.DrawRay(root.point, relativePos, Color.red);
 
-        if ((hitInfo.distance < relativeDistance - 0.5)&& (hitInfo.transform.tag != "CollectableObject"))
+        if ((hitInfo.distance < relativeDistance) && (hitInfo.transform.tag != "CollectableObject"))
         {
 
             GameObject obstacle = hitInfo.transform.gameObject;
             NavPoint[] obstVerts = obstacle.GetComponentsInChildren<NavPoint>();
-            foreach(NavPoint current in obstVerts)
+            foreach (NavPoint current in obstVerts)
             {
-                relativeDistance = (NavPoint.point - root.point).magnitude;
+                relativeDistance = (current.point - root.point).magnitude;
 
-                if ((relativeDistance).magnitude+root.gCost < NavPoint.gCost) //If G cost is higher no point already more optomised
+                if (relativeDistance + root.gCost < current.gCost) //If G cost is higher no point already more optomised
                 {
-                    relativePos = NavPoint.point - root.point;
+                    relativePos = current.point - root.point;
                     Physics.Raycast(root.point, relativePos, out hitInfo);
                     if (hitInfo.distance < relativeDistance)
                     {
-                        NavPoint.gCost = (relativeDistance).magnitude + root.gCost;
-                        NavPoint.fCost = NavPoint.gCost + (NavPoint.point - target.point).magnitude;
+                        current.gCost = relativeDistance + root.gCost;
+                        current.fCost = current.gCost + (current.point - target.point).magnitude;
+                        current.from = root;
+                        if (!searchStack.Contains(current))
+                        {
+                            searchStack.Add(current);
+                        }
                     }
                 }
             }
 
         } else
         {
-
+            target.from = root;
+            found = true;
         }
+        searchStack.Remove(root);
     }
-    
+
 
     GameObject FindNearest(GameObject[] gameObjects)
     {
@@ -82,8 +109,7 @@ public class RobotAI : MonoBehaviour
         return closest;
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (GameObject.FindGameObjectsWithTag("CollectableObject").Length > 0)
         {
             if (justReleased)
@@ -95,13 +121,14 @@ public class RobotAI : MonoBehaviour
             {
                 GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-                Vector3 targetPos = FindNearest(collectableObjects).transform.position;
-
+                GameObject target = FindNearest(collectableObjects);
+                List<NavPoint> route = CalculateRouteMain(target.GetComponent<NavPoint>());
                 if (!gameObject.GetComponent<RobotMovement>().goGo)
                 {
                     Grab();
                 }
-                Move(targetPos);
+                
+                Move(target.transform.position);
             }
             if (isHoldingCollectableObject)
             {// Gogo needs to be true the first time this is run to skip release, so I'm taking advantage of Move().
