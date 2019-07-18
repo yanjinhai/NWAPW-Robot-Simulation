@@ -5,7 +5,7 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-    public GameObject goalArea;
+    GameObject[] goalAreas;
 
     public bool isHoldingCollectableObject;
     private bool justReleased;
@@ -15,15 +15,17 @@ public class RobotAI : MonoBehaviour
     {
         justReleased = false;
         isHoldingCollectableObject = false;
+        goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
     }
 
+    
     void CalculateRouteMain(NavPoint target)
     {
         List<NavPoint> searchStack = new List<NavPoint>();
 
         
     }
-
+    
     void CalculateRouteRecursion(NavPoint target, NavPoint root = this.gameObject.GetComponent<NavPoint>) {
         RaycastHit hitInfo;
         Vector3 targetPos = target.point;
@@ -109,7 +111,8 @@ public class RobotAI : MonoBehaviour
                 {
                     Release();
                 }
-                Move(new Vector3(goalArea.transform.position.x, 0.5f, goalArea.transform.position.z));
+                GameObject closestGoal = FindNearest(goalAreas);
+                Move(new Vector3(closestGoal.transform.position.x, 0.5f, closestGoal.transform.position.z));
             }
         }
     }
