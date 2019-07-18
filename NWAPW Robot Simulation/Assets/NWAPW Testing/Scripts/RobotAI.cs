@@ -1,17 +1,23 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
 
-    private bool isHoldingCollectableObject;
-    
+
+    public GameObject goalArea;
+
+    public bool isHoldingCollectableObject;
+    private bool justReleased;
+    int collectables = 1;
 
     void Start()
     {
+        justReleased = false;
         isHoldingCollectableObject = false;
     }
+
 
     /*
     void CalculateRoute(Vector3 targetPos) {
@@ -45,6 +51,7 @@ public class RobotAI : MonoBehaviour
         }
     }
     */
+
     Vector3 FindNearest(GameObject[] gameObjects) {
         Vector3 closestPosition = gameObjects[0].transform.position;
         float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
@@ -66,16 +73,36 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isHoldingCollectableObject) {
+        if (GameObject.FindGameObjectsWithTag("CollectableObject").Length > 0)
+        {
+            if (justReleased)
+            {
+                gameObject.GetComponent<RobotMovement>().goGo = true;
+                justReleased = false;
+            }
+            if (!isHoldingCollectableObject)
+            {
 
-            GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-            Vector3 targetPos = FindNearest(collectableObjects);
+                GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-            Move(targetPos);
+                Vector3 targetPos = FindNearest(collectableObjects);
 
-            if (!gameObject.GetComponent<RobotMovement>().goGo) {
-                Grab();
+
+
+                if (!gameObject.GetComponent<RobotMovement>().goGo)
+                {
+                    Grab();
+                }
+                Move(targetPos);
+            }
+            if (isHoldingCollectableObject)
+            {// Gogo needs to be true the first time this is run to skip release, so I'm taking advantage of Move().
+                if (!gameObject.GetComponent<RobotMovement>().goGo)
+                {
+                    Release();
+                }
+                Move(new Vector3(goalArea.transform.position.x, 0.5f, goalArea.transform.position.z));
             }
         }
     }
@@ -89,11 +116,18 @@ public class RobotAI : MonoBehaviour
             return;
         }
         isHoldingCollectableObject = true;
-
-        // Unfinished. Needs to actually pick up object.
+        gameObject.GetComponent<GrabRelease>().Grab();
 
     }
 
     void Release() {
+        if (!isHoldingCollectableObject)
+        {
+            return;
+        }
+        justReleased = true;
+        isHoldingCollectableObject = false;
+        gameObject.GetComponent<GrabRelease>().Release();
+
     }
 }
