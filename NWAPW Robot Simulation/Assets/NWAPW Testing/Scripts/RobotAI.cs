@@ -114,8 +114,10 @@ public class RobotAI : MonoBehaviour
         if (isHoldingCollectableObject) {
             return;
         }
-        isHoldingCollectableObject = true;
-        gameObject.GetComponent<GrabRelease>().Grab();
+        if (gameObject.GetComponent<GrabRelease>().Grab())
+        {
+            isHoldingCollectableObject = true;
+        }
 
     }
 

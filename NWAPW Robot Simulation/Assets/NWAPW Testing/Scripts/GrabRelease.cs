@@ -24,13 +24,17 @@ public class GrabRelease : MonoBehaviour
         }
     }
 
-    public void Grab()
+    public bool Grab()
     {
         grabbableObjs = GameObject.FindGameObjectsWithTag("CollectableObject");
         grabbedObj = FindNearest(grabbableObjs);
-        grabbedObj.transform.parent = this.transform;
-        grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-        
+        if ((grabbedObj.transform.position - this.transform.position).magnitude <= 1.2f)
+        {
+            grabbedObj.transform.parent = this.transform;
+            grabbedObj.GetComponent<Rigidbody>().useGravity = false;
+            return true;
+        }
+        return false;
     }
     GameObject FindNearest(GameObject[] gameObjects)
     {
