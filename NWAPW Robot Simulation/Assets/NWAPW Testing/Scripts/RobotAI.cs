@@ -19,7 +19,7 @@ public class RobotAI : MonoBehaviour
 
 
 
-    /*
+    
     void CalculateRoute(Vector3 targetPos) {
         RaycastHit hitInfo;
 
@@ -31,45 +31,33 @@ public class RobotAI : MonoBehaviour
 
         Debug.DrawRay(transform.position, relativePos, Color.red);
 
-        if (hitInfo.distance < relativeDistance - 0.5)
+        if ((hitInfo.distance < relativeDistance - 0.5)&& (hitInfo.transform.tag != "CollectableObject"))
         {
-            if (hitInfo.transform.tag != "CollectableObject")
-            {
-                Transform obstacle = hitInfo.transform;
-                Quaternion angle = this.transform.rotation;
-                while (hitInfo.transform.Equals(obstacle)) {
-                    Physics.Raycast(transform.position, angle.eulerAngles, out hitInfo);
-                    Vector3 newAngle = angle.eulerAngles;
-                    newAngle.y += 5;
-                    angle.eulerAngles = newAngle;
-                }
-                Debug.DrawRay(transform.position, angle.eulerAngles, Color.green);
-                //hitInfo.collider.bounds;
-                //hitInfo.transform.localScale.x;
-                //hitInfo.transform.localScale.z;
-            }
+
+            GameObject obstacle = hitInfo.transform.gameObject;
+            NavPoint[] obstVerts = obstacle.GetComponentsInChildren<NavPoint>();
+
         }
     }
-    */
+    
 
-    Vector3 FindNearest(GameObject[] gameObjects) {
-        Vector3 closestPosition = gameObjects[0].transform.position;
+    GameObject FindNearest(GameObject[] gameObjects)
+    {
+        GameObject closest = gameObjects[0];
         float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
-        foreach (GameObject obj in gameObjects) {
+        foreach (GameObject obj in gameObjects)
+        {
             Vector3 currPos = obj.transform.position;
-
-
             float relativeDistance = (currPos - this.transform.position).magnitude;
 
-//            CalculateRoute(currPos);
-
-            if (relativeDistance < shortestDistance) {
+            if (relativeDistance < shortestDistance)
+            {
                 shortestDistance = relativeDistance;
-                closestPosition = currPos;
+                closest = obj;
             }
         }
-            
-        return closestPosition;
+
+        return closest;
     }
 
     void FixedUpdate()
@@ -87,7 +75,7 @@ public class RobotAI : MonoBehaviour
 
                 GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-                Vector3 targetPos = FindNearest(collectableObjects);
+                Vector3 targetPos = FindNearest(collectableObjects).transform.position;
 
                 if (!gameObject.GetComponent<RobotMovement>().goGo)
                 {
