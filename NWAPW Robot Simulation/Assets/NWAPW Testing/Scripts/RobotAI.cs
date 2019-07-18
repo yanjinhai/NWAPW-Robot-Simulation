@@ -5,9 +5,6 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-    public GameObject collectableObjectParent;
-
-
     private bool isHoldingCollectableObject;
     
 
@@ -16,13 +13,47 @@ public class RobotAI : MonoBehaviour
         isHoldingCollectableObject = false;
     }
 
-    Vector3 FindNearest(Transform[] transforms) {
-        Vector3 closestPosition = new Vector3(0.0f, 0.5f, 0.0f);
-        float shortestDistance = (transforms[0].position - this.transform.position).magnitude;
-        foreach (Transform comparableTransform in transforms) {
-            Vector3 currPos = comparableTransform.position;
+    /*
+    void CalculateRoute(Vector3 targetPos) {
+        RaycastHit hitInfo;
+
+        float relativeDistance = (targetPos - this.transform.position).magnitude;
+
+        Vector3 relativePos = targetPos - this.transform.position;
+
+        Physics.Raycast(transform.position, relativePos, out hitInfo);
+
+        Debug.DrawRay(transform.position, relativePos, Color.red);
+
+        if (hitInfo.distance < relativeDistance - 0.5)
+        {
+            if (hitInfo.transform.tag != "CollectableObject")
+            {
+                Transform obstacle = hitInfo.transform;
+                Quaternion angle = this.transform.rotation;
+                while (hitInfo.transform.Equals(obstacle)) {
+                    Physics.Raycast(transform.position, angle.eulerAngles, out hitInfo);
+                    Vector3 newAngle = angle.eulerAngles;
+                    newAngle.y += 5;
+                    angle.eulerAngles = newAngle;
+                }
+                Debug.DrawRay(transform.position, angle.eulerAngles, Color.green);
+                //hitInfo.collider.bounds;
+                //hitInfo.transform.localScale.x;
+                //hitInfo.transform.localScale.z;
+            }
+        }
+    }
+    */
+    Vector3 FindNearest(GameObject[] gameObjects) {
+        Vector3 closestPosition = gameObjects[0].transform.position;
+        float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
+        foreach (GameObject obj in gameObjects) {
+            Vector3 currPos = obj.transform.position;
 
             float relativeDistance = (currPos - this.transform.position).magnitude;
+
+//            CalculateRoute(currPos);
 
             if (relativeDistance < shortestDistance) {
                 shortestDistance = relativeDistance;
@@ -37,9 +68,9 @@ public class RobotAI : MonoBehaviour
     {
         if (!isHoldingCollectableObject) {
 
-            Transform[] collectableObjectTransforms = collectableObjectParent.GetComponentsInChildren<Transform>();
+            GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-            Vector3 targetPos = FindNearest(collectableObjectTransforms);
+            Vector3 targetPos = FindNearest(collectableObjects);
 
             Move(targetPos);
 
