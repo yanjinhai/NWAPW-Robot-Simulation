@@ -10,6 +10,11 @@ public class CameraSwitch : MonoBehaviour
     void Start()
     {
         CurrentCam = Cameras[0];
+        foreach (GameObject cam in Cameras)
+        {
+            cam.SetActive(false);
+        }
+        Cameras[0].SetActive(true);
     }
 
     // Update is called once per frame
