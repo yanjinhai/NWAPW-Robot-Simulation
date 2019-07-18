@@ -29,7 +29,7 @@ public class CameraSwitch : MonoBehaviour
             }
             if (camMode == 0)
             {
-   
+                
                 TopView.SetActive(true);
                 ThirdPerson.SetActive(false);
                 FirstPerson.SetActive(false);
