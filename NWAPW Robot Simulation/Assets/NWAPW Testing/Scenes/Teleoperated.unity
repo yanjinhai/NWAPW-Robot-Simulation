@@ -362,6 +362,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5173397962810750821}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &986751781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8973889257444598830, guid: de7d791d4f75ab647b814185f767ff62,
+    type: 3}
+  m_PrefabInstance: {fileID: 763810184}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &994134087
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -974,5 +980,10 @@ PrefabInstance:
       propertyPath: Camera3
       value: 
       objectReference: {fileID: 1388074023}
+    - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
+        type: 3}
+      propertyPath: CameraSwitcher
+      value: 
+      objectReference: {fileID: 986751781}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6006308ece287a0499125c43762a69aa, type: 3}
