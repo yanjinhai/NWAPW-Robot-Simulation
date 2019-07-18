@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrabRelease : MonoBehaviour
 {
     public GameObject grabbedObj;
-    public GameObject[] grabbableObjs;
+    private GameObject[] grabbableObjs;
     public GameObject releasedObjs;
     
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
