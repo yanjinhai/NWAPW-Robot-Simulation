@@ -11,6 +11,7 @@ public class CollectableRemove : MonoBehaviour
     {
         if (collision.gameObject.tag == "CollectableObject")
         {
+            collision.gameObject.SetActive(false);
             score++;
             text.text = "Score: " + score;
             Destroy(collision.gameObject);

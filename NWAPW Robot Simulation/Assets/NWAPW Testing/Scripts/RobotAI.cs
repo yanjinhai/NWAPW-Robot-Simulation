@@ -130,8 +130,8 @@ public class RobotAI : MonoBehaviour
         {
             return;
         }
-        justReleased = true;
         isHoldingCollectableObject = false;
+        justReleased = true;
         gameObject.GetComponent<GrabRelease>().Release();
     }
 }
