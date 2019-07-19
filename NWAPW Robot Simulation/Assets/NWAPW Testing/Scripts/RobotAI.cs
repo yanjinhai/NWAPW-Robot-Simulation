@@ -35,6 +35,7 @@ public class RobotAI : MonoBehaviour
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
+        Debug.Log("RoutePlan");
         found = false;
         searchStack.Clear();
         closedSearch.Clear();
@@ -42,6 +43,7 @@ public class RobotAI : MonoBehaviour
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
         while (searchStack.Count > 0 && !found) {
+            Debug.Log("RouteNodeLoop");
             searchStack.Sort(delegate (NavPoint a, NavPoint b)
             {
                 return (a.fCost).CompareTo(b.fCost);
