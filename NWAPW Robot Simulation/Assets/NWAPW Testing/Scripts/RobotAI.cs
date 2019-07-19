@@ -6,12 +6,12 @@ public class RobotAI : MonoBehaviour
 {
 
     GameObject[] goalAreas;
-    public bool targetChanged;
+    private bool targetChanged;
+    public bool resetNav;
     public bool isHoldingCollectableObject;
     public NavPoint targetLoc;
     private bool justReleased;
     private bool justGrabbed;
-    int collectables = 1;
     bool found = false;
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
@@ -23,6 +23,7 @@ public class RobotAI : MonoBehaviour
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
+        resetNav = true;
         isHoldingCollectableObject = false;
         layerMask = 1 << 8;
         layerMask = ~layerMask;
@@ -115,69 +116,40 @@ public class RobotAI : MonoBehaviour
 
         return closest;
     }
-    /*
-    void FixedUpdate() {
+
+    void Update()
+    {
+        resetNav = false;
         if (GameObject.FindGameObjectsWithTag("CollectableObject").Length > 0)
         {
-            if (justReleased)
-            {
-                gameObject.GetComponent<RobotMovement>().goGo = true;
-                justReleased = false;
-            }
             if (!isHoldingCollectableObject)
             {
-                GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
-
-                GameObject target = FindNearest(collectableObjects);
-                List<NavPoint> route = CalculateRouteMain(target.GetComponent<NavPoint>());
-                if (!gameObject.GetComponent<RobotMovement>().goGo)
+                if (FollowRoute() && !justReleased)
                 {
                     Grab();
                 }
-                
-                Move(target.transform.position);
+
+                if (FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>() != targetLoc)
+                {
+                    targetLoc = FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justReleased = false;
+                    Debug.Log("ChangedCol");
+                }
             }
-            if (isHoldingCollectableObject)
-            {// Gogo needs to be true the first time this is run to skip release, so I'm taking advantage of Move().
-                if (!gameObject.GetComponent<RobotMovement>().goGo)
+            else
+            {
+                if (FollowRoute() && !justGrabbed)
                 {
                     Release();
                 }
-                GameObject closestGoal = FindNearest(goalAreas);
-                List<NavPoint> route = CalculateRouteMain(closestGoal.GetComponent<NavPoint>());
-                Move(new Vector3(closestGoal.transform.position.x, 0.5f, closestGoal.transform.position.z));
-            }
-        }
-
-    }
-    */
-    void Update()
-    {
-        if (!isHoldingCollectableObject)
-        {
-            if (FollowRoute()&&!justReleased)
-            {
-                Grab();
-            }
-
-            if (FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>() != targetLoc)
-            {
-                targetLoc = FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>();
-                targetChanged = true;
-                justReleased = false;
-
-            }
-        } else
-        {
-            if (FollowRoute()&&!justGrabbed)
-            {
-                Release();
-            }
-            if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
-            {
-                targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
-                targetChanged = true;
-                justGrabbed = false;
+                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
+                {
+                    targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                    Debug.Log("ChangedDro");
+                }
             }
         }
     }
@@ -192,6 +164,7 @@ public class RobotAI : MonoBehaviour
             route = CalculateRouteMain(targetLoc);
             gameObject.GetComponent<RobotMovement>().goGo = true;
             targetChanged = false;
+            resetNav = true;
         }
         if (gameObject.GetComponent<RobotMovement>().goGo)
         {

@@ -22,8 +22,9 @@ public class NavPoint : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (GameObject.FindWithTag("Player").GetComponent<RobotAI>().targetChanged)
+        if (GameObject.FindWithTag("Player").GetComponent<RobotAI>().resetNav)
         {
+            Debug.Log("Reset");
             gCost = Mathf.Infinity;
             fCost = Mathf.Infinity;
             from = this;
