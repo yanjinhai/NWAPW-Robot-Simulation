@@ -4,11 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-
   - CollectableObject
-
   - Drop Area
-
   layers:
   - Default
   - TransparentFX
@@ -18,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - NavIgnore
   - 
   - 
   - 

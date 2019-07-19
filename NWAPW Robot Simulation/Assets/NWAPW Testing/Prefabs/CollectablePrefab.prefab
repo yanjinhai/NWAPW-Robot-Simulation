@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8583497016052636917}
   - component: {fileID: 5481050973456474328}
   - component: {fileID: 5362264769862200493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CollectablePrefab
   m_TagString: CollectableObject
   m_Icon: {fileID: 0}

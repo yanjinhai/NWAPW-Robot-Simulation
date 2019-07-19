@@ -16,6 +16,7 @@ public class RobotAI : MonoBehaviour
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
     List<NavPoint> closedSearch = new List<NavPoint>();
+    int layerMask;
 
     void Start()
     {
@@ -23,6 +24,8 @@ public class RobotAI : MonoBehaviour
         justReleased = false;
         justGrabbed = false;
         isHoldingCollectableObject = false;
+        layerMask = 1 << 8;
+        layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
         targetLoc = FindNearest(collectableObjects).GetComponent<NavPoint>();
@@ -57,28 +60,21 @@ public class RobotAI : MonoBehaviour
 
 
     void CalculateRouteRecursion(NavPoint target, NavPoint root) {
-        RaycastHit hitInfo;
-        Vector3 targetPos = target.point;
-        float relativeDistance = (targetPos - root.point).magnitude;
 
-        Vector3 relativePos = targetPos - root.point;
 
-        Physics.Raycast(root.point, relativePos, out hitInfo);
 
-        if ((hitInfo.distance < relativeDistance) && (hitInfo.transform.tag != "CollectableObject"))
+        if (Physics.Linecast(root.point,target.point,out RaycastHit hitInfo, layerMask))
         {
 
-            GameObject obstacle = hitInfo.transform.gameObject;
-            NavPoint[] obstVerts = obstacle.GetComponentsInChildren<NavPoint>();
+            NavPoint[] obstVerts = hitInfo.transform.gameObject.GetComponentsInChildren<NavPoint>();
             foreach (NavPoint current in obstVerts)
             {
-                relativeDistance = (current.point - root.point).magnitude;
+                float relativeDistance = (current.point - root.point).magnitude;
 
                 if (relativeDistance + root.gCost < current.gCost && !closedSearch.Contains(current)) //If G cost is higher no point already more optomised
                 {
-                    relativePos = current.point - root.point;
-                    Physics.Raycast(root.point, relativePos, out hitInfo);
-                    if (hitInfo.distance < relativeDistance)
+
+                    if (!Physics.Linecast(root.point, current.point, layerMask))
                     {
                         current.gCost = relativeDistance + root.gCost;
                         current.fCost = current.gCost + (current.point - target.point).magnitude;
@@ -169,6 +165,7 @@ public class RobotAI : MonoBehaviour
                 targetLoc = FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>();
                 targetChanged = true;
                 justReleased = false;
+
             }
         } else
         {

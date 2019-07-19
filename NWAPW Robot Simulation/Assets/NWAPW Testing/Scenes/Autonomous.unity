@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3708651}
   - component: {fileID: 3708650}
   - component: {fileID: 3708649}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetChanged: 0
   isHoldingCollectableObject: 0
+  targetLoc: {fileID: 0}
 --- !u!114 &1630158171
 MonoBehaviour:
   m_ObjectHideFlags: 0
