@@ -10,7 +10,7 @@ public class RandomSpawn : MonoBehaviour
     GameObject obj2 = null;
     GameObject obj3 = null;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         
             newObj(obj1, 1);

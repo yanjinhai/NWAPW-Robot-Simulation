@@ -11,13 +11,22 @@ public class NavPoint : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        point = new Vector3 (this.transform.position.x,.5f, this.transform.position.y);
+        point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
         from = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        point = new Vector3(this.transform.position.x, .5f, this.transform.position.y);
+        point = new Vector3(this.transform.position.x, .5f, this.transform.position.z);
+    }
+    void LateUpdate()
+    {
+        if (GameObject.FindWithTag("Player").GetComponent<RobotAI>().targetChanged)
+        {
+            gCost = Mathf.Infinity;
+            fCost = Mathf.Infinity;
+            from = this;
+        }
     }
 }

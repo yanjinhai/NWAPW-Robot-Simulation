@@ -6,24 +6,34 @@ public class RobotAI : MonoBehaviour
 {
 
     GameObject[] goalAreas;
-
+    public bool targetChanged;
     public bool isHoldingCollectableObject;
+    public NavPoint targetLoc;
     private bool justReleased;
+    private bool justGrabbed;
     int collectables = 1;
     bool found = false;
+    List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
+    List<NavPoint> closedSearch = new List<NavPoint>();
 
     void Start()
     {
+        targetChanged = true;
         justReleased = false;
+        justGrabbed = false;
         isHoldingCollectableObject = false;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
+        targetLoc = FindNearest(collectableObjects).GetComponent<NavPoint>();
+        
     }
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
         found = false;
-        searchStack = new List<NavPoint>();
+        searchStack.Clear();
+        closedSearch.Clear();
 
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
@@ -55,8 +65,6 @@ public class RobotAI : MonoBehaviour
 
         Physics.Raycast(root.point, relativePos, out hitInfo);
 
-        Debug.DrawRay(root.point, relativePos, Color.red);
-
         if ((hitInfo.distance < relativeDistance) && (hitInfo.transform.tag != "CollectableObject"))
         {
 
@@ -66,7 +74,7 @@ public class RobotAI : MonoBehaviour
             {
                 relativeDistance = (current.point - root.point).magnitude;
 
-                if (relativeDistance + root.gCost < current.gCost) //If G cost is higher no point already more optomised
+                if (relativeDistance + root.gCost < current.gCost && !closedSearch.Contains(current)) //If G cost is higher no point already more optomised
                 {
                     relativePos = current.point - root.point;
                     Physics.Raycast(root.point, relativePos, out hitInfo);
@@ -89,6 +97,7 @@ public class RobotAI : MonoBehaviour
             found = true;
         }
         searchStack.Remove(root);
+        closedSearch.Add(root);
     }
 
 
@@ -110,7 +119,7 @@ public class RobotAI : MonoBehaviour
 
         return closest;
     }
-
+    /*
     void FixedUpdate() {
         if (GameObject.FindGameObjectsWithTag("CollectableObject").Length > 0)
         {
@@ -143,10 +152,64 @@ public class RobotAI : MonoBehaviour
                 Move(new Vector3(closestGoal.transform.position.x, 0.5f, closestGoal.transform.position.z));
             }
         }
-    }
 
+    }
+    */
+    void Update()
+    {
+        if (!isHoldingCollectableObject)
+        {
+            if (FollowRoute()&&!justReleased)
+            {
+                Grab();
+            }
+
+            if (FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>() != targetLoc)
+            {
+                targetLoc = FindNearest(GameObject.FindGameObjectsWithTag("CollectableObject")).GetComponent<NavPoint>();
+                targetChanged = true;
+                justReleased = false;
+            }
+        } else
+        {
+            if (FollowRoute()&&!justGrabbed)
+            {
+                Release();
+            }
+            if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
+            {
+                targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
+                targetChanged = true;
+                justGrabbed = false;
+            }
+        }
+    }
     void Move(Vector3 position) {
         gameObject.GetComponent<RobotMovement>().Move(position);
+    }
+    bool FollowRoute()
+    {
+        if (targetChanged)
+        {
+            route.Clear();
+            route = CalculateRouteMain(targetLoc);
+            gameObject.GetComponent<RobotMovement>().goGo = true;
+            targetChanged = false;
+        }
+        if (gameObject.GetComponent<RobotMovement>().goGo)
+        {
+            Move(route[route.Count - 1].point);
+        }
+        else
+        {
+            if (route.Count == 1)
+            {
+                return true;
+            }
+            route.RemoveAt(route.Count - 1);
+            Move(route[route.Count - 1].point);
+        }
+        return false;
     }
 
     void Grab() {
@@ -156,6 +219,7 @@ public class RobotAI : MonoBehaviour
         if (gameObject.GetComponent<GrabRelease>().Grab())
         {
             isHoldingCollectableObject = true;
+            justGrabbed = true;
         }
     }
 
