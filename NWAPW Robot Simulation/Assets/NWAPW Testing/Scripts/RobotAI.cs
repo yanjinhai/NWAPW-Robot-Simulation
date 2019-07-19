@@ -5,7 +5,7 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-    public GameObject goalArea;
+    GameObject[] goalAreas;
 
     public bool isHoldingCollectableObject;
     private bool justReleased;
@@ -15,6 +15,8 @@ public class RobotAI : MonoBehaviour
     {
         justReleased = false;
         isHoldingCollectableObject = false;
+
+        goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
     }
 
 
@@ -52,8 +54,8 @@ public class RobotAI : MonoBehaviour
     }
     */
 
-    Vector3 FindNearest(GameObject[] gameObjects) {
-        Vector3 closestPosition = gameObjects[0].transform.position;
+    GameObject FindNearest(GameObject[] gameObjects) {
+        GameObject closestObj = gameObjects[0];
         float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
         foreach (GameObject obj in gameObjects) {
             Vector3 currPos = obj.transform.position;
@@ -65,11 +67,11 @@ public class RobotAI : MonoBehaviour
 
             if (relativeDistance < shortestDistance) {
                 shortestDistance = relativeDistance;
-                closestPosition = currPos;
+                closestObj = obj;
             }
         }
             
-        return closestPosition;
+        return closestObj;
     }
 
     void FixedUpdate()
@@ -87,7 +89,7 @@ public class RobotAI : MonoBehaviour
 
                 GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
 
-                Vector3 targetPos = FindNearest(collectableObjects);
+                Vector3 targetPos = FindNearest(collectableObjects).transform.position;
 
                 if (!gameObject.GetComponent<RobotMovement>().goGo)
                 {
@@ -101,7 +103,9 @@ public class RobotAI : MonoBehaviour
                 {
                     Release();
                 }
-                Move(new Vector3(goalArea.transform.position.x, 0.5f, goalArea.transform.position.z));
+                GameObject closestGoal = FindNearest(goalAreas);
+
+                Move(new Vector3(closestGoal.transform.position.x, 0.5f, closestGoal.transform.position.z));
             }
         }
     }
