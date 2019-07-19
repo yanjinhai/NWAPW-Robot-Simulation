@@ -12,8 +12,8 @@ public class CollectableRemove : MonoBehaviour
         if (collision.gameObject.tag == "CollectableObject")
         {
             score++;
-            Destroy(collision.gameObject);
             text.text = "Score: " + score;
+            Destroy(collision.gameObject);
         }
     }
 }
