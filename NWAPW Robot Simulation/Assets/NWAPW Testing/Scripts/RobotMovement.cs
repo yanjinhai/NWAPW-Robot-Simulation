@@ -26,6 +26,7 @@ public class RobotMovement : MonoBehaviour
             neededMove = goal - this.transform.position;
             if (neededMove.magnitude <= positionDeadband)
             {
+                Debug.Log("FalseGogo");
                 goGo = false;
                 return;
             }

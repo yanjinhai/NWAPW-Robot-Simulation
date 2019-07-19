@@ -126,6 +126,7 @@ public class RobotAI : MonoBehaviour
             {
                 if (FollowRoute() && !justReleased)
                 {
+                    Debug.Log("Grab");
                     Grab();
                 }
 
@@ -141,6 +142,7 @@ public class RobotAI : MonoBehaviour
             {
                 if (FollowRoute() && !justGrabbed)
                 {
+                    Debug.Log("Release");
                     Release();
                 }
                 if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
@@ -158,8 +160,10 @@ public class RobotAI : MonoBehaviour
     }
     bool FollowRoute()
     {
+        Debug.Log("Loop");
         if (targetChanged)
         {
+            Debug.Log("targetChangedRun");
             route.Clear();
             route = CalculateRouteMain(targetLoc);
             gameObject.GetComponent<RobotMovement>().goGo = true;
@@ -172,6 +176,7 @@ public class RobotAI : MonoBehaviour
         }
         else
         {
+            Debug.Log("NoGogo");
             if (route.Count == 1)
             {
                 return true;
