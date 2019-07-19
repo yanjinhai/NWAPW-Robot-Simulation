@@ -188,6 +188,7 @@ public class RobotAI : MonoBehaviour
     }
 
     void Grab() {
+        Debug.Log("Grab2");
         if (isHoldingCollectableObject) {
             return;
         }
