@@ -22,12 +22,13 @@ public class NavPoint : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (GameObject.FindWithTag("Player").GetComponent<RobotAI>().resetNav)
+        if (GameObject.FindWithTag("Player").GetComponent<RobotAI>().resetNav&&this.gameObject.tag !="Player")
         {
             Debug.Log("Reset");
             gCost = Mathf.Infinity;
             fCost = Mathf.Infinity;
             from = this;
         }
+
     }
 }

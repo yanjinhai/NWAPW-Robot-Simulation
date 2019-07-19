@@ -39,16 +39,21 @@ public class RobotAI : MonoBehaviour
         found = false;
         searchStack.Clear();
         closedSearch.Clear();
-
+        searchStack.TrimExcess();
+        closedSearch.TrimExcess();
+        Debug.Log(searchStack);
+        Debug.Log(closedSearch);
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
         while (searchStack.Count > 0 && !found) {
             Debug.Log("RouteNodeLoop");
+           
+            CalculateRouteRecursion(target, searchStack[0]);
+            Debug.Log("Recusion Success");
             searchStack.Sort(delegate (NavPoint a, NavPoint b)
             {
                 return (a.fCost).CompareTo(b.fCost);
             });
-            CalculateRouteRecursion(target, searchStack[0]);
         }
 
         NavPoint backTrack = target;
@@ -64,26 +69,32 @@ public class RobotAI : MonoBehaviour
 
     void CalculateRouteRecursion(NavPoint target, NavPoint root) {
 
-
+        float relativeDistance;
 
         if (Physics.Linecast(root.point,target.point,out RaycastHit hitInfo, layerMask))
         {
-
+            Debug.Log("1");
             NavPoint[] obstVerts = hitInfo.transform.gameObject.GetComponentsInChildren<NavPoint>();
             foreach (NavPoint current in obstVerts)
             {
-                float relativeDistance = (current.point - root.point).magnitude;
-
+                Debug.Log("NavPointLoop");
+                relativeDistance = (current.point - root.point).magnitude;
+                Debug.Log(relativeDistance);
+                Debug.Log(root.gCost);
+                Debug.Log(current.gCost);
                 if (relativeDistance + root.gCost < current.gCost && !closedSearch.Contains(current)) //If G cost is higher no point already more optomised
                 {
-
+                    Debug.Log("2");
                     if (!Physics.Linecast(root.point, current.point, layerMask))
                     {
+                        Debug.Log("3");
                         current.gCost = relativeDistance + root.gCost;
                         current.fCost = current.gCost + (current.point - target.point).magnitude;
                         current.from = root;
                         if (!searchStack.Contains(current))
                         {
+                            Debug.Log("4");
+                            Debug.Log("StackAdd");
                             searchStack.Add(current);
                         }
                     }
@@ -92,6 +103,7 @@ public class RobotAI : MonoBehaviour
 
         } else
         {
+            Debug.Log("Found");
             target.from = root;
             found = true;
         }
@@ -142,6 +154,7 @@ public class RobotAI : MonoBehaviour
             }
             else
             {
+                Debug.Log("Ping");
                 if (FollowRoute() && !justGrabbed)
                 {
                     Debug.Log("Release");
@@ -167,6 +180,7 @@ public class RobotAI : MonoBehaviour
         {
             Debug.Log("targetChangedRun");
             route.Clear();
+            route.TrimExcess();
             route = CalculateRouteMain(targetLoc);
             gameObject.GetComponent<RobotMovement>().goGo = true;
             targetChanged = false;
