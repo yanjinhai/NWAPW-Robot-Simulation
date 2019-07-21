@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CollectableObject
   - Drop Area
+  - Obstacle
   layers:
   - Default
   - TransparentFX
