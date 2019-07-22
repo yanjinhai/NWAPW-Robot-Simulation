@@ -37,19 +37,24 @@ public class RobotAI : MonoBehaviour
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
+        //Resets Search Stack from previous Nav
         found = false;
         searchStack.Clear();
         searchStack.TrimExcess();
+        //Adds This object as the first NavPoint in the search stack.
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
-        while (searchStack.Count > 0 && !found) {           
+        while (searchStack.Count > 0 && !found) {
+            //Checks if it can reach the target and adds follow up points
             CalculateRouteRecursion(target, searchStack[0]);
-            searchStack.Sort(delegate (NavPoint a, NavPoint b)
+            //Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
+            searchStack.Sort(delegate (NavPoint a, NavPoint b) 
             {
                 return (a.fCost).CompareTo(b.fCost);
             });
         }
-
+        // Goes back along the route from the target to This Object using NavPoint.from
+        // Crashes in this loop is no route is found
         NavPoint backTrack = target;
         List<NavPoint> route = new List<NavPoint>();
         do
