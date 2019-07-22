@@ -10,7 +10,7 @@ public class RobotAI : MonoBehaviour
     private bool targetChanged;
 
     public bool isHoldingCollectableObject;
-    public NavPoint targetLoc;
+    public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
     public bool everGrabbed;
@@ -32,7 +32,7 @@ public class RobotAI : MonoBehaviour
         // Initial route set up
         ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
-        targetLoc = FindNearest(collectableObjects).GetComponent<NavPoint>();
+        targetPos = FindNearest(collectableObjects).GetComponent<NavPoint>();
 
     }
 
@@ -146,9 +146,9 @@ public class RobotAI : MonoBehaviour
 
                 GameObject closestCollectible = FindNearest(collectibles);
                 NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
-                if (closestNavPoint != targetLoc)
+                if (closestNavPoint != targetPos)
                 {
-                    targetLoc = closestNavPoint;
+                    targetPos = closestNavPoint;
                     targetChanged = true;
                     justReleased = false;
                 }
@@ -159,9 +159,9 @@ public class RobotAI : MonoBehaviour
                 {
                     Release();
                 }
-                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
+                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                 {
-                    targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
                     targetChanged = true;
                     justGrabbed = false;
                 }
@@ -174,7 +174,7 @@ public class RobotAI : MonoBehaviour
         {
             route.Clear();
             route.TrimExcess();
-            route = CalculateRouteMain(targetLoc);
+            route = CalculateRouteMain(targetPos);
             gameObject.GetComponent<RobotMovement>().isMoving = true;
             targetChanged = false;
             ResetNavPoints();
