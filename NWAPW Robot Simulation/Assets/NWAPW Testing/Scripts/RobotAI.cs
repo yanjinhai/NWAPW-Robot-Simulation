@@ -8,6 +8,7 @@ public class RobotAI : MonoBehaviour
 
     GameObject[] goalAreas;
     private bool targetChanged;
+
     public bool isHoldingCollectableObject;
     public NavPoint targetLoc;
     private bool justReleased;
@@ -25,12 +26,13 @@ public class RobotAI : MonoBehaviour
         justGrabbed = false;
         ResetNavPoints();
         isHoldingCollectableObject = false;
+
         layerMask = 1 << 8;
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
         targetLoc = FindNearest(collectableObjects).GetComponent<NavPoint>();
-        
+
     }
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
@@ -98,6 +100,7 @@ public class RobotAI : MonoBehaviour
     }
 
 
+
     GameObject FindNearest(GameObject[] gameObjects)
     {
         GameObject Closest = gameObjects[0];
@@ -114,6 +117,7 @@ public class RobotAI : MonoBehaviour
             }
         }
         return Closest;
+
     }
 
     void FixedUpdate()
@@ -123,6 +127,7 @@ public class RobotAI : MonoBehaviour
         {
             if (!isHoldingCollectableObject)
             {
+
                 if (FollowRoute() && !justReleased)
                 {
                     Grab();
@@ -221,8 +226,8 @@ public class RobotAI : MonoBehaviour
         {
             return;
         }
-        justReleased = true;
         isHoldingCollectableObject = false;
+        justReleased = true;
         gameObject.GetComponent<GrabRelease>().Release();
     }
 }

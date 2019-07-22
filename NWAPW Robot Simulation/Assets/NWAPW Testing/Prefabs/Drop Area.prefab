@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5185413912609061473}
   - component: {fileID: 5185413912609061477}
   - component: {fileID: 4821780272040759643}
+
   m_Layer: 0
   m_Name: Drop Area
   m_TagString: Drop Area
@@ -106,13 +107,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac39ecca41fd3548aa024abaa44a25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+
 --- !u!114 &4821780272040759643
 MonoBehaviour:
+
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5185413912609061474}
+
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
