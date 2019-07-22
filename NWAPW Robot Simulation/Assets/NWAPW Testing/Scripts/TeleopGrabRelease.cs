@@ -14,8 +14,6 @@ public class TeleopGrabRelease : MonoBehaviour
     void Start()
     {
         isHoldingCollectableObject = false;
-
-
     }
 
     // Update is called once per frame

@@ -24,7 +24,7 @@ public class CameraSwitch : MonoBehaviour
     
     }
     void switchCamera() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
             int index = System.Array.IndexOf(Cameras, CurrentCam);
             if (index == Cameras.Length - 1) {
                 index = -1;
