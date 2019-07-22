@@ -1135,9 +1135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionDeadband: 1.05
-  rotateSpeed: 70
-  moveSpeed: 7
-  goGo: 0
+  rotateSpeed: 50
+  moveSpeed: 5
+  isMoving: 0
 --- !u!114 &1630158172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,6 +1265,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD:NWAPW Robot Simulation/Assets/NWAPW Testing/Scenes/Autonomous no spawn on scorepads.unity
     - target: {fileID: 5185413912609061477, guid: 084d3118ea1a59f40b94693ff6ccbbea,
         type: 3}
       propertyPath: CollectableParent
@@ -1281,6 +1282,8 @@ PrefabInstance:
       propertyPath: text
       value: 
       objectReference: {fileID: 279870609}
+=======
+>>>>>>> 7497aeb365c1b25cae93171ee8e8408eced99128:NWAPW Robot Simulation/Assets/NWAPW Testing/Scenes/Autonomous.unity
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084d3118ea1a59f40b94693ff6ccbbea, type: 3}
 --- !u!1 &1993451265

@@ -165,11 +165,11 @@ public class RobotAI : MonoBehaviour
             route.Clear();
             route.TrimExcess();
             route = CalculateRouteMain(targetLoc);
-            gameObject.GetComponent<RobotMovement>().goGo = true;
+            gameObject.GetComponent<RobotMovement>().isMoving = true;
             targetChanged = false;
             ResetNavPoints();
         }
-        if (!gameObject.GetComponent<RobotMovement>().goGo)
+        if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
             if (route.Count == 1)
             {
