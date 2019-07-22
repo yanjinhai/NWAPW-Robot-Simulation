@@ -5,39 +5,34 @@ using UnityEngine;
 
 public class RobotMovement : MonoBehaviour
 {
-    Vector3 neededMove;
-    public float positionDeadband = 1.05f;
     Vector3 targetPos;
+    Vector3 relativePos;
+    public float positionDeadband = 1.05f;
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
-    int rotateDir = 1;// clockwise/counterclockwise
-    public bool goGo;
+    public bool isMoving;
 
     void Start()
     {
-        goGo = true;
+        isMoving = true;
     }
 
     void Update()
     {
-        if (goGo)
+        if (isMoving)
         {
-            neededMove = targetPos - this.transform.position;
-            if (neededMove.magnitude <= positionDeadband)
+            relativePos = targetPos - this.transform.position;
+            if (relativePos.magnitude <= positionDeadband)
             {
-                goGo = false;
+                isMoving = false;
                 return;
             }
-            float angle = Vector3.Angle(neededMove, this.transform.forward);
-            if (angle >= 1)
-            {
-                this.transform.Rotate(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
-                float checkAngle = Vector3.Angle(neededMove, this.transform.forward);
-                if (angle < checkAngle)
-                {
-                    rotateDir = rotateDir * -1;
-                }
 
+            float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
+            float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+            if (Mathf.Abs(relativeAngle) > 1)
+            {
+                this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
             }
             else
             {
@@ -48,7 +43,7 @@ public class RobotMovement : MonoBehaviour
     public void Move(Vector3 position)
     {
         targetPos = position;
-        goGo = true;
+        isMoving = true;
     }
 }
 
