@@ -17,7 +17,6 @@ public class RobotAI : MonoBehaviour
     bool found = false;
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
-    List<NavPoint> closedSearch = new List<NavPoint>();
     int layerMask;
 
     void Start()
@@ -40,9 +39,7 @@ public class RobotAI : MonoBehaviour
     {
         found = false;
         searchStack.Clear();
-        closedSearch.Clear();
         searchStack.TrimExcess();
-        closedSearch.TrimExcess();
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
         while (searchStack.Count > 0 && !found) {           
@@ -75,7 +72,7 @@ public class RobotAI : MonoBehaviour
             foreach (NavPoint current in obstVerts)
             {
                 relativeDistance = (current.point - root.point).magnitude;
-                if (relativeDistance + root.gCost < current.gCost && !closedSearch.Contains(current)) //If G cost is higher no point already more optomised
+                if (relativeDistance + root.gCost < current.gCost) //If G cost is higher no point already more optomised
                 {
                     if (!Physics.Linecast(root.point, current.point, layerMask))
                     {
@@ -97,7 +94,7 @@ public class RobotAI : MonoBehaviour
             found = true;
         }
         searchStack.Remove(root);
-        closedSearch.Add(root);
+        
     }
 
 
