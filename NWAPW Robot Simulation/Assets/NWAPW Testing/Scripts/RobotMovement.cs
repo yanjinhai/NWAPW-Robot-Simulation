@@ -7,7 +7,7 @@ public class RobotMovement : MonoBehaviour
 {
     Vector3 neededMove;
     public float positionDeadband = 1.05f;
-    Vector3 goal;
+    Vector3 targetPos;
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
     int rotateDir = 1;// clockwise/counterclockwise
@@ -16,21 +16,20 @@ public class RobotMovement : MonoBehaviour
     void Start()
     {
         goGo = true;
-        
     }
 
     void Update()
     {
         if (goGo)
         {
-            neededMove = goal - this.transform.position;
+            neededMove = targetPos - this.transform.position;
             if (neededMove.magnitude <= positionDeadband)
             {
                 goGo = false;
                 return;
             }
             float angle = Vector3.Angle(neededMove, this.transform.forward);
-            if (angle >= 5)
+            if (angle >= 1)
             {
                 this.transform.Rotate(0, rotateDir * rotateSpeed * Time.deltaTime, 0);
                 float checkAngle = Vector3.Angle(neededMove, this.transform.forward);
@@ -48,9 +47,8 @@ public class RobotMovement : MonoBehaviour
     }
     public void Move(Vector3 position)
     {
-        goal = position;
+        targetPos = position;
         goGo = true;
-        
     }
 }
 
