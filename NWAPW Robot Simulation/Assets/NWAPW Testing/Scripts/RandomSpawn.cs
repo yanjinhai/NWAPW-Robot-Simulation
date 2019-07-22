@@ -6,7 +6,7 @@ public class RandomSpawn : MonoBehaviour
 {
     public GameObject CollectableParent;
     public GameObject CollectablePremade;
-    void Start()
+    void Awake()
     {
 
         for (int i = 0; i < 3; i++) {
