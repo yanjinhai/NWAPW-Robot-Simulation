@@ -37,17 +37,17 @@ public class RobotAI : MonoBehaviour
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
-        //Resets Search Stack from previous Nav
+        // Resets Search Stack from previous Nav
         found = false;
         searchStack.Clear();
         searchStack.TrimExcess();
-        //Adds This object as the first NavPoint in the search stack.
+        // Adds This object as the first NavPoint in the search stack.
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
         while (searchStack.Count > 0 && !found) {
-            //Checks if it can reach the target and adds follow up points
+            // Checks if it can reach the target and adds follow up points
             CalculateRouteRecursion(target, searchStack[0]);
-            //Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
+            // Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
             searchStack.Sort(delegate (NavPoint a, NavPoint b) 
             {
                 return (a.fCost).CompareTo(b.fCost);
@@ -70,21 +70,26 @@ public class RobotAI : MonoBehaviour
 
         float relativeDistance;
 
-        // if there is an obstacle between the current NavPoint and the target (ball or drop area)
+        // If there is an obstacle between the current NavPoint and the Target (ball or drop area)
+        // This ignores the player and collectables using the layerMask
         if (Physics.Linecast(root.point, target.point, out RaycastHit hitInfo, layerMask))
         {
+            // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
             NavPoint[] obstVerts = hitInfo.transform.gameObject.GetComponentsInChildren<NavPoint>();
             foreach (NavPoint current in obstVerts)
             {
                 relativeDistance = (current.point - root.point).magnitude;
-                if (relativeDistance + root.gCost < current.gCost) //If G cost is higher no point already more optomised
+                // If G cost (distance to the NavPoint from the origin) is higher than existing, a more optimised route already exists to here
+                if (relativeDistance + root.gCost < current.gCost) 
                 {
+                    // Checks Line of Sight to the NavPoint from the root 
                     if (!Physics.Linecast(root.point, current.point, layerMask))
                     {
+                        // Updates g, f, and from on the NavPoint with the better route
                         current.gCost = relativeDistance + root.gCost;
                         current.fCost = current.gCost + (current.point - target.point).magnitude;
                         current.from = root;
-                        
+                        // Adds the NavPoint to the search stack if it has not been already
                         if (!searchStack.Contains(current))
                         {
                             searchStack.Add(current);
@@ -93,11 +98,13 @@ public class RobotAI : MonoBehaviour
                 }
             }
 
-        } else
+        } else // Else Line of Sight from the current NavPoint to the Target.
         {
+            // Makes the Target 's from be the current NavPoint and set found to true to break the while loop
             target.from = root;
             found = true;
         }
+        // Removes the curren NavPoint from the search stack
         searchStack.Remove(root);
         
     }
