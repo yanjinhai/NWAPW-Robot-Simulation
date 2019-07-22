@@ -13,6 +13,7 @@ public class RobotAI : MonoBehaviour
     public NavPoint targetLoc;
     private bool justReleased;
     private bool justGrabbed;
+    public bool everGrabbed;
     bool found = false;
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
@@ -211,6 +212,7 @@ public class RobotAI : MonoBehaviour
     }
 
     void Grab() {
+        everGrabbed = true;
         if (isHoldingCollectableObject) {
             return;
         }
@@ -222,12 +224,12 @@ public class RobotAI : MonoBehaviour
     }
 
     void Release() {
+        justReleased = true;
         if (!isHoldingCollectableObject)
         {
             return;
         }
         isHoldingCollectableObject = false;
-        justReleased = true;
         gameObject.GetComponent<GrabRelease>().Release();
     }
 }
