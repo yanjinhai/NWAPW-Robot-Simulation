@@ -17,13 +17,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        /*
-        float h = Input.GetAxis("Horizontal") *5;
-        float v = Input.GetAxis("Vertical") * 5;
-        Vector3 vel = rb.velocity;
-        vel.x = h;
-        vel.z = v;
-        rb.velocity = vel;*/
+
         if (Input.GetKey("right"))
         {
             transform.Rotate(0, 1.5f, 0);
