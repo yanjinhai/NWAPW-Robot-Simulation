@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class CollectableRemove : MonoBehaviour
 {
-    public Text text;
-    public int score = 0;
-    GameObject obj = null;
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "CollectableObject")
@@ -15,10 +13,9 @@ public class CollectableRemove : MonoBehaviour
 
             collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().everGrabbed) 
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed) 
             {
-                score++;
-                text.text = "Score: " + score;
+                GameObject.FindGameObjectWithTag("DropObject").GetComponent<Increment>().increase(1);
             }
             else {
                 print("Redirected Block");

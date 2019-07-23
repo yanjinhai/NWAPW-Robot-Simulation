@@ -15,6 +15,7 @@ public class RobotAI : MonoBehaviour
     private bool justGrabbed;
     public bool everGrabbed;
     bool found = false;
+    public bool run;
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
     int layerMask;
@@ -132,37 +133,40 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
-        if (collectibles.Length > 0)
+        if (run)
         {
-            if (!isHoldingCollectableObject)
+            GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
+            if (collectibles.Length > 0)
             {
+                if (!isHoldingCollectableObject)
+                {
 
-                if (FollowRoute() && !justReleased)
-                {
-                    Grab();
-                }
+                    if (FollowRoute() && !justReleased)
+                    {
+                        Grab();
+                    }
 
-                GameObject closestCollectible = FindNearest(collectibles);
-                NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
-                if (closestNavPoint != targetLoc)
-                {
-                    targetLoc = closestNavPoint;
-                    targetChanged = true;
-                    justReleased = false;
+                    GameObject closestCollectible = FindNearest(collectibles);
+                    NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
+                    if (closestNavPoint != targetLoc)
+                    {
+                        targetLoc = closestNavPoint;
+                        targetChanged = true;
+                        justReleased = false;
+                    }
                 }
-            }
-            else
-            {
-                if (FollowRoute() && !justGrabbed)
+                else
                 {
-                    Release();
-                }
-                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
-                {
-                    targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
-                    targetChanged = true;
-                    justGrabbed = false;
+                    if (FollowRoute() && !justGrabbed)
+                    {
+                        Release();
+                    }
+                    if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
+                    {
+                        targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
+                        targetChanged = true;
+                        justGrabbed = false;
+                    }
                 }
             }
         }

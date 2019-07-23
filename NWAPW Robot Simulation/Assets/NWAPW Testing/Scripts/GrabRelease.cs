@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GrabRelease : MonoBehaviour
 {
+    public GameObject Collectables;
     public GameObject grabbedObj;
     private GameObject[] grabbableObjs;
-    public GameObject releasedObjs;
-    
+    public Camera camera;
+    public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
     void Update()
     {
-        if (this.GetComponent<RobotAI>().isHoldingCollectableObject)
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
         }
@@ -24,8 +25,10 @@ public class GrabRelease : MonoBehaviour
         grabbedObj = FindNearest(grabbableObjs);
         if ((grabbedObj.transform.position - this.transform.position).magnitude <= 1.2f)
         {
+            everGrabbed = true;
             grabbedObj.transform.parent = this.transform;
             grabbedObj.GetComponent<Rigidbody>().useGravity = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
             return true;
         }
         return false;
@@ -50,9 +53,15 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        grabbedObj.transform.parent = releasedObjs.transform;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
+        grabbedObj.transform.parent = Collectables.transform;
         grabbedObj = null;
 
+    }
+    public bool infront(Transform target)
+    {
+        Vector3 visTest = camera.WorldToViewportPoint(target.position);
+        return (visTest.x >= 0 && visTest.y >= 0) && (visTest.x <= 1 && visTest.y <= 1) && visTest.z >= 0;
     }
 }
