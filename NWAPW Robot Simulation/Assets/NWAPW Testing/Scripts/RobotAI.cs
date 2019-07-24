@@ -10,36 +10,39 @@ public class RobotAI : MonoBehaviour
     private bool targetChanged;
 
     public bool isHoldingCollectableObject;
-    public NavPoint targetLoc;
+    public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
     public bool everGrabbed;
     bool found = false;
     public bool run;
+
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
     int layerMask;
 
     void Start()
     {
+        // Bool set up
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
-        ResetNavPoints();
         isHoldingCollectableObject = false;
-
+        // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        // Initial route set up
+        ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
-        targetLoc = FindNearest(collectableObjects).GetComponent<NavPoint>();
+        targetPos = FindNearest(collectableObjects).GetComponent<NavPoint>();
 
     }
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
         // Resets Search Stack from previous Nav
-        found = false;
+        bool found = false;
         searchStack.Clear();
         searchStack.TrimExcess();
         // Adds This object as the first NavPoint in the search stack.
@@ -47,7 +50,7 @@ public class RobotAI : MonoBehaviour
 
         while (searchStack.Count > 0 && !found) {
             // Checks if it can reach the target and adds follow up points
-            CalculateRouteRecursion(target, searchStack[0]);
+            found = CalculateRouteRecursion(target, searchStack[0]);
             // Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
             searchStack.Sort(delegate (NavPoint a, NavPoint b) 
             {
@@ -67,7 +70,7 @@ public class RobotAI : MonoBehaviour
     }
 
 
-    void CalculateRouteRecursion(NavPoint target, NavPoint root) {
+    bool CalculateRouteRecursion(NavPoint target, NavPoint root) {
 
         float relativeDistance;
 
@@ -103,11 +106,11 @@ public class RobotAI : MonoBehaviour
         {
             // Makes the Target 's from be the current NavPoint and set found to true to break the while loop
             target.from = root;
-            found = true;
+            return true;
         }
         // Removes the curren NavPoint from the search stack
         searchStack.Remove(root);
-        
+        return false;
     }
 
 
@@ -140,7 +143,6 @@ public class RobotAI : MonoBehaviour
             {
                 if (!isHoldingCollectableObject)
                 {
-
                     if (FollowRoute() && !justReleased)
                     {
                         Grab();
@@ -178,7 +180,7 @@ public class RobotAI : MonoBehaviour
         {
             route.Clear();
             route.TrimExcess();
-            route = CalculateRouteMain(targetLoc);
+            route = CalculateRouteMain(targetPos);
             gameObject.GetComponent<RobotMovement>().isMoving = true;
             targetChanged = false;
             ResetNavPoints();
@@ -212,11 +214,17 @@ public class RobotAI : MonoBehaviour
             vertex.GetComponent<NavPoint>().ResetValues();
         }
 
-        //Collectibles
+        // Collectibles
         GameObject[] Collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
         foreach (GameObject collectible in Collectibles)
         {
             collectible.GetComponent<NavPoint>().ResetValues();
+        }
+
+        // GropAreas
+        foreach (GameObject goalArea in goalAreas)
+        {
+            goalArea.GetComponent<NavPoint>().ResetValues();
         }
     }
 
