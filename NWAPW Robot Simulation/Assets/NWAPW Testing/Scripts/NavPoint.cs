@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class NavPoint : MonoBehaviour
 {
+    // Variables, some with default values
     public Vector3 point;
     public float gCost = Mathf.Infinity;
     public NavPoint from;
     public float fCost = Mathf.Infinity;
     public float deadBand = 0.05f;
 
+    // Awake is used here to prempt intial pathfinding run on start
     void Awake()
     {
+        // Set up point at its location and sets from to itself
         point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
         from = this;
+
+        // Sets deadband for objects the robor runs into
         if(this.gameObject.tag == "CollectableObject")
         {
             deadBand = this.gameObject.GetComponent<Collider>().bounds.size.x / 2;
@@ -22,9 +27,11 @@ public class NavPoint : MonoBehaviour
 
     void Update()
     {
+        // Updates point for moving objects
         point = new Vector3(this.transform.position.x, .5f, this.transform.position.z);
     }
 
+    // Resets from and costs to default values, except player, due to it having special values
     public void ResetValues() {
         if (this.gameObject.tag != "Player")
         {
