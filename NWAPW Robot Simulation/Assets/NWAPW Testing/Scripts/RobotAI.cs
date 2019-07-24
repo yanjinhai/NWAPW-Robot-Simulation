@@ -7,7 +7,8 @@ using UnityEngine;
 public class RobotAI : MonoBehaviour
 {
 
-    GameObject[] goalAreas;
+    GameObject[] dropAreas;
+    GameObject[] stackAreas;
     private bool targetChanged;
     public float robotDeadband;
     public NavPoint targetPos;
@@ -31,7 +32,8 @@ public class RobotAI : MonoBehaviour
         // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
-        goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        dropAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
         robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
 
         // Initial route set up
@@ -213,7 +215,7 @@ public class RobotAI : MonoBehaviour
             GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
             if (collectibles.Length > 0)
             {
-                if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
+                if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
                     if (FollowRoute() && !justReleased)
                     {
@@ -235,6 +237,17 @@ public class RobotAI : MonoBehaviour
                     {
                         Release();
                         //Toss();
+                    }
+                    GameObject[] goalAreas;
+                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+                    {
+                        Debug.Log("Cube");
+                        goalAreas = stackAreas;
+                    }
+                    else
+                    {
+                        Debug.Log("Sphere");
+                        goalAreas = dropAreas;
                     }
                     if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                     {
@@ -293,10 +306,16 @@ public class RobotAI : MonoBehaviour
             collectible.GetComponent<NavPoint>().ResetValues();
         }
 
-        // DropAreas
-        foreach (GameObject goalArea in goalAreas)
+        // Drop Areas
+        foreach (GameObject area in dropAreas)
         {
-            goalArea.GetComponent<NavPoint>().ResetValues();
+            area.GetComponent<NavPoint>().ResetValues();
+        }
+
+        // Stack Areas
+        foreach (GameObject area in stackAreas)
+        {
+            area.GetComponent<NavPoint>().ResetValues();
         }
     }
 

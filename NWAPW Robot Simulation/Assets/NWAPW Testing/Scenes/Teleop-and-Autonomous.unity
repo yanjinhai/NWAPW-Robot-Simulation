@@ -1766,7 +1766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collectables: {fileID: 1929844720}
   grabbedObj: {fileID: 0}
-  camera: {fileID: 1188354036}
+  firstPersonCamera: {fileID: 1188354036}
   shootCamera: {fileID: 409994294}
   isHoldingCollectableObject: 0
   everGrabbed: 0
