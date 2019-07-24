@@ -1815,7 +1815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHoldingCollectableObject: 0
-  targetLoc: {fileID: 0}
+  targetPos: {fileID: 0}
   everGrabbed: 0
   run: 0
 --- !u!54 &1897405838

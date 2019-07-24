@@ -150,9 +150,9 @@ public class RobotAI : MonoBehaviour
 
                     GameObject closestCollectible = FindNearest(collectibles);
                     NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
-                    if (closestNavPoint != targetLoc)
+                    if (closestNavPoint != targetPos)
                     {
-                        targetLoc = closestNavPoint;
+                        targetPos = closestNavPoint;
                         targetChanged = true;
                         justReleased = false;
                     }
@@ -164,9 +164,9 @@ public class RobotAI : MonoBehaviour
                         Release();
                         //Toss();
                     }
-                    if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
+                    if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                     {
-                        targetLoc = FindNearest(goalAreas).GetComponent<NavPoint>();
+                        targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
                         targetChanged = true;
                         justGrabbed = false;
                     }
