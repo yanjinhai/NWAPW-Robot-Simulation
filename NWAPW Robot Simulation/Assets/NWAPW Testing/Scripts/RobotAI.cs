@@ -10,7 +10,6 @@ public class RobotAI : MonoBehaviour
     GameObject[] goalAreas;
     private bool targetChanged;
     public float robotDeadband;
-    public bool isHoldingCollectableObject;
     public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
@@ -28,7 +27,6 @@ public class RobotAI : MonoBehaviour
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
-        isHoldingCollectableObject = false;
 
         // Non-bool set up
         layerMask = 1 << 8;
@@ -215,7 +213,7 @@ public class RobotAI : MonoBehaviour
             GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
             if (collectibles.Length > 0)
             {
-                if (!isHoldingCollectableObject)
+                if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
                     if (FollowRoute() && !justReleased)
                     {
@@ -309,34 +307,31 @@ public class RobotAI : MonoBehaviour
 
     void Grab() {
         everGrabbed = true;
-        if (isHoldingCollectableObject) {
+        if (this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject) {
             return;
         }
         if (gameObject.GetComponent<GrabRelease>().Grab())
         {
-            isHoldingCollectableObject = true;
             justGrabbed = true;
         }
     }
 
     void Release() {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
     }
     //to toss the ball
     void Toss()
     {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Toss();
     }
 }

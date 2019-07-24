@@ -10,12 +10,19 @@ public class GrabRelease : MonoBehaviour
     public Camera camera;
     public Camera shootCamera;
 
+    public bool isHoldingCollectableObject;
     public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
+    void Awake()
+    {
+        isHoldingCollectableObject = false;
+    }
+
+
     void Update()
     {
-        if (this.gameObject.GetComponent<RobotAI>().isHoldingCollectableObject)
+        if (isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
         }
@@ -32,7 +39,7 @@ public class GrabRelease : MonoBehaviour
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
                 grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
+                isHoldingCollectableObject = true;
                 return true;
             }
         }
@@ -58,7 +65,7 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
+        isHoldingCollectableObject = false;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj.transform.parent = Collectables.transform;
         grabbedObj = null;
@@ -66,7 +73,7 @@ public class GrabRelease : MonoBehaviour
     }
     //toss the ball
     public void Toss() {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
+        isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
