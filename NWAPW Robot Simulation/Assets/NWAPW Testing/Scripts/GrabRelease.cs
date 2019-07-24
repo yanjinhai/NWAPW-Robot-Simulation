@@ -68,8 +68,8 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         isHoldingCollectableObject = false;
+        grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj.transform.parent = Collectables.transform;
         grabbedObj = null;
