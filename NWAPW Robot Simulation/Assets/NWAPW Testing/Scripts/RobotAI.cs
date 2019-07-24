@@ -67,8 +67,18 @@ public class RobotAI : MonoBehaviour
             });
         }
 
+        // This loop runs if there is absolutly no route to target. In this case it rams headlong into a wall.
+        // Under all normal circumstances this should never run. Unless a ball is spawned ontop of a wall or enclosed by obstacles there will be a way
+        // If there's a will there's a way
+        if(!found)
+        {
+            List<NavPoint> crashRoute = new List<NavPoint>();
+            crashRoute.Add(target);
+            return crashRoute;
+
+        }
+
         // Goes back along the route from the target to This Object using NavPoint.from
-        // Crashes in this loop is no route is found
         NavPoint backTrack = target;
         List<NavPoint> route = new List<NavPoint>();
         do
@@ -95,6 +105,7 @@ public class RobotAI : MonoBehaviour
         bool testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out RaycastHit hitTwo, relativeDistance, layerMask);
         if (testOne || testTwo)
         {
+
             // List of objects with their vertices already being processed
             List<GameObject> hitObjects = new List<GameObject>();
 
