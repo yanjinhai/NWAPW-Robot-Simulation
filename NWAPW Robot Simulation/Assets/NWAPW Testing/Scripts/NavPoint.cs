@@ -14,12 +14,12 @@ public class NavPoint : MonoBehaviour
     // Awake is used here to prempt intial pathfinding run on start
     void Awake()
     {
-        // Set up point at its location and sets from to itself
+        // Set up point at its location and resets values to defaults
         point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
-        from = this;
+        ResetValues();
 
         // Sets deadband for objects the robor runs into
-        if(this.gameObject.tag == "CollectableObject")
+        if (this.gameObject.tag == "CollectableObject")
         {
             deadBand = this.gameObject.GetComponent<Collider>().bounds.size.x / 2;
         }
