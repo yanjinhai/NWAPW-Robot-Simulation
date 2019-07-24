@@ -15,7 +15,7 @@ public class GrabRelease : MonoBehaviour
 
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject)
+        if (this.gameObject.GetComponent<RobotAI>().isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
         }

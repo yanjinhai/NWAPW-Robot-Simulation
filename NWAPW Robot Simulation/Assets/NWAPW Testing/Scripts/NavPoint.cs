@@ -8,13 +8,16 @@ public class NavPoint : MonoBehaviour
     public float gCost = Mathf.Infinity;
     public NavPoint from;
     public float fCost = Mathf.Infinity;
-    public float deadBand = 0;
+    public float deadBand = 0.05f;
 
     void Awake()
     {
         point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
         from = this;
-
+        if(this.gameObject.tag == "CollectableObject")
+        {
+            deadBand = this.gameObject.GetComponent<Collider>().bounds.size.x / 2;
+        }
     }
 
     void Update()

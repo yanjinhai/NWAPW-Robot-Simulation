@@ -242,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 6192613494680834716, guid: e0176f6eab41f4943ad6ad8309064389,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6192613494680834716, guid: e0176f6eab41f4943ad6ad8309064389,
         type: 3}
@@ -311,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 768124090979561711, guid: 4e650c6b93b19e349aa8a0346ddc39b0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 768124090979561711, guid: 4e650c6b93b19e349aa8a0346ddc39b0,
         type: 3}
@@ -634,8 +634,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb3ee5593855f8458249189b1fc03d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Collectables: {fileID: 0}
   grabbedObj: {fileID: 0}
-  releasedObjs: {fileID: 825329683}
+  camera: {fileID: 0}
+  shootCamera: {fileID: 0}
+  everGrabbed: 0
 --- !u!114 &1940783824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +655,7 @@ MonoBehaviour:
   gCost: 0
   from: {fileID: 0}
   fCost: 0
+  deadBand: 0
 --- !u!114 &1940783825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,9 +669,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionDeadband: 1.05
-  rotateSpeed: 70
+  rotateSpeed: 45
   moveSpeed: 7
-  goGo: 0
+  isMoving: 0
+  run: 1
 --- !u!114 &1940783826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,9 +685,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetChanged: 0
+  robotDeadband: 0
   isHoldingCollectableObject: 0
-  targetLoc: {fileID: 0}
+  targetPos: {fileID: 0}
+  everGrabbed: 0
+  run: 1
 --- !u!54 &1940783827
 Rigidbody:
   m_ObjectHideFlags: 0

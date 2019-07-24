@@ -9,13 +9,12 @@ public class RobotAI : MonoBehaviour
 
     GameObject[] goalAreas;
     private bool targetChanged;
-
+    public float robotDeadband;
     public bool isHoldingCollectableObject;
     public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
     public bool everGrabbed;
-    bool found = false;
     public bool run;
 
     List<NavPoint> route = new List<NavPoint>();
@@ -35,6 +34,7 @@ public class RobotAI : MonoBehaviour
         layerMask = 1 << 8;
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
 
         // Initial route set up
         ResetNavPoints();
@@ -267,7 +267,7 @@ public class RobotAI : MonoBehaviour
             }
             route.RemoveAt(route.Count - 1);
         }
-        Move(route[route.Count - 1].point);
+        Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }
 
@@ -302,9 +302,9 @@ public class RobotAI : MonoBehaviour
         }
     }
 
-    void Move(Vector3 position)
+    void Move(Vector3 position, float deadBand)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position);
+        gameObject.GetComponent<RobotMovement>().Move(position,deadBand);
     }
 
     void Grab() {

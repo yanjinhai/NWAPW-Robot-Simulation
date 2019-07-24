@@ -7,7 +7,7 @@ public class RobotMovement : MonoBehaviour
 {
     Vector3 targetPos;
     Vector3 relativePos;
-    public float positionDeadband = 1.05f;
+    public float positionDeadband = 0.05f;
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
     public bool isMoving;
@@ -40,10 +40,11 @@ public class RobotMovement : MonoBehaviour
             }
         }
     }
-    public void Move(Vector3 position)
+    public void Move(Vector3 position, float deadBand)
     {
         targetPos = position;
         isMoving = true;
+        positionDeadband = deadBand;
     }
 }
 
