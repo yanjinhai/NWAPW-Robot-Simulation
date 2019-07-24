@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// Hopefully this causes a merge error and screws up camera
 
 public class RobotMovement : MonoBehaviour
 {
