@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 807595469213108778}
   - component: {fileID: 1490451237566297125}
   m_Layer: 8
-  m_Name: CollectablePrefab 2
+  m_Name: Block
   m_TagString: CollectableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

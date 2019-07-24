@@ -15,7 +15,7 @@ public class GrabRelease : MonoBehaviour
 
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject)
+        if (this.gameObject.GetComponent<RobotAI>().isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
         }
@@ -32,7 +32,8 @@ public class GrabRelease : MonoBehaviour
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
                 grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
+                grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                this.gameObject.GetComponent<RobotAI>().isHoldingCollectableObject = true;
                 return true;
             }
         }
