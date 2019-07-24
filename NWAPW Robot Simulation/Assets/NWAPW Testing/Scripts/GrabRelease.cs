@@ -7,7 +7,7 @@ public class GrabRelease : MonoBehaviour
     public GameObject Collectables;
     public GameObject grabbedObj;
     private GameObject[] grabbableObjs;
-    public Camera camera;
+    public Camera firstPersonCamera;
     public Camera shootCamera;
 
     public bool isHoldingCollectableObject;
@@ -88,7 +88,7 @@ public class GrabRelease : MonoBehaviour
     }
     public bool infront(Transform target)
     {
-        Vector3 visTest = camera.WorldToViewportPoint(target.position);
+        Vector3 visTest = firstPersonCamera.WorldToViewportPoint(target.position);
         return (visTest.x >= 0 && visTest.y >= 0) && (visTest.x <= 1 && visTest.y <= 1) && visTest.z >= 0;
     }
 }
