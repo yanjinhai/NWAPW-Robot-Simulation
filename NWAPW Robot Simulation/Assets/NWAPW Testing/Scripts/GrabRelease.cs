@@ -8,6 +8,8 @@ public class GrabRelease : MonoBehaviour
     public GameObject grabbedObj;
     private GameObject[] grabbableObjs;
     public Camera camera;
+    public Camera shootCamera;
+
     public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
@@ -25,11 +27,14 @@ public class GrabRelease : MonoBehaviour
         grabbedObj = FindNearest(grabbableObjs);
         if ((grabbedObj.transform.position - this.transform.position).magnitude <= 1.2f)
         {
-            everGrabbed = true;
-            grabbedObj.transform.parent = this.transform;
-            grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-            GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
-            return true;
+            if (infront(grabbedObj.transform))
+            {
+                everGrabbed = true;
+                grabbedObj.transform.parent = this.transform;
+                grabbedObj.GetComponent<Rigidbody>().useGravity = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
+                return true;
+            }
         }
         return false;
     }
@@ -58,6 +63,17 @@ public class GrabRelease : MonoBehaviour
         grabbedObj.transform.parent = Collectables.transform;
         grabbedObj = null;
 
+    }
+    //toss the ball
+    public void Toss() {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
+        grabbedObj.transform.parent = Collectables.transform;
+        Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        
+        grabbedObj.transform.position = transform.position + shootCamera.transform.forward * 2;
+        rb.velocity = shootCamera.transform.forward * 15;
+        grabbedObj = null;
     }
     public bool infront(Transform target)
     {

@@ -160,6 +160,7 @@ public class RobotAI : MonoBehaviour
                     if (FollowRoute() && !justGrabbed)
                     {
                         Release();
+                        //Toss();
                     }
                     if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetLoc)
                     {
@@ -244,5 +245,16 @@ public class RobotAI : MonoBehaviour
         }
         isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
+    }
+    //to toss the ball
+    void Toss()
+    {
+        justReleased = true;
+        if (!isHoldingCollectableObject)
+        {
+            return;
+        }
+        isHoldingCollectableObject = false;
+        gameObject.GetComponent<GrabRelease>().Toss();
     }
 }
