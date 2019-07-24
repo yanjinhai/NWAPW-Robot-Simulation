@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RobotAI : MonoBehaviour
@@ -8,13 +9,11 @@ public class RobotAI : MonoBehaviour
 
     GameObject[] goalAreas;
     private bool targetChanged;
-
-    public bool isHoldingCollectableObject;
+    public float robotDeadband;
     public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
     public bool everGrabbed;
-    bool found = false;
     public bool run;
 
     List<NavPoint> route = new List<NavPoint>();
@@ -23,15 +22,18 @@ public class RobotAI : MonoBehaviour
 
     void Start()
     {
+
         // Bool set up
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
-        isHoldingCollectableObject = false;
+
         // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
+
         // Initial route set up
         ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
@@ -41,22 +43,28 @@ public class RobotAI : MonoBehaviour
 
     List<NavPoint> CalculateRouteMain(NavPoint target)
     {
+
         // Resets Search Stack from previous Nav
         bool found = false;
         searchStack.Clear();
         searchStack.TrimExcess();
+
         // Adds This object as the first NavPoint in the search stack.
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
-        while (searchStack.Count > 0 && !found) {
+        // Loops until a route is found or search stack is empty
+        while (!found && searchStack.Count > 0) {
+
             // Checks if it can reach the target and adds follow up points
             found = CalculateRouteRecursion(target, searchStack[0]);
+
             // Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
             searchStack.Sort(delegate (NavPoint a, NavPoint b) 
             {
                 return (a.fCost).CompareTo(b.fCost);
             });
         }
+
         // Goes back along the route from the target to This Object using NavPoint.from
         // Crashes in this loop is no route is found
         NavPoint backTrack = target;
@@ -72,42 +80,106 @@ public class RobotAI : MonoBehaviour
 
     bool CalculateRouteRecursion(NavPoint target, NavPoint root) {
 
-        float relativeDistance;
+        // Set up for the initaial raycast
+        Vector3 between = target.point-root.point;
+        float relativeDistance = between.magnitude;
+
+        // Set up for the offset on the raycasts
+        Vector3 perp = Vector3.Cross(Vector3.up, between).normalized;
 
         // If there is an obstacle between the current NavPoint and the Target (ball or drop area)
         // This ignores the player and collectables using the layerMask
-        if (Physics.Linecast(root.point, target.point, out RaycastHit hitInfo, layerMask))
+        bool testOne = Physics.Raycast(root.point + perp * 0.5f, between, out RaycastHit hitOne, relativeDistance, layerMask);
+        bool testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out RaycastHit hitTwo, relativeDistance, layerMask);
+        if (testOne || testTwo)
         {
-            // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
-            NavPoint[] obstVerts = hitInfo.transform.gameObject.GetComponentsInChildren<NavPoint>();
-            foreach (NavPoint current in obstVerts)
+            // List of objects with their vertices already being processed
+            List<GameObject> hitObjects = new List<GameObject>();
+
+            // Creates obstVerts with the verts around the obstacle(s) hit and adds the object(s) to hitObjects
+            NavPoint[] obstVerts;
+            if (testOne)
             {
-                relativeDistance = (current.point - root.point).magnitude;
-                // If G cost (distance to the NavPoint from the origin) is higher than existing, a more optimised route already exists to here
-                if (relativeDistance + root.gCost < current.gCost) 
+                obstVerts = hitOne.transform.gameObject.GetComponentsInChildren<NavPoint>();
+                hitObjects.Add(hitOne.transform.gameObject);
+                if (testTwo)
                 {
+                    obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                    hitObjects.Add(hitTwo.transform.gameObject);
+                }
+            }
+            else
+            {
+                obstVerts = hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>();
+                hitObjects.Add(hitTwo.transform.gameObject);
+            }
+
+            // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
+            NavPoint current;
+            for (int i = 0; i < obstVerts.Count(); i++)
+            {
+                current = obstVerts[i];
+
+                // Set up for the secondary raycasts and prepares relativeDistance
+                between = current.point - root.point;
+                relativeDistance = (between).magnitude;
+
+                // If G cost (distance to the NavPoint from the origin) is higher than existing, a more optimised route already exists to here
+                if (relativeDistance + root.gCost < current.gCost)
+                {
+
+                    // Set up for the offset on the raycasts
+                    perp = Vector3.Cross(Vector3.up, between).normalized;
+
                     // Checks Line of Sight to the NavPoint from the root 
-                    if (!Physics.Linecast(root.point, current.point, layerMask))
+                    testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
+                    testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
+                    // For debug draw rays Debug.DrawRay(root.point, between, Color.white, 10.0f);
+                    if (!(testOne || testTwo))
                     {
+
                         // Updates g, f, and from on the NavPoint with the better route
                         current.gCost = relativeDistance + root.gCost;
                         current.fCost = current.gCost + (current.point - target.point).magnitude;
                         current.from = root;
+
                         // Adds the NavPoint to the search stack if it has not been already
                         if (!searchStack.Contains(current))
                         {
                             searchStack.Add(current);
                         }
                     }
+                    
+                    // Else adds the NavPoints around this object to the array if that obstacle is not already being checked
+                    else
+                    {
+                        if (testOne && !hitObjects.Contains(hitOne.transform.gameObject))
+                        {
+                            obstVerts = obstVerts.Concat(hitOne.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                            hitObjects.Add(hitOne.transform.gameObject);
+                        }
+                        if (testTwo && !hitObjects.Contains(hitTwo.transform.gameObject))
+                        {
+                            obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                            hitObjects.Add(hitTwo.transform.gameObject);
+                        }
+
+                    }
+                    
                 }
             }
 
-        } else // Else Line of Sight from the current NavPoint to the Target.
+        }
+
+        // Else there is Line of Sight from the current NavPoint to the Target.
+        else 
         {
-            // Makes the Target 's from be the current NavPoint and set found to true to break the while loop
+
+            // Makes the Target's from be the current NavPoint and set found to true to break the while loop
             target.from = root;
             return true;
         }
+
         // Removes the curren NavPoint from the search stack
         searchStack.Remove(root);
         return false;
@@ -141,7 +213,7 @@ public class RobotAI : MonoBehaviour
             GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
             if (collectibles.Length > 0)
             {
-                if (!isHoldingCollectableObject)
+                if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
                     if (FollowRoute() && !justReleased)
                     {
@@ -193,7 +265,7 @@ public class RobotAI : MonoBehaviour
             }
             route.RemoveAt(route.Count - 1);
         }
-        Move(route[route.Count - 1].point);
+        Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }
 
@@ -221,48 +293,45 @@ public class RobotAI : MonoBehaviour
             collectible.GetComponent<NavPoint>().ResetValues();
         }
 
-        // GropAreas
+        // DropAreas
         foreach (GameObject goalArea in goalAreas)
         {
             goalArea.GetComponent<NavPoint>().ResetValues();
         }
     }
 
-    void Move(Vector3 position)
+    void Move(Vector3 position, float deadBand)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position);
+        gameObject.GetComponent<RobotMovement>().Move(position,deadBand);
     }
 
     void Grab() {
         everGrabbed = true;
-        if (isHoldingCollectableObject) {
+        if (this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject) {
             return;
         }
         if (gameObject.GetComponent<GrabRelease>().Grab())
         {
-            isHoldingCollectableObject = true;
             justGrabbed = true;
         }
     }
 
     void Release() {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
     }
     //to toss the ball
     void Toss()
     {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Toss();
     }
 }
