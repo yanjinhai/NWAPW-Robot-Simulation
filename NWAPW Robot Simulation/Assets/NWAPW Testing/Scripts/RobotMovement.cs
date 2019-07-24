@@ -12,6 +12,7 @@ public class RobotMovement : MonoBehaviour
     public float moveSpeed = 5.0f;
     public bool isMoving;
     public bool run;
+
     void Start()
     {
         isMoving = true;
