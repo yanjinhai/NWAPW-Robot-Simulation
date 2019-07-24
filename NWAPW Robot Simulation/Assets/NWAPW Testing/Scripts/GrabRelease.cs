@@ -40,6 +40,7 @@ public class GrabRelease : MonoBehaviour
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
                 grabbedObj.GetComponent<Rigidbody>().useGravity = false;
+                grabbedObj.transform.rotation = new Quaternion();
                 grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
                 isHoldingCollectableObject = true;
                 return true;
@@ -67,6 +68,7 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
+        grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         isHoldingCollectableObject = false;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj.transform.parent = Collectables.transform;
