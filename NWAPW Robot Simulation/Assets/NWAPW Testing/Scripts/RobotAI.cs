@@ -161,8 +161,8 @@ public class RobotAI : MonoBehaviour
                 {
                     if (FollowRoute() && !justGrabbed)
                     {
-                        Release();
-                        //Toss();
+                        //Release();
+                        Toss();
                     }
                     if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                     {
