@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1768,6 +1768,7 @@ MonoBehaviour:
   grabbedObj: {fileID: 0}
   camera: {fileID: 1188354036}
   shootCamera: {fileID: 409994294}
+  isHoldingCollectableObject: 0
   everGrabbed: 0
 --- !u!114 &1897405835
 MonoBehaviour:
@@ -1785,6 +1786,7 @@ MonoBehaviour:
   gCost: 0
   from: {fileID: 0}
   fCost: 0
+  deadBand: 0.05
 --- !u!114 &1897405836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1814,7 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHoldingCollectableObject: 0
+  robotDeadband: 0
   targetPos: {fileID: 0}
   everGrabbed: 0
   run: 0
@@ -2003,12 +2005,12 @@ PrefabInstance:
         type: 3}
       propertyPath: Cameras.Array.data[0]
       value: 
-      objectReference: {fileID: 1188354034}
+      objectReference: {fileID: 104899433}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: Cameras.Array.data[1]
       value: 
-      objectReference: {fileID: 104899433}
+      objectReference: {fileID: 1188354034}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: CurrentCam
