@@ -114,8 +114,10 @@ public class RobotAI : MonoBehaviour
             }
 
             // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
-            foreach (NavPoint current in obstVerts)
+            NavPoint current;
+            for (int i = 0; i < obstVerts.Count(); i++)
             {
+                current = obstVerts[i];
 
                 // Set up for the secondary raycasts and prepares relativeDistance
                 between = current.point - root.point;
@@ -129,8 +131,9 @@ public class RobotAI : MonoBehaviour
                     perp = Vector3.Cross(Vector3.up, between).normalized;
 
                     // Checks Line of Sight to the NavPoint from the root 
-                    testOne = Physics.Raycast(root.point + perp * 0.5f, between, relativeDistance, layerMask);
-                    testTwo = Physics.Raycast(root.point + perp * -0.5f, between, relativeDistance, layerMask);
+                    testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
+                    testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
+                    // For debug draw rays Debug.DrawRay(root.point, between, Color.white, 10.0f);
                     if (!(testOne || testTwo))
                     {
 
@@ -145,7 +148,7 @@ public class RobotAI : MonoBehaviour
                             searchStack.Add(current);
                         }
                     }
-
+                    
                     // Else adds the NavPoints around this object to the array if that obstacle is not already being checked
                     else
                     {
@@ -161,6 +164,7 @@ public class RobotAI : MonoBehaviour
                         }
 
                     }
+                    
                 }
             }
 

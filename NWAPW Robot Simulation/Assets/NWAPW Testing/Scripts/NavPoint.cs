@@ -8,11 +8,13 @@ public class NavPoint : MonoBehaviour
     public float gCost = Mathf.Infinity;
     public NavPoint from;
     public float fCost = Mathf.Infinity;
+    public float deadBand = 0;
 
     void Awake()
     {
         point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
         from = this;
+
     }
 
     void Update()
