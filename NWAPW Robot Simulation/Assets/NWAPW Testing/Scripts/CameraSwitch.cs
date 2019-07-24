@@ -6,7 +6,7 @@ public class CameraSwitch : MonoBehaviour
 {
     public GameObject[] Cameras;
     public GameObject CurrentCam;
-    // Start is called before the first frame update
+
     void Start()
     {
         CurrentCam = Cameras[0];
@@ -17,7 +17,6 @@ public class CameraSwitch : MonoBehaviour
         Cameras[0].SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         switchCamera();

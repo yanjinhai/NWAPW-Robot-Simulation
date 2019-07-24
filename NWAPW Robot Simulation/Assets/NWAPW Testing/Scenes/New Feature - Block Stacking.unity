@@ -705,12 +705,12 @@ PrefabInstance:
         type: 3}
       propertyPath: Cameras.Array.data[0]
       value: 
-      objectReference: {fileID: 615511098}
+      objectReference: {fileID: 42602097}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: Cameras.Array.data[1]
       value: 
-      objectReference: {fileID: 42602097}
+      objectReference: {fileID: 615511098}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: CurrentCam
@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 1088436384}
   - component: {fileID: 1088436383}
   m_Layer: 5
-  m_Name: SceneChanger
+  m_Name: Switch Mode Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,7 +1147,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Change Scene
+  m_Text: 'Change Mode
+
+'
 --- !u!222 &1277584177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1765,8 +1767,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collectables: {fileID: 1223407391}
   grabbedObj: {fileID: 0}
-  camera: {fileID: 615511099}
+  firstPersonCamera: {fileID: 615511099}
   shootCamera: {fileID: 84668848}
+  isHoldingCollectableObject: 0
   everGrabbed: 0
 --- !u!114 &1923268565
 MonoBehaviour:
@@ -1784,6 +1787,7 @@ MonoBehaviour:
   gCost: 0
   from: {fileID: 0}
   fCost: 0
+  deadBand: 0.05
 --- !u!114 &1923268566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1813,7 +1817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHoldingCollectableObject: 0
+  robotDeadband: 0
   targetPos: {fileID: 0}
   everGrabbed: 0
   run: 0
@@ -1962,6 +1966,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: 0.05
 --- !u!114 &4821780272312344315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1978,6 +1983,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: 0.05
 --- !u!1 &5185413911981838392
 GameObject:
   m_ObjectHideFlags: 0
