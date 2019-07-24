@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 1088436384}
   - component: {fileID: 1088436383}
   m_Layer: 5
-  m_Name: SceneChanger
+  m_Name: Switch Mode Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,7 +1147,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Change Scene
+  m_Text: 'Change Mode
+
+'
 --- !u!222 &1277584177
 CanvasRenderer:
   m_ObjectHideFlags: 0
