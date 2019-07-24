@@ -11,7 +11,7 @@ public class RobotMovement : MonoBehaviour
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
     public bool isMoving;
-
+    public bool run;
     void Start()
     {
         isMoving = true;
@@ -19,7 +19,7 @@ public class RobotMovement : MonoBehaviour
 
     void Update()
     {
-        if (isMoving)
+        if (isMoving && run)
         {
             relativePos = targetPos - this.transform.position;
             if (relativePos.magnitude <= positionDeadband)
