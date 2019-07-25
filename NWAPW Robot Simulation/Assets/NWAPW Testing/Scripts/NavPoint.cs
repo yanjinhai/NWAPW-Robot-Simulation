@@ -10,7 +10,7 @@ public class NavPoint : MonoBehaviour
     public float gCost = Mathf.Infinity;
     public NavPoint from;
     public float fCost = Mathf.Infinity;
-    public float deadBand = 0.05f;
+    public float deadBand = -0.45f;
 
     // Awake is used here to prempt intial pathfinding run on start
     void Awake()

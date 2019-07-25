@@ -331,9 +331,9 @@ public class RobotAI : MonoBehaviour
         }
     }
 
-    void Move(Vector3 position, float deadBand)
+    void Move(Vector3 position, float deadBand, bool moveBack = false)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position,deadBand);
+        gameObject.GetComponent<RobotMovement>().Move(position,deadBand, moveBack);
     }
 
     void Grab() {
