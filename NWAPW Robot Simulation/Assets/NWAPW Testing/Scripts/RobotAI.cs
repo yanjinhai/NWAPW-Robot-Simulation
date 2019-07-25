@@ -233,7 +233,7 @@ public class RobotAI : MonoBehaviour
                 collectible = collectibles[i];
                 // Check if the collectible is a block.
                 BlockScript blockScript = collectible.GetComponent<BlockScript>();
-                if (!blockScript.Equals(null))
+                if (blockScript != null)
                 {
                     // Check if the collectible is stacked already.
                     if (blockScript.CheckState())

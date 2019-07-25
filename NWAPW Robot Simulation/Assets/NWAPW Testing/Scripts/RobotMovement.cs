@@ -68,21 +68,21 @@ public class RobotMovement : MonoBehaviour
             else
             {
 
-                // Checks if the robot is pointing at the target
+                // Checks if the robot is pointing away from the target
                 float relativeAngle = Vector3.SignedAngle(relativePos, -this.transform.forward, this.transform.up);
                 float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
                 if (Mathf.Abs(relativeAngle) > 1)
                 {
 
-                    // Rotates the robot towards the target
+                    // Rotates the robot away from the target
                     this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
                 }
 
-                // Else the robot is pointing at the target
+                // Else the robot is pointing away from the target
                 else
                 {
 
-                    // Moves the robot forward, toward the target
+                    // Moves the robot backward, toward the target
                     this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
                 }
             }
