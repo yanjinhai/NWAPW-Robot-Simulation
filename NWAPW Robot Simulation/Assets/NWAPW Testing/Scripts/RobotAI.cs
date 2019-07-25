@@ -249,22 +249,23 @@ public class RobotAI : MonoBehaviour
                         Release();
                         //Toss();
                     }
-                    GameObject[] goalAreas;
-                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
-                    {
-                        Debug.Log("Cube");
-                        goalAreas = stackAreas;
-                    }
                     else
                     {
-                        Debug.Log("Sphere");
-                        goalAreas = dropAreas;
-                    }
-                    if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
-                    {
-                        targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
-                        targetChanged = true;
-                        justGrabbed = false;
+                        GameObject[] goalAreas;
+                        if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+                        {
+                            goalAreas = stackAreas;
+                        }
+                        else
+                        {
+                            goalAreas = dropAreas;
+                        }
+                        if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                        {
+                            targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                            targetChanged = true;
+                            justGrabbed = false;
+                        }
                     }
                 }
             }
@@ -337,7 +338,7 @@ public class RobotAI : MonoBehaviour
 
     void Grab() {
         everGrabbed = true;
-        if (this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject) {
+        if (gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject) {
             return;
         }
         if (gameObject.GetComponent<GrabRelease>().Grab())
@@ -348,7 +349,7 @@ public class RobotAI : MonoBehaviour
 
     void Release() {
         justReleased = true;
-        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
+        if (!gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
@@ -358,7 +359,7 @@ public class RobotAI : MonoBehaviour
     void Toss()
     {
         justReleased = true;
-        if (!this.gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
+        if (!gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }

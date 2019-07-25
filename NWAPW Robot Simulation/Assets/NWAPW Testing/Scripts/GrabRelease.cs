@@ -14,18 +14,35 @@ public class GrabRelease : MonoBehaviour
     public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
+    int originalChildCount;
+
     void Awake()
     {
         isHoldingCollectableObject = false;
+
+        /*
+         * I've come up with an alternative method of keeping track of isHoldingCollectableObject.
+         * Because all grabbed objects are children objects of the robot, the value of isHoldingCollectableObject
+         * will be true if the current child count is greater than the child count at the start of the simulation,
+         * because the robot isn't grabbing any objects at that time.
+         * 
+         * I tested this method and it works!
+         * 
+         * Jinhai
+         */
+        originalChildCount = gameObject.transform.childCount;
     }
 
 
     void Update()
     {
+        // Update value.
+        isHoldingCollectableObject = gameObject.transform.childCount > originalChildCount;
 
         if (isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
+            grabbedObj.transform.localRotation = new Quaternion();
         }
     }
 
@@ -40,9 +57,9 @@ public class GrabRelease : MonoBehaviour
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
                 grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-                grabbedObj.transform.rotation = new Quaternion();
-                grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-                isHoldingCollectableObject = true;
+                //grabbedObj.transform.rotation = new Quaternion();
+                //grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                //isHoldingCollectableObject = true;
                 return true;
             }
         }
@@ -68,16 +85,16 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        isHoldingCollectableObject = false;
+        //isHoldingCollectableObject = false;
         grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj.transform.parent = Collectables.transform;
         grabbedObj = null;
-
     }
+
     //toss the ball
     public void Toss() {
-        isHoldingCollectableObject = false;
+        //isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
