@@ -12,6 +12,7 @@ public class RobotMovement : MonoBehaviour
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
     public bool isMoving;
+    public bool moveBack;
 
     // Run is used to swap between teleop and auto
     public bool run;
@@ -40,34 +41,63 @@ public class RobotMovement : MonoBehaviour
                 return;
             }
 
-            // Checks if the robot is pointing at the target
-            float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
-            float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
-            if (Mathf.Abs(relativeAngle) > 1)
+            // If backwards movement is not enabled
+            if (!moveBack)
             {
 
-                // Rotates the robot towards the target
-                this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                // Checks if the robot is pointing at the target
+                float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
+                float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+                if (Mathf.Abs(relativeAngle) > 1)
+                {
+
+                    // Rotates the robot towards the target
+                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                }
+
+                // Else the robot is pointing at the target
+                else
+                {
+
+                    // Moves the robot forward, toward the target
+                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                }
             }
 
-            // Else the robot is pointing at the target
+            // Else the robot is moving backwards
             else
             {
 
-                // Moves the robot forward, toward the target
-                this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                // Checks if the robot is pointing at the target
+                float relativeAngle = Vector3.SignedAngle(relativePos, -this.transform.forward, this.transform.up);
+                float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+                if (Mathf.Abs(relativeAngle) > 1)
+                {
+
+                    // Rotates the robot towards the target
+                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                }
+
+                // Else the robot is pointing at the target
+                else
+                {
+
+                    // Moves the robot forward, toward the target
+                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
+                }
             }
         }
     }
 
     // Move function which is used as an interface by the AI
-    public void Move(Vector3 position, float deadBand)
+    public void Move(Vector3 position, float deadBand, bool backwards = false)
     {
 
         // Sets the target, sets the robot to moving, and sets the deadband
         targetPos = position;
         isMoving = true;
         positionDeadband = deadBand;
+        moveBack = backwards;
     }
 }
 
