@@ -38,7 +38,7 @@ public class RobotMovement : MonoBehaviour
                     //Shoot in the right direction
                     relativeAngle = Vector3.SignedAngle(prevTargetPos - this.transform.position, this.transform.forward, this.transform.up);
                     print(relativeAngle);
-                    if (!(Mathf.Abs(relativeAngle) > 1 && goingBack))
+                    if (!(Mathf.Abs(relativeAngle) > 1))
                     {
                         print("Shooting!");
                         isMoving = false;
