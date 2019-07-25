@@ -44,12 +44,12 @@ public class StackAreaScript : MonoBehaviour
         refPoints.Add(new Vector3(transform.position.x - FixedDistance, robot.transform.position.y, nextPos.z));
         
         // Remove the obstructed reference points.
-        foreach (Vector3 point in refPoints)
+        for (int i = 0; i < refPoints.Count; i++)
         {
-            bool isObstructed = Physics.Linecast(nextPos, point);
+            bool isObstructed = Physics.Linecast(nextPos, refPoints[i]);
             if (isObstructed)
             {
-                refPoints.Remove(point);
+                refPoints.Remove(refPoints[i]);
             }
         }
     }

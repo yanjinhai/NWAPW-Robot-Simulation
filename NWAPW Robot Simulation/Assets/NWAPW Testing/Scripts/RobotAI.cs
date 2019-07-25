@@ -223,8 +223,29 @@ public class RobotAI : MonoBehaviour
     {
         if (run)
         {
-            GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
-            if (collectibles.Length > 0)
+            List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
+            /*
+             * Added this to prevent the robot from going after blocks already stacked.
+             */
+            GameObject collectible;
+            for (int i = 0; i < collectibles.Count; i++)
+            {
+                collectible = collectibles[i];
+                // Check if the collectible is a block.
+                BlockScript blockScript = collectible.GetComponent<BlockScript>();
+                if (!blockScript.Equals(null))
+                {
+                    // Check if the collectible is stacked already.
+                    if (blockScript.CheckState())
+                    {
+                        collectibles.Remove(collectible);
+                        i--;
+                    }
+                }
+            }
+            
+
+            if (collectibles.Count > 0)
             {
                 if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
@@ -233,7 +254,7 @@ public class RobotAI : MonoBehaviour
                         Grab();
                     }
 
-                    GameObject closestCollectible = FindNearest(collectibles);
+                    GameObject closestCollectible = FindNearest(collectibles.ToArray());
                     NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
                     if (closestNavPoint != targetPos)
                     {

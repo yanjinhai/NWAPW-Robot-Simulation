@@ -40,7 +40,8 @@ public class NavPoint : MonoBehaviour
         {
             gCost = Mathf.Infinity;
             fCost = Mathf.Infinity;
-            from = this;
+            
         }
+        from = this;
     }
 }

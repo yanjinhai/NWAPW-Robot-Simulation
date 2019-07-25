@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3909412162793290354}
   - component: {fileID: 807595469213108778}
   - component: {fileID: 1490451237566297125}
+  - component: {fileID: 7131071024414680186}
   m_Layer: 8
   m_Name: Block
   m_TagString: CollectableObject
@@ -112,6 +113,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: 0.05
 --- !u!65 &1490451237566297125
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,3 +127,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7131071024414680186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490451237566297114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba3ba214bd860342aef9a6e45755982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
