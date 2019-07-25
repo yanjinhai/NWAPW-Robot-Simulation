@@ -7,8 +7,10 @@ public class RobotAI : MonoBehaviour
 {
 
     GameObject[] goalAreas;
+    GameObject[] baskets;
     private bool targetChanged;
 
+    public bool targetIsBasket;
     public bool isHoldingCollectableObject;
     public NavPoint targetPos;
     private bool justReleased;
@@ -28,10 +30,13 @@ public class RobotAI : MonoBehaviour
         justReleased = false;
         justGrabbed = false;
         isHoldingCollectableObject = false;
+        targetIsBasket = false;
         // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        baskets = GameObject.FindGameObjectsWithTag("Basket");
+        print(baskets);
         // Initial route set up
         ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
@@ -136,6 +141,12 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(targetPos != null && targetPos.gameObject.tag != "Basket")
+        {
+            targetIsBasket = false;
+            GetComponent<RobotMovement>().needsToGoBack = true;
+        }
+
         if (run)
         {
             GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
@@ -164,9 +175,10 @@ public class RobotAI : MonoBehaviour
                         //Release();
                         Toss();
                     }
-                    if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                    if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
                     {
-                        targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                        targetPos = FindNearest(baskets).GetComponent<NavPoint>();
+                        targetIsBasket = true;
                         targetChanged = true;
                         justGrabbed = false;
                     }
@@ -226,6 +238,15 @@ public class RobotAI : MonoBehaviour
         {
             goalArea.GetComponent<NavPoint>().ResetValues();
         }
+        /*
+        // baskets
+        foreach (GameObject basket in baskets)
+        {
+            if (basket != null)
+            {
+                basket.GetComponent<NavPoint>().ResetValues();
+            }
+        } */
     }
 
     void Move(Vector3 position)
