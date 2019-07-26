@@ -267,7 +267,7 @@ public class RobotAI : MonoBehaviour
                 {
                     if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
-
+                        StackingAI();
                     }
                     else if (FollowRoute() && !justGrabbed)
                     {
@@ -318,6 +318,19 @@ public class RobotAI : MonoBehaviour
         Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }
+
+    void StackingAI()
+    {
+
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Doesn't include the NavPoint on the Robot game object.
