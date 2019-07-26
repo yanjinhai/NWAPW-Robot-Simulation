@@ -349,14 +349,6 @@ public class RobotAI : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
     /**
      * Doesn't include the NavPoint on the Robot game object.
      */
