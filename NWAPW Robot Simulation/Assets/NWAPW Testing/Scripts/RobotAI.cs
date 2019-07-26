@@ -115,7 +115,7 @@ public class RobotAI : MonoBehaviour
             {
                 obstVerts = hitOne.transform.gameObject.GetComponentsInChildren<NavPoint>();
                 hitObjects.Add(hitOne.transform.gameObject);
-                if (testTwo)
+                if (testTwo && hitTwo.transform != hitOne.transform)
                 {
                     obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
                     hitObjects.Add(hitTwo.transform.gameObject);
