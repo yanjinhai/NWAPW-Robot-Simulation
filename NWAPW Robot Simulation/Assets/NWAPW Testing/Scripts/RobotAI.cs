@@ -265,7 +265,11 @@ public class RobotAI : MonoBehaviour
                 }
                 else
                 {
-                    if (FollowRoute() && !justGrabbed)
+                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+                    {
+
+                    }
+                    else if (FollowRoute() && !justGrabbed)
                     {
                         Release();
                         //Toss();
