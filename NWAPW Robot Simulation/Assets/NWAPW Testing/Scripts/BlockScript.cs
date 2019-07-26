@@ -9,6 +9,7 @@ public class BlockScript : MonoBehaviour
      */
     public bool CheckState()
     {
+        // Gets the parent object of the all stack areas.
         GameObject stackAreaParent = GameObject.FindGameObjectWithTag("DropObject");
         // Find the extents of the block's collider.
         Vector3 blockExtents = this.gameObject.GetComponent<Collider>().bounds.extents;

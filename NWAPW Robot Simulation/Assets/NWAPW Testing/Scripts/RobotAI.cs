@@ -253,6 +253,7 @@ public class RobotAI : MonoBehaviour
                 if(stackingStage> 0)
                 {
                     StackingAI();
+                    return;
                 }
                 if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
@@ -367,14 +368,13 @@ public class RobotAI : MonoBehaviour
                 foreach (Vector3 refp in refPoints)
                 {
                     float relativeDistance = (refp - this.transform.position).magnitude;
-                    Debug.Log(relativeDistance);
                     if (relativeDistance < shortestDistance)
                     {
                         shortestDistance = relativeDistance;
                         closestRef = refp;
                     }
                 }
-                Debug.Log(closestRef);
+                Debug.Log("Closest " + closestRef);
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
                     Debug.Log(closestRef != referencePoint.point);
