@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-
     GameObject[] dropAreas;
     GameObject[] stackAreas;
     private bool targetChanged;
@@ -322,10 +321,19 @@ public class RobotAI : MonoBehaviour
         switch(stackingStage)
         {
             case 0:
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
+                {
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                }
+                FollowRoute();
+                goto case 1;
+            case 1:
                 if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
                 {
                     stackingStage++;
-                    break;
+                    goto case 2;
                 } else
                 {
                     layerMask = 11 << 8;
@@ -334,12 +342,35 @@ public class RobotAI : MonoBehaviour
                     layerMask = 1 << 8;
                     layerMask = ~layerMask;
                 }
-                GameObject[] goalAreas = stackAreas;
-                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
-                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
                     targetChanged = true;
                     justGrabbed = false;
+                }
+                break;
+            case 2:
+                List<Vector3> refPoints = FindNearest(stackAreas).GetComponent<StackAreaScript>().refPoints;
+                Vector3 closestRef = refPoints[0];
+                float shortestDistance = (refPoints[0] - this.transform.position).magnitude;
+                foreach (Vector3 refp in refPoints)
+                {
+                    float relativeDistance = (refp - this.transform.position).magnitude;
+
+                    if (relativeDistance < shortestDistance)
+                    {
+                        shortestDistance = relativeDistance;
+                        closestRef = refp;
+                    }
+                }
+                if (closestRef != targetPos)
+                {
+                    targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                }
+                if (FollowRoute())
+                {
+
                 }
                 break;
         }
