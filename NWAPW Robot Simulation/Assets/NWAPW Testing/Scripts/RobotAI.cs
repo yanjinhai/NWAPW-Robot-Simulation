@@ -340,7 +340,7 @@ public class RobotAI : MonoBehaviour
                 stackingStage++;
                 goto case 1;
             case 1:
-                if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
+                if ((route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving) || route.Count() < 2)
                 {
                     stackingStage++;
                     goto case 2;
@@ -373,6 +373,7 @@ public class RobotAI : MonoBehaviour
                     }
                 }
                 Debug.Log("Closest " + closestRef);
+                Debug.Log("Distance " + shortestDistance);
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
                     Debug.Log(closestRef != referencePoint.point);
