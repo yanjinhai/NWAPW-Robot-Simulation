@@ -375,8 +375,6 @@ public class RobotAI : MonoBehaviour
                         closestRef = refp;
                     }
                 }
-                Debug.Log("Closest " + closestRef);
-                Debug.Log("Distance " + shortestDistance);
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
                     Debug.Log(closestRef != referencePoint.point);
