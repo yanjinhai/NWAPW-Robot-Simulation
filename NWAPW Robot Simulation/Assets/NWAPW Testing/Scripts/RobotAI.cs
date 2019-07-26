@@ -37,7 +37,10 @@ public class RobotAI : MonoBehaviour
         stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
         robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
         stackingStage = 0;
-        referencePoint = GameObject.FindGameObjectWithTag("Ref Point").GetComponent<NavPoint>();
+        if (GameObject.FindGameObjectWithTag("Ref Point") != null)
+        {
+            referencePoint = GameObject.FindGameObjectWithTag("Ref Point").GetComponent<NavPoint>();
+        }
 
         // Initial route set up
         ResetNavPoints();

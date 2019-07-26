@@ -64,6 +64,7 @@ public class StackAreaScript : MonoBehaviour
             bool isObstructed = Physics.Linecast(nextPos, refPoints[i]);
             if (isObstructed)
             {
+                Debug.Log("PLEASE NO DON'T BE THIS");
                 refPoints.Remove(refPoints[i]);
             }
         }
