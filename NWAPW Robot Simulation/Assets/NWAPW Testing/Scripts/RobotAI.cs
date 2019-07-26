@@ -358,6 +358,15 @@ public class RobotAI : MonoBehaviour
                         closestRef = refp;
                     }
                 }
+                if (closestRef != targetPos)
+                {
+                    targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                }
+                if (FollowRoute())
+                {
+
+                }
                 break;
         }
     }
