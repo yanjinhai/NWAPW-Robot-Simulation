@@ -404,6 +404,7 @@ public class RobotAI : MonoBehaviour
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
                 {
                     stackingStage = 0;
+                    justReleased = true;
                     break;
                 }
                 Move(referencePoint.point, .05f, true);
