@@ -305,19 +305,9 @@ public class RobotAI : MonoBehaviour
         }
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
-            if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+            if (route.Count == 1)
             {
-                if (route.Count == 2)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (route.Count == 1)
-                {
-                    return true;
-                }
+                return true;
             }
             route.RemoveAt(route.Count - 1);
         }
