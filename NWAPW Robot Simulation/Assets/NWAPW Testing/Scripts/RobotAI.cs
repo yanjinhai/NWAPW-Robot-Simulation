@@ -333,20 +333,16 @@ public class RobotAI : MonoBehaviour
                     targetChanged = true;
                     justGrabbed = false;
                 }
-                Debug.Log(targetChanged);
-                Debug.Log(route.Count);
+                layerMask = 11 << 8;
+                layerMask = ~layerMask;
                 FollowRoute();
-                Debug.Log(route.Count);
-                Debug.Log(gameObject.GetComponent<RobotMovement>().isMoving);
-                Debug.Log("Check1");
+                layerMask = 1 << 8;
+                layerMask = ~layerMask;
                 stackingStage++;
                 goto case 1;
             case 1:
-                Debug.Log("Check2");
-                Debug.Log(route.Count);
                 if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
                 {
-                    Debug.Log("Check3");
                     stackingStage++;
                     goto case 2;
                 } else
@@ -371,15 +367,17 @@ public class RobotAI : MonoBehaviour
                 foreach (Vector3 refp in refPoints)
                 {
                     float relativeDistance = (refp - this.transform.position).magnitude;
-
+                    Debug.Log(relativeDistance);
                     if (relativeDistance < shortestDistance)
                     {
                         shortestDistance = relativeDistance;
                         closestRef = refp;
                     }
                 }
+                Debug.Log(closestRef);
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
+                    Debug.Log(closestRef != referencePoint.point);
                     referencePoint.gameObject.transform.position = closestRef;
                     referencePoint.point = closestRef;
                     targetPos = referencePoint;

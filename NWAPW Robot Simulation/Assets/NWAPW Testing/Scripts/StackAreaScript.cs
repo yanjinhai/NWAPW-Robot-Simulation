@@ -61,6 +61,7 @@ public class StackAreaScript : MonoBehaviour
         // Remove the obstructed reference points
         for (int i = 0; i < refPoints.Count; i++)
         {
+            Debug.Log(refPoints[i]);
             bool isObstructed = Physics.Linecast(nextPos, refPoints[i]);
             if (isObstructed)
             {
