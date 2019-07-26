@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-    GameObject[] goalAreas
+    GameObject[] goalAreas;
     GameObject[] dropAreas;
     GameObject[] stackAreas;
     private bool targetChanged;
