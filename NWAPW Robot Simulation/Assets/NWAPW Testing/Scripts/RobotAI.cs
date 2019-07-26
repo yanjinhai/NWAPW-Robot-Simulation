@@ -345,6 +345,19 @@ public class RobotAI : MonoBehaviour
                 }
                 break;
             case 2:
+                List<Vector3> refPoints = FindNearest(stackAreas).GetComponent<StackAreaScript>().refPoints;
+                Vector3 closestRef = refPoints[0];
+                float shortestDistance = (refPoints[0] - this.transform.position).magnitude;
+                foreach (Vector3 refp in refPoints)
+                {
+                    float relativeDistance = (refp - this.transform.position).magnitude;
+
+                    if (relativeDistance < shortestDistance)
+                    {
+                        shortestDistance = relativeDistance;
+                        closestRef = refp;
+                    }
+                }
                 break;
         }
     }
