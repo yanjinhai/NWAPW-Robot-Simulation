@@ -147,7 +147,7 @@ public class RobotAI : MonoBehaviour
                     // Checks Line of Sight to the NavPoint from the root 
                     testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
                     testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
-                    // For debug draw rays Debug.DrawRay(root.point, between, Color.white, 10.0f);
+                    // /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
                     if (!(testOne || testTwo))
                     {
 
@@ -305,19 +305,9 @@ public class RobotAI : MonoBehaviour
         }
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
-            if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+            if (route.Count == 1)
             {
-                if (route.Count == 2)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (route.Count == 1)
-                {
-                    return true;
-                }
+                return true;
             }
             route.RemoveAt(route.Count - 1);
         }
