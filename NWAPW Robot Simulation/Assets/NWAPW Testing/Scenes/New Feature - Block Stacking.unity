@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -476,7 +476,7 @@ Transform:
   - {fileID: 1488285001}
   - {fileID: 1483784477}
   m_Father: {fileID: 5185413911981838396}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &259599738
 BoxCollider:
@@ -2187,7 +2187,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5185413911981838396}
-  - {fileID: 2127565993}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2202,7 +2201,7 @@ GameObject:
   - component: {fileID: 2127565993}
   - component: {fileID: 2127565994}
   m_Layer: 0
-  m_Name: Ref Point
+  m_Name: Chosen Reference Point
   m_TagString: Ref Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2216,11 +2215,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127565992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.25, y: 0.001, z: 23.25}
-  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
+  m_LocalPosition: {x: -6.5, y: 0, z: 6.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2077175469}
-  m_RootOrder: 1
+  m_Father: {fileID: 5185413911981838396}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2127565994
 MonoBehaviour:
@@ -2355,6 +2354,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.001, z: 20}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children:
+  - {fileID: 2127565993}
   - {fileID: 259599737}
   m_Father: {fileID: 2077175469}
   m_RootOrder: 0

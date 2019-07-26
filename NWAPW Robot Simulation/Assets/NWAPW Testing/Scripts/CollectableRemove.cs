@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class CollectableRemove : MonoBehaviour
 {
+    // Handles ball scoring
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "CollectableObject")
+        GameObject obj = collision.gameObject;
+        if (obj.tag == "CollectableObject" && obj.GetComponent<MeshFilter>().sharedMesh.name == "Sphere")
         {
-            collision.gameObject.SetActive(false);
-            Destroy(collision.gameObject);
+            Destroy(obj);
             if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed) 
             {
                 GameObject.FindGameObjectWithTag("DropObject").GetComponent<Increment>().increase(1);
