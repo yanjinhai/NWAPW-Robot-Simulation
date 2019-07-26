@@ -8,6 +8,7 @@ public class RobotAI : MonoBehaviour
 {
     GameObject[] dropAreas;
     GameObject[] stackAreas;
+    NavPoint referencePoint;
     private bool targetChanged;
     public float robotDeadband;
     public NavPoint targetPos;
@@ -36,6 +37,7 @@ public class RobotAI : MonoBehaviour
         stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
         robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
         stackingStage = 0;
+        referencePoint = GameObject.FindGameObjectWithTag("Ref Point").GetComponent<NavPoint>();
 
         // Initial route set up
         ResetNavPoints();
@@ -248,6 +250,10 @@ public class RobotAI : MonoBehaviour
 
             if (collectibles.Count > 0)
             {
+                if(stackingStage> 0)
+                {
+                    StackingAI();
+                }
                 if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
                     if (FollowRoute() && !justReleased)
@@ -323,6 +329,7 @@ public class RobotAI : MonoBehaviour
                     justGrabbed = false;
                 }
                 FollowRoute();
+                stackingStage++;
                 goto case 1;
             case 1:
                 if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
@@ -358,14 +365,34 @@ public class RobotAI : MonoBehaviour
                         closestRef = refp;
                     }
                 }
-                if (closestRef != targetPos)
+                if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
-                    targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
+                    referencePoint.gameObject.transform.position = closestRef;
+                    referencePoint.point = closestRef;
+                    targetPos = referencePoint;
                     targetChanged = true;
                 }
                 if (FollowRoute())
                 {
-
+                    stackingStage++;
+                    goto case 3;
+                }
+                break;
+                // Inbetween these cases add veticality
+            case 3:
+                Move(FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos,robotDeadband+.05f+gameObject.GetComponent<GrabRelease>().grabbedObj.GetComponent<NavPoint>().deadBand);
+                if(!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage++;
+                    Release();
+                    goto case 4;
+                }
+                break;
+            case 4:
+                Move(referencePoint.point, .05f, true);
+                if (!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage = 0;
                 }
                 break;
         }
