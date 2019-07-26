@@ -326,6 +326,25 @@ public class RobotAI : MonoBehaviour
         switch(stackingStage)
         {
             case 0:
+                if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
+                {
+                    stackingStage++;
+                    break;
+                } else
+                {
+                    layerMask = 11 << 8;
+                    layerMask = ~layerMask;
+                    FollowRoute();
+                    layerMask = 1 << 8;
+                    layerMask = ~layerMask;
+                }
+                GameObject[] goalAreas = stackAreas;
+                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                {
+                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                }
                 break;
         }
     }
