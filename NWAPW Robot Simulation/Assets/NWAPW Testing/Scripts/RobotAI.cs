@@ -153,6 +153,7 @@ public class RobotAI : MonoBehaviour
                     // Checks Line of Sight to the NavPoint from the root 
                     testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
                     testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
+                    
                     // /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
                     if (!(testOne || testTwo))
                     {
@@ -182,28 +183,23 @@ public class RobotAI : MonoBehaviour
                             obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
                             hitObjects.Add(hitTwo.transform.gameObject);
                         }
-
-                    }
-                    
+                    }       
                 }
             }
-
         }
 
         // Else there is Line of Sight from the current NavPoint to the Target.
         else 
         {
-
             // Makes the Target's from be the current NavPoint and set found to true to break the while loop
             target.from = root;
             return true;
         }
 
-        // Removes the curren NavPoint from the search stack
+        // Removes the current NavPoint from the search stack
         searchStack.Remove(root);
         return false;
     }
-
 
 
     GameObject FindNearest(GameObject[] gameObjects)
@@ -214,7 +210,7 @@ public class RobotAI : MonoBehaviour
         {
             Vector3 CurrPos = obj.transform.position;
             float relativeDistance = (CurrPos - this.transform.position).magnitude;
-
+            // Description
             if (relativeDistance < shortestDistance)
             {
                 shortestDistance = relativeDistance;
@@ -228,8 +224,8 @@ public class RobotAI : MonoBehaviour
     {
         if (run)
         {
+            // Description
             List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
-            
             // Prevent the robot from going after blocks already stacked. 
             GameObject collectible;
             for (int i = 0; i < collectibles.Count; i++)
@@ -303,6 +299,7 @@ public class RobotAI : MonoBehaviour
 
     bool FollowRoute()
     {
+        // Description here
         if (targetChanged)
         {
             route.Clear();
@@ -312,6 +309,7 @@ public class RobotAI : MonoBehaviour
             targetChanged = false;
             ResetNavPoints();
         }
+        // Description here
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
             if (route.Count == 1)
@@ -320,6 +318,7 @@ public class RobotAI : MonoBehaviour
             }
             route.RemoveAt(route.Count - 1);
         }
+
         Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }

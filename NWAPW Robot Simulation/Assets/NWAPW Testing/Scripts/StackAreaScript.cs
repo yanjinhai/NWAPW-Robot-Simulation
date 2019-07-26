@@ -8,7 +8,7 @@ public class StackAreaScript : MonoBehaviour
     public GameObject robot, block;
 
     // Constants
-    float robotRadMin, robotRadMax, blockRadMin, blockRadMax, FixedDistance;
+    public float robotRadMin, robotRadMax, blockRadMin, blockRadMax, FixedDistance;
     int layerMask;
 
     // Output
@@ -32,6 +32,7 @@ public class StackAreaScript : MonoBehaviour
 
         // Finds the minimum radius of the block (half the side length of the cube)
         blockRadMin = block.GetComponent<Collider>().bounds.extents.x;
+        print(block.GetComponent<Collider>());
 
         // Finds the maximum radius of the block (half the diagonal length of the cube)
         blockRadMax = blockRadMin * Mathf.Sqrt(2);
@@ -53,7 +54,7 @@ public class StackAreaScript : MonoBehaviour
         refPoints.Clear();
 
         // Calculate the next available position for the next block
-        nextPos = transform.position + new Vector3(GetComponent<MeshCollider>().bounds.extents.x - block.GetComponent<Collider>().bounds.extents.x, block.transform.position.y, GetComponent<MeshCollider>().bounds.extents.z - block.GetComponent<Collider>().bounds.extents.z);
+        nextPos = transform.position + new Vector3(GetComponent<MeshCollider>().bounds.extents.x - blockRadMin, block.transform.position.y, GetComponent<MeshCollider>().bounds.extents.z - blockRadMin);
 
         // Calculate all the reference points
         refPoints.Add(new Vector3(nextPos.x, robot.transform.position.y, transform.position.z + FixedDistance));

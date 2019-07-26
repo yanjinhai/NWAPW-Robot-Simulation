@@ -59,7 +59,6 @@ public class RobotMovement : MonoBehaviour
             // Else the robot is moving backwards
             else
             {
-
                 // Checks if the robot is pointing away from the target
                 float relativeAngle = Vector3.SignedAngle(relativePos, -this.transform.forward, this.transform.up);
                 float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
@@ -72,8 +71,7 @@ public class RobotMovement : MonoBehaviour
 
                 // Else the robot is pointing away from the target
                 else
-                {
-
+                { 
                     // Moves the robot backward, toward the target
                     this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
                 }
@@ -84,7 +82,6 @@ public class RobotMovement : MonoBehaviour
     // Move function which is used as an interface by the AI
     public void Move(Vector3 position, float deadBand, bool backwards = false)
     {
-
         // Sets the target, sets the robot to moving, and sets the deadband
         targetPos = position;
         isMoving = true;
