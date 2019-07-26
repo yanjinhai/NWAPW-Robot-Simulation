@@ -342,7 +342,7 @@ public class RobotAI : MonoBehaviour
                 stackingStage++;
                 goto case 1;
             case 1:
-                if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
+                if ((route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving) || route.Count() < 2)
                 {
                     stackingStage++;
                     goto case 2;
