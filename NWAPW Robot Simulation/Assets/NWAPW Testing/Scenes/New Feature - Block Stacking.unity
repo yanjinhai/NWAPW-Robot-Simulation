@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0, z: 0}
   gCost: 0
-  from: {fileID: 0}
+  from: {fileID: 1923268565}
   fCost: 0
   deadBand: 0.05
 --- !u!114 &1923268566
