@@ -267,29 +267,24 @@ public class RobotAI : MonoBehaviour
                 }
                 else
                 {
+                    // Check if the grabbed object is a block.
                     if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
+                        // If so, >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Finish doc here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                         StackingAI();
                     }
-                    else if (FollowRoute() && !justGrabbed)
+                    else if (FollowRoute() && !justGrabbed) // Otherwise, its a ball. Check if the robot is both at the position and didn't just grab an object.
                     {
+                        // Release the ball
                         Release();
                         //Toss();
                     }
                     else
                     {
-                        GameObject[] goalAreas;
-                        //if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
-                        //{
-                        //    goalAreas = stackAreas;
-                        //}
-                        //else
-                        //{
-                            goalAreas = dropAreas;
-                        //}
-                        if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                        // If it
+                        if (FindNearest(dropAreas).GetComponent<NavPoint>() != targetPos)
                         {
-                            targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                            targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
                             targetChanged = true;
                             justGrabbed = false;
                         }
@@ -298,6 +293,7 @@ public class RobotAI : MonoBehaviour
             }
         }
     }
+
     bool FollowRoute()
     {
         if (targetChanged)
