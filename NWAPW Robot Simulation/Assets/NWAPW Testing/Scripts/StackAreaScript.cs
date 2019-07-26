@@ -53,7 +53,7 @@ public class StackAreaScript : MonoBehaviour
         refPoints.Clear();
 
         // Calculate the next available position for the next block
-        nextPos = transform.position + new Vector3(GetComponent<Collider>().bounds.extents.x, block.transform.position.y, GetComponent<Collider>().bounds.extents.z);
+        nextPos = transform.position + new Vector3(GetComponent<MeshCollider>().bounds.extents.x - block.GetComponent<Collider>().bounds.extents.x, block.transform.position.y, GetComponent<MeshCollider>().bounds.extents.z - block.GetComponent<Collider>().bounds.extents.z);
 
         // Calculate all the reference points
         refPoints.Add(new Vector3(nextPos.x, robot.transform.position.y, transform.position.z + FixedDistance));
