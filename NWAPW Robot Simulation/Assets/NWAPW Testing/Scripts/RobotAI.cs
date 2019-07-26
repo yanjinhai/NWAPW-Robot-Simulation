@@ -16,6 +16,7 @@ public class RobotAI : MonoBehaviour
     private bool justGrabbed;
     public bool everGrabbed;
     public bool run;
+    private int stackingStage;
 
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
@@ -35,6 +36,7 @@ public class RobotAI : MonoBehaviour
         dropAreas = GameObject.FindGameObjectsWithTag("Drop Area");
         stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
         robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
+        stackingStage = 0;
 
         // Initial route set up
         ResetNavPoints();
@@ -321,7 +323,11 @@ public class RobotAI : MonoBehaviour
 
     void StackingAI()
     {
-
+        switch(stackingStage)
+        {
+            case 0:
+                break;
+        }
     }
 
 
