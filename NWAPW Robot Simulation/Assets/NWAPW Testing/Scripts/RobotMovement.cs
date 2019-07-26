@@ -12,6 +12,8 @@ public class RobotMovement : MonoBehaviour
     public float basketDistLim;
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
+
+    public GameObject shootCamera;
     public bool isMoving;
     public bool run;
     public bool needsToGoBack = true;
@@ -24,6 +26,7 @@ public class RobotMovement : MonoBehaviour
 
     void Update()
     {
+    
         float relativeAngle;
         float relativeRotationDir;
         if (isMoving && run)
@@ -33,19 +36,20 @@ public class RobotMovement : MonoBehaviour
             {
                 if (GetComponent<RobotAI>().targetIsBasket && Mathf.Abs(relativePos.magnitude - basketDistLim) <= 1.0f || goingBack)
                 {
-                    print("In range now");
-                    print(prevTargetPos);
                     //Shoot in the right direction
                     relativeAngle = Vector3.SignedAngle(prevTargetPos - this.transform.position, this.transform.forward, this.transform.up);
+                    float otherAngle = Mathf.Abs(Vector3.SignedAngle(targetPos - this.transform.position, this.transform.forward, this.transform.up));
                     print(relativeAngle);
-                    if (!(Mathf.Abs(relativeAngle) > 1))
+                    print(otherAngle);
+                    print(goingBack);
+                    if ((Mathf.Abs(relativeAngle) < 1 && goingBack) || 
+                        (otherAngle < 1 && !goingBack))
                     {
-                        print("Shooting!");
                         isMoving = false;
                         goingBack = false;
                     }
                     else
-                    {
+                    { 
                         print("needs rotate :)"); 
                     }  
                 }

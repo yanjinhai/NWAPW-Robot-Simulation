@@ -36,7 +36,6 @@ public class RobotAI : MonoBehaviour
         layerMask = ~layerMask;
         goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
         baskets = GameObject.FindGameObjectsWithTag("Basket");
-        print(baskets);
         // Initial route set up
         ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
@@ -238,15 +237,18 @@ public class RobotAI : MonoBehaviour
         {
             goalArea.GetComponent<NavPoint>().ResetValues();
         }
-        /*
+
         // baskets
-        foreach (GameObject basket in baskets)
+        /*if (baskets != null)
         {
-            if (basket != null)
+            foreach (GameObject basket in baskets)
             {
-                basket.GetComponent<NavPoint>().ResetValues();
+                if (basket != null)
+                {
+                    basket.GetComponent<NavPoint>().ResetValues();
+                }
             }
-        } */
+        }*/
     }
 
     void Move(Vector3 position)

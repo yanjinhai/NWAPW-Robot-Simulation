@@ -10,6 +10,7 @@ public class GrabRelease : MonoBehaviour
     public Camera camera;
     public Camera shootCamera;
 
+    public float shootVelocity = 15.0f;
     public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
@@ -65,14 +66,15 @@ public class GrabRelease : MonoBehaviour
 
     }
     //toss the ball
-    public void Toss() {
+    public void Toss()
+    {
         GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
         
         grabbedObj.transform.position = transform.position + shootCamera.transform.forward * 2;
-        rb.velocity = shootCamera.transform.forward * 15;
+        rb.velocity = shootCamera.transform.forward * shootVelocity;
         grabbedObj = null;
     }
     public bool infront(Transform target)

@@ -2318,6 +2318,7 @@ MonoBehaviour:
   grabbedObj: {fileID: 0}
   camera: {fileID: 1188354036}
   shootCamera: {fileID: 409994294}
+  shootVelocity: 15
   everGrabbed: 0
 --- !u!114 &1897405835
 MonoBehaviour:
@@ -2351,8 +2352,10 @@ MonoBehaviour:
   basketDistLim: 20.238
   rotateSpeed: 50
   moveSpeed: 5
+  shootCamera: {fileID: 409994291}
   isMoving: 0
   run: 0
+  needsToGoBack: 1
 --- !u!114 &1897405837
 MonoBehaviour:
   m_ObjectHideFlags: 0
