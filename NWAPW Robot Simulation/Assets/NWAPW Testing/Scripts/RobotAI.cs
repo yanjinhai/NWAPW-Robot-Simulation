@@ -265,7 +265,7 @@ public class RobotAI : MonoBehaviour
                 }
                 else
                 {
-                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
 
                     }
