@@ -219,7 +219,6 @@ public class RobotAI : MonoBehaviour
             }
         }
         return Closest;
-
     }
 
     void FixedUpdate()
@@ -227,9 +226,8 @@ public class RobotAI : MonoBehaviour
         if (run)
         {
             List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
-            /*
-             * Added this to prevent the robot from going after blocks already stacked.
-             */
+            
+            // Prevent the robot from going after blocks already stacked. 
             GameObject collectible;
             for (int i = 0; i < collectibles.Count; i++)
             {
