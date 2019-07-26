@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-    GameObject[] goalAreas;
     GameObject[] dropAreas;
     GameObject[] stackAreas;
     private bool targetChanged;
@@ -278,17 +277,9 @@ public class RobotAI : MonoBehaviour
                     }
                     else
                     {
-                        //if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
-                        //{
-                        //    goalAreas = stackAreas;
-                        //}
-                        //else
-                        //{
-                            goalAreas = dropAreas;
-                        //}
-                        if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                        if (FindNearest(dropAreas).GetComponent<NavPoint>() != targetPos)
                         {
-                            targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                            targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
                             targetChanged = true;
                             justGrabbed = false;
                         }
@@ -325,10 +316,9 @@ public class RobotAI : MonoBehaviour
         switch(stackingStage)
         {
             case 0:
-                goalAreas = stackAreas;
-                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
-                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
                     targetChanged = true;
                     justGrabbed = false;
                 }
@@ -347,10 +337,9 @@ public class RobotAI : MonoBehaviour
                     layerMask = 1 << 8;
                     layerMask = ~layerMask;
                 }
-                goalAreas = stackAreas;
-                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
-                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
                     targetChanged = true;
                     justGrabbed = false;
                 }
