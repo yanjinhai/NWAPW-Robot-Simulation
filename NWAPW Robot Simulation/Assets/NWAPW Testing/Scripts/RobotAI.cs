@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-
+    GameObject[] goalAreas
     GameObject[] dropAreas;
     GameObject[] stackAreas;
     private bool targetChanged;
@@ -278,7 +278,6 @@ public class RobotAI : MonoBehaviour
                     }
                     else
                     {
-                        GameObject[] goalAreas;
                         //if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
                         //{
                         //    goalAreas = stackAreas;
@@ -326,10 +325,20 @@ public class RobotAI : MonoBehaviour
         switch(stackingStage)
         {
             case 0:
+                goalAreas = stackAreas;
+                if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
+                {
+                    targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                }
+                FollowRoute();
+                goto case 1;
+            case 1:
                 if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
                 {
                     stackingStage++;
-                    break;
+                    goto case 2;
                 } else
                 {
                     layerMask = 11 << 8;
@@ -338,13 +347,15 @@ public class RobotAI : MonoBehaviour
                     layerMask = 1 << 8;
                     layerMask = ~layerMask;
                 }
-                GameObject[] goalAreas = stackAreas;
+                goalAreas = stackAreas;
                 if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                 {
                     targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
                     targetChanged = true;
                     justGrabbed = false;
                 }
+                break;
+            case 2:
                 break;
         }
     }
