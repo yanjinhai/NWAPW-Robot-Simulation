@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/NWAPW Testing/Prefabs/Scenes/Start.unity
+    guid: 9e6af4b92fae950499801705763f5deb
+  - enabled: 1
+    path: Assets/NWAPW Testing/Prefabs/Scenes/TeleopAutonomous.unity
+    guid: 8ebaa52810b3a3f4bbeb1cf5c37129a1
   m_configObjects: {}

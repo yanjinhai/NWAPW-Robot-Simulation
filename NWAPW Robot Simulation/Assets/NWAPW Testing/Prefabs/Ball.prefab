@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8583497016052636917}
   - component: {fileID: 5481050973456474328}
   - component: {fileID: 5362264769862200493}
+  - component: {fileID: 7342925838829278382}
   m_Layer: 8
   m_Name: Ball
   m_TagString: CollectableObject
@@ -125,3 +126,15 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+--- !u!114 &7342925838829278382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6192613494680834717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72cca46df6dee04380df5fbe49c8ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

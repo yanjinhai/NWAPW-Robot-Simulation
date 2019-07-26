@@ -13,7 +13,7 @@ public class PlaceScript : MonoBehaviour
     void Update()
      {
 
-         if (Input.GetButtonDown("Fire1"))
+         if (Input.GetButtonDown("Fire1") && GameObject.FindGameObjectWithTag("TogglePlace").GetComponent<TogglePlace>().place)
          {
             CurrentCam = CameraSwitcher.GetComponent<CameraSwitch>().CurrentCam;
 
@@ -27,7 +27,6 @@ public class PlaceScript : MonoBehaviour
                 newBall.transform.parent = CollectablesParent.transform;
             }
         }
-
-     }
+    }
     
 }
