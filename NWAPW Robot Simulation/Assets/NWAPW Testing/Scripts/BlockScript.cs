@@ -3,18 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockScript : MonoBehaviour
-{
-    void Start()
-    {
-
-    }
-
-
-    void Update()
-    {
-        //CheckState();
-    }
-
+{ 
     /**
      * This works for cube shapes, not sure about anything else.
      */
