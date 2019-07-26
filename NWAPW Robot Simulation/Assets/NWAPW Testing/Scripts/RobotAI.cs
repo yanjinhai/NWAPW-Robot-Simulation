@@ -385,25 +385,28 @@ public class RobotAI : MonoBehaviour
                 if (FollowRoute())
                 {
                     stackingStage++;
+                    gameObject.GetComponent<RobotMovement>().isMoving = true;
                     goto case 3;
                 }
                 break;
                 // Inbetween these cases add veticality
             case 3:
-                Move(FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos,robotDeadband+.05f+gameObject.GetComponent<GrabRelease>().grabbedObj.GetComponent<NavPoint>().deadBand);
                 if(!gameObject.GetComponent<RobotMovement>().isMoving)
                 {
                     stackingStage++;
                     Release();
+                    gameObject.GetComponent<RobotMovement>().isMoving = true;
                     goto case 4;
                 }
+                Move(FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos, robotDeadband + .05f + gameObject.GetComponent<GrabRelease>().grabbedObj.GetComponent<NavPoint>().deadBand);
                 break;
             case 4:
-                Move(referencePoint.point, .05f, true);
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
                 {
                     stackingStage = 0;
+                    break;
                 }
+                Move(referencePoint.point, .05f, true);
                 break;
         }
     }
