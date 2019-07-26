@@ -377,7 +377,6 @@ public class RobotAI : MonoBehaviour
                 }
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
-                    Debug.Log(closestRef != referencePoint.point);
                     referencePoint.gameObject.transform.position = closestRef;
                     referencePoint.point = closestRef;
                     targetPos = referencePoint;
