@@ -9,6 +9,7 @@ public class StackAreaScript : MonoBehaviour
 
     // Constants
     float robotRadMin, robotRadMax, blockRadMin, blockRadMax, FixedDistance;
+    int layerMask;
 
     // Output
     public Vector3 nextPos;
@@ -17,6 +18,8 @@ public class StackAreaScript : MonoBehaviour
     // Awake is called upon initialization
     void Awake()
     {
+        layerMask = 11 << 8;
+        layerMask = ~layerMask;
         /*
          * Initializes constants. Assumes the robot and the blocks are perfect cubes. X can be replaced by Y or Z without any issues.
          */
@@ -61,10 +64,9 @@ public class StackAreaScript : MonoBehaviour
         // Remove the obstructed reference points
         for (int i = 0; i < refPoints.Count; i++)
         {
-            bool isObstructed = Physics.Linecast(nextPos, refPoints[i]);
+            bool isObstructed = Physics.Linecast(nextPos, refPoints[i], layerMask);
             if (isObstructed)
             {
-                Debug.Log("PLEASE NO DON'T BE THIS");
                 refPoints.Remove(refPoints[i]);
             }
         }
