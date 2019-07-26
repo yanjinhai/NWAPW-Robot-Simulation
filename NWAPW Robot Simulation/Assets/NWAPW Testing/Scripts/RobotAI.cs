@@ -273,14 +273,14 @@ public class RobotAI : MonoBehaviour
                     else
                     {
                         GameObject[] goalAreas;
-                        if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
-                        {
-                            goalAreas = stackAreas;
-                        }
-                        else
-                        {
+                        //if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
+                        //{
+                        //    goalAreas = stackAreas;
+                        //}
+                        //else
+                        //{
                             goalAreas = dropAreas;
-                        }
+                        //}
                         if (FindNearest(goalAreas).GetComponent<NavPoint>() != targetPos)
                         {
                             targetPos = FindNearest(goalAreas).GetComponent<NavPoint>();
@@ -305,9 +305,19 @@ public class RobotAI : MonoBehaviour
         }
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
-            if (route.Count == 1)
+            if (GetComponent<GrabRelease>().grabbedObj.GetComponent<MeshFilter>().sharedMesh.name == "Cube")
             {
-                return true;
+                if (route.Count == 2)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (route.Count == 1)
+                {
+                    return true;
+                }
             }
             route.RemoveAt(route.Count - 1);
         }
