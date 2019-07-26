@@ -6,7 +6,6 @@ public class CameraSwitch : MonoBehaviour
 {
     public GameObject[] Cameras;
     public GameObject CurrentCam;
-    // Start is called before the first frame update
     void Start()
     {
         CurrentCam = Cameras[0];
@@ -17,14 +16,8 @@ public class CameraSwitch : MonoBehaviour
         Cameras[0].SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        switchCamera();
-    
-    }
-    void switchCamera() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+    public void switchCamera() {
+        print("jdfak");
             int index = System.Array.IndexOf(Cameras, CurrentCam);
             if (index == Cameras.Length - 1) {
                 index = -1;
@@ -34,6 +27,5 @@ public class CameraSwitch : MonoBehaviour
                 cam.SetActive(false);
             }
             Cameras[index + 1].SetActive(true);
-        }
     }
 }

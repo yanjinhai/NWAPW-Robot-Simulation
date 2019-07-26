@@ -9,6 +9,8 @@ TagManager:
   - Obstacle
   - CollectableParent
   - DropObject
+  - TogglePlace
+  - Enviorment
   layers:
   - Default
   - TransparentFX
