@@ -272,17 +272,21 @@ public class RobotAI : MonoBehaviour
                 }
                 else
                 {
+                    // Check if the grabbed object is a block.
                     if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
+                        // If so, >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Finish doc here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                         StackingAI();
                     }
-                    else if (FollowRoute() && !justGrabbed)
+                    else if (FollowRoute() && !justGrabbed) // Otherwise, its a ball. Check if the robot is both at the position and didn't just grab an object.
                     {
+                        // Release the ball
                         Release();
                         //Toss();
                     }
                     else
                     {
+                        // If it
                         if (FindNearest(dropAreas).GetComponent<NavPoint>() != targetPos)
                         {
                             targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
@@ -294,6 +298,7 @@ public class RobotAI : MonoBehaviour
             }
         }
     }
+
     bool FollowRoute()
     {
         if (targetChanged)
