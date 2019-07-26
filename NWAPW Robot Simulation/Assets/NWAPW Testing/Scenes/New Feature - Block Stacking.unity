@@ -411,8 +411,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26660daa111ee7c4f8095a75869cf67e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &211289269
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,8 +532,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -785,37 +785,37 @@ PrefabInstance:
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: FirstPerson
-      value: 
+      value:
       objectReference: {fileID: 615511098}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: ThirdPerson
-      value: 
+      value:
       objectReference: {fileID: 42602097}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: TopView
-      value: 
+      value:
       objectReference: {fileID: 34263041}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: Cameras.Array.data[0]
-      value: 
+      value:
       objectReference: {fileID: 42602097}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: Cameras.Array.data[1]
-      value: 
+      value:
       objectReference: {fileID: 615511098}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: CurrentCam
-      value: 
+      value:
       objectReference: {fileID: 0}
     - target: {fileID: 8973889257444598825, guid: de7d791d4f75ab647b814185f767ff62,
         type: 3}
       propertyPath: Cameras.Array.data[2]
-      value: 
+      value:
       objectReference: {fileID: 34263041}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7d791d4f75ab647b814185f767ff62, type: 3}
@@ -875,8 +875,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Navigation:
     m_Mode: 3
     m_SelectOnUp: {fileID: 0}
@@ -913,7 +913,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -928,8 +928,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -982,8 +982,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52b6cbd55975b5c4c814a3d4235e686d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!4 &1115837367
 Transform:
   m_ObjectHideFlags: 0
@@ -1025,8 +1025,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5ac83896a3da394b97a17c942a86273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   CollectableParent: {fileID: 1223407391}
   CollectablePremade: {fileID: 1490451237566297114, guid: 9f3f683466090964ba92c1eb4b4852a3,
     type: 3}
@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Navigation:
     m_Mode: 3
     m_SelectOnUp: {fileID: 0}
@@ -1131,7 +1131,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument:
           m_BoolArgument: 0
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1146,8 +1146,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -1220,8 +1220,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
@@ -1295,8 +1295,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -1343,8 +1343,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -1379,8 +1379,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
@@ -1396,8 +1396,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -1492,8 +1492,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -1615,8 +1615,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
@@ -1694,8 +1694,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
@@ -1798,53 +1798,53 @@ PrefabInstance:
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: AssetType
-      value: 
+      value:
       objectReference: {fileID: 1223407391}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: CameraSwitcher
-      value: 
+      value:
       objectReference: {fileID: 1079299393}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: Camera3
-      value: 
+      value:
       objectReference: {fileID: 615511098}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: Camera2
-      value: 
+      value:
       objectReference: {fileID: 42602097}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: Camera1
-      value: 
+      value:
       objectReference: {fileID: 34263041}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: TopView
-      value: 
+      value:
       objectReference: {fileID: 34263041}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: ThirdPerson
-      value: 
+      value:
       objectReference: {fileID: 42602097}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: FirstPerson
-      value: 
+      value:
       objectReference: {fileID: 42602097}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: Collectable
-      value: 
+      value:
       objectReference: {fileID: 1490451237566297114, guid: 9f3f683466090964ba92c1eb4b4852a3,
         type: 3}
     - target: {fileID: 6663399642567861435, guid: 6006308ece287a0499125c43762a69aa,
         type: 3}
       propertyPath: CollectablesParent
-      value: 
+      value:
       objectReference: {fileID: 1223407391}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6006308ece287a0499125c43762a69aa, type: 3}
@@ -1989,8 +1989,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a69700ef1016afe418d4156e25e69554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   speed: 1
   run: 1
 --- !u!114 &1923268564
@@ -2003,8 +2003,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eb3ee5593855f8458249189b1fc03d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Collectables: {fileID: 1223407391}
   grabbedObj: {fileID: 0}
   firstPersonCamera: {fileID: 615511099}
@@ -2021,8 +2021,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: 0
   from: {fileID: 1923268565}
@@ -2038,8 +2038,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27be66d8a117c7f4a90747c1e12b0259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   positionDeadband: 0.05
   rotateSpeed: 50
   moveSpeed: 5
@@ -2056,8 +2056,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   robotDeadband: 0
   targetPos: {fileID: 0}
   everGrabbed: 0
@@ -2106,8 +2106,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -2125,8 +2125,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
@@ -2171,8 +2171,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 166dde5b095822742986a9c0338afef6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   score: 0
   text: {fileID: 1693573491}
 --- !u!4 &2077175469
@@ -2231,8 +2231,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -2248,8 +2248,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca771b098aa58524aaca45edd81c887e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   point: {x: 0, y: 0, z: 0}
   gCost: Infinity
   from: {fileID: 0}
@@ -2286,8 +2286,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c427ca22e05d5484783c159aafcbbe40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   robot: {fileID: 1923268561}
   block: {fileID: 1490451237566297114, guid: 9f3f683466090964ba92c1eb4b4852a3, type: 3}
   nextPos: {x: 0, y: 0, z: 0}
@@ -2356,6 +2356,7 @@ Transform:
   m_Children:
   - {fileID: 2127565993}
   - {fileID: 259599737}
+  - {fileID: 2127565993}
   m_Father: {fileID: 2077175469}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

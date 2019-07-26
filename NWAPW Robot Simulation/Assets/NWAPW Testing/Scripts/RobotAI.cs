@@ -16,7 +16,7 @@ public class RobotAI : MonoBehaviour
     private bool justGrabbed;
     public bool everGrabbed;
     public bool run;
-    private int stackingStage;
+    public int stackingStage;
 
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
@@ -333,12 +333,20 @@ public class RobotAI : MonoBehaviour
                     targetChanged = true;
                     justGrabbed = false;
                 }
+                Debug.Log(targetChanged);
+                Debug.Log(route.Count);
                 FollowRoute();
+                Debug.Log(route.Count);
+                Debug.Log(gameObject.GetComponent<RobotMovement>().isMoving);
+                Debug.Log("Check1");
                 stackingStage++;
                 goto case 1;
             case 1:
+                Debug.Log("Check2");
+                Debug.Log(route.Count);
                 if (route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving || route.Count() < 2)
                 {
+                    Debug.Log("Check3");
                     stackingStage++;
                     goto case 2;
                 } else
