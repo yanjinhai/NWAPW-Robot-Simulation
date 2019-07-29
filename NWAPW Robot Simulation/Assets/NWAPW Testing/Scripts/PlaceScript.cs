@@ -27,6 +27,8 @@ public class PlaceScript : MonoBehaviour
                 newBall.transform.parent = CollectablesParent.transform;
             }
         }
+
+       
     }
     
 }

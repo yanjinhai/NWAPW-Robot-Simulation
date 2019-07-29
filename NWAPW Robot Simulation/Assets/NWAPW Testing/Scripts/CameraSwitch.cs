@@ -7,15 +7,13 @@ public class CameraSwitch : MonoBehaviour
     public GameObject[] Cameras;
     public GameObject CurrentCam;
 
-    void Start()
+    private void Update()
     {
-        CurrentCam = Cameras[0];
-        foreach (GameObject cam in Cameras)
-        {
-            cam.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            switchCamera();
         }
-        Cameras[0].SetActive(true);
     }
+
 
     public void switchCamera() {
         int index = System.Array.IndexOf(Cameras, CurrentCam);
@@ -29,3 +27,4 @@ public class CameraSwitch : MonoBehaviour
         Cameras[index + 1].SetActive(true);
     }
 }
+
