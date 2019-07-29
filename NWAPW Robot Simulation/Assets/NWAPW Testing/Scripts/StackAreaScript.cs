@@ -72,8 +72,8 @@ public class StackAreaScript : MonoBehaviour
         float placementMargin = GetComponent<MeshCollider>().bounds.extents.x - blockRadMin - allowedError;
 
         // Find the displacement due to blocks already stacked.
-        int xDisplacement = (StackedBlocks.Count % 3) * (int)(2 * blockRadMin);
-        int zDisplacement = (StackedBlocks.Count / 3) * (int)(2 * blockRadMin);
+        int xDisplacement = (StackedBlocks.Count % 2) * (int)(2 * blockRadMin);
+        int zDisplacement = (StackedBlocks.Count / 2) * (int)(2 * blockRadMin);
         Vector3 nextPosDisplacement = new Vector3(xDisplacement, 0 , zDisplacement);
         
         // Calculate the next available position for the next block
