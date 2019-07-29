@@ -44,12 +44,10 @@ public class PlayerMovement : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().Release();
             }
             //more toss
-            
             if (Input.GetKeyDown(KeyCode.S)) {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().Toss();
 
             }
-                
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-    GameObject[] dropAreas;
+    GameObject[] baskets;
     GameObject[] stackAreas;
     NavPoint referencePoint;
     private bool targetChanged;
@@ -16,6 +16,7 @@ public class RobotAI : MonoBehaviour
     private bool justGrabbed;
     public bool everGrabbed;
     public bool run;
+    private bool movingBack;
     public int stackingStage;
 
     List<NavPoint> route = new List<NavPoint>();
@@ -29,12 +30,13 @@ public class RobotAI : MonoBehaviour
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
+        movingBack = false;
 
         // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
-        dropAreas = GameObject.FindGameObjectsWithTag("Drop Area");
         stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
+        baskets = GameObject.FindGameObjectsWithTag("Basket");
         robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
         stackingStage = 0;
         if (GameObject.FindGameObjectWithTag("Ref Point") != null)
@@ -153,7 +155,7 @@ public class RobotAI : MonoBehaviour
                     // Checks Line of Sight to the NavPoint from the root 
                     testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
                     testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
-                    
+
                     // /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
                     if (!(testOne || testTwo))
                     {
@@ -169,7 +171,7 @@ public class RobotAI : MonoBehaviour
                             searchStack.Add(current);
                         }
                     }
-                    
+
                     // Else adds the NavPoints around this object to the array if that obstacle is not already being checked
                     else
                     {
@@ -243,7 +245,6 @@ public class RobotAI : MonoBehaviour
                     }
                 }
             }
-            
 
             if (collectibles.Count > 0)
             {
@@ -252,7 +253,8 @@ public class RobotAI : MonoBehaviour
                     StackingAI();
                     return;
                 }
-                if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
+                if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
+
                 {
                     if (FollowRoute() && !justReleased)
                     {
@@ -276,21 +278,9 @@ public class RobotAI : MonoBehaviour
                         // If so, >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Finish doc here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                         StackingAI();
                     }
-                    else if (FollowRoute() && !justGrabbed) // Otherwise, its a ball. Check if the robot is both at the position and didn't just grab an object.
-                    {
-                        // Release the ball
-                        Release();
-                        //Toss();
-                    }
                     else
                     {
-                        // If it
-                        if (FindNearest(dropAreas).GetComponent<NavPoint>() != targetPos)
-                        {
-                            targetPos = FindNearest(dropAreas).GetComponent<NavPoint>();
-                            targetChanged = true;
-                            justGrabbed = false;
-                        }
+                        TossingAI();
                     }
                 }
             }
@@ -411,6 +401,31 @@ public class RobotAI : MonoBehaviour
         }
     }
 
+    void TossingAI()
+    {
+        if ((FollowRoute() && !justGrabbed) || movingBack)
+        {
+            float distance = (targetPos.point - GetComponent<NavPoint>().point).magnitude;
+            if (distance < 11.67f)
+            {
+                movingBack = true;
+                Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
+                Move(GetComponent<NavPoint>().point + neededMove, .05f, true);
+            }
+            else
+            {
+                movingBack = false;
+                Toss();
+            }
+        }
+        else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
+        {
+            targetPos = FindNearest(baskets).GetComponent<NavPoint>();
+            targetChanged = true;
+            justGrabbed = false;
+        }
+    }
+
     /**
      * Doesn't include the NavPoint on the Robot game object.
      */
@@ -435,17 +450,20 @@ public class RobotAI : MonoBehaviour
             collectible.GetComponent<NavPoint>().ResetValues();
         }
 
-        // Drop Areas
-        foreach (GameObject area in dropAreas)
-        {
-            area.GetComponent<NavPoint>().ResetValues();
-        }
-
         // Stack Areas
         foreach (GameObject area in stackAreas)
         {
             area.GetComponent<NavPoint>().ResetValues();
         }
+        
+        // Basket Areas
+        foreach (GameObject basket in baskets)
+        {
+
+            basket.GetComponent<NavPoint>().ResetValues();
+
+        }
+
     }
 
     void Move(Vector3 position, float deadBand, bool moveBack = false)

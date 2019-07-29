@@ -16,7 +16,7 @@ public class NavPoint : MonoBehaviour
     void Awake()
     {
         // Set up point at its location and resets values to defaults
-        point = new Vector3 (this.transform.position.x,.5f, this.transform.position.z);
+        point = new Vector3 (this.transform.position.x, .5f, this.transform.position.z);
         ResetValues();
 
         // Sets deadband for objects the robot runs into
@@ -24,6 +24,12 @@ public class NavPoint : MonoBehaviour
         {
             deadBand = this.gameObject.GetComponent<Collider>().bounds.size.x / 2;
         }
+
+        if (this.gameObject.tag == "Basket")
+        {
+            deadBand = 11.674f;
+        }
+
     }
 
     void Update()
@@ -33,12 +39,12 @@ public class NavPoint : MonoBehaviour
     }
 
     // Resets from and costs to default values, except player, due to it having special values
-    public void ResetValues() {
+    public void ResetValues()
+    {
         if (this.gameObject.tag != "Player")
         {
             gCost = Mathf.Infinity;
             fCost = Mathf.Infinity;
-            
         }
         from = this;
     }
