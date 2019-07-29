@@ -401,7 +401,7 @@ public class RobotAI : MonoBehaviour
         if ((FollowRoute() && !justGrabbed) || movingBack)
         {
             float distance = (targetPos.point - GetComponent<NavPoint>().point).magnitude;
-            if (distance < 11.6f)
+            if (distance < 11.67f)
             {
                 movingBack = true;
                 Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
