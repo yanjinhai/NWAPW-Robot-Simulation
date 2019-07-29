@@ -24,6 +24,11 @@ public class NavPoint : MonoBehaviour
         {
             deadBand = this.gameObject.GetComponent<Collider>().bounds.size.x / 2;
         }
+
+        if (this.gameObject.tag == "Basket")
+        {
+            deadBand = 11.674f;
+        }
     }
 
     void Update()

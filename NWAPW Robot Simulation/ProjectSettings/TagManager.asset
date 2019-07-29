@@ -9,6 +9,10 @@ TagManager:
   - Obstacle
   - CollectableParent
   - DropObject
+  - Undefined
+  - Basket
+  - Stack Area
+  - Ref Point
   layers:
   - Default
   - TransparentFX

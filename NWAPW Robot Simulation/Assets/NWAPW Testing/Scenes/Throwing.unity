@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 356220032}
   - component: {fileID: 356220030}
   - component: {fileID: 356220031}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NW Basket
   m_TagString: Basket
   m_Icon: {fileID: 0}
@@ -419,6 +419,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: -0.5
 --- !u!114 &356220031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,7 +1285,7 @@ GameObject:
   - component: {fileID: 1005170980}
   m_Layer: 0
   m_Name: Baskets
-  m_TagString: Basket
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1583,6 +1584,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5523010578917955481, guid: 11b8026e419dc1b42978755ea209cb6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523010578341675757, guid: 11b8026e419dc1b42978755ea209cb6c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5523010577884418267, guid: 11b8026e419dc1b42978755ea209cb6c,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -1603,10 +1614,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 5523010578917955481, guid: 11b8026e419dc1b42978755ea209cb6c,
+    - target: {fileID: 5523010577047497800, guid: 11b8026e419dc1b42978755ea209cb6c,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523010577884418266, guid: 11b8026e419dc1b42978755ea209cb6c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523010578415146575, guid: 11b8026e419dc1b42978755ea209cb6c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523010578663087495, guid: 11b8026e419dc1b42978755ea209cb6c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b8026e419dc1b42978755ea209cb6c, type: 3}
@@ -1624,7 +1650,7 @@ GameObject:
   - component: {fileID: 1130028817}
   - component: {fileID: 1130028815}
   - component: {fileID: 1130028816}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SE Basket
   m_TagString: Basket
   m_Icon: {fileID: 0}
@@ -1661,6 +1687,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: -0.5
 --- !u!114 &1130028816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1999,7 +2026,7 @@ GameObject:
   - component: {fileID: 1435070923}
   - component: {fileID: 1435070922}
   - component: {fileID: 1435070926}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SW Basket
   m_TagString: Basket
   m_Icon: {fileID: 0}
@@ -2036,6 +2063,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: -0.5
 --- !u!136 &1435070923
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2123,7 +2151,7 @@ GameObject:
   - component: {fileID: 1592823241}
   - component: {fileID: 1592823239}
   - component: {fileID: 1592823240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NE Basket
   m_TagString: Basket
   m_Icon: {fileID: 0}
@@ -2160,6 +2188,7 @@ MonoBehaviour:
   gCost: Infinity
   from: {fileID: 0}
   fCost: Infinity
+  deadBand: -0.5
 --- !u!114 &1592823240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,9 +2345,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collectables: {fileID: 1929844720}
   grabbedObj: {fileID: 0}
-  camera: {fileID: 1188354036}
+  firstPersonCamera: {fileID: 1188354036}
   shootCamera: {fileID: 409994294}
-  shootVelocity: 15
+  isHoldingCollectableObject: 0
   everGrabbed: 0
 --- !u!114 &1897405835
 MonoBehaviour:
@@ -2336,6 +2365,7 @@ MonoBehaviour:
   gCost: 0
   from: {fileID: 0}
   fCost: 0
+  deadBand: -0.5
 --- !u!114 &1897405836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2349,13 +2379,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionDeadband: 1.05
-  basketDistLim: 20.238
   rotateSpeed: 50
   moveSpeed: 5
-  shootCamera: {fileID: 409994291}
   isMoving: 0
+  moveBack: 0
   run: 0
-  needsToGoBack: 1
 --- !u!114 &1897405837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2368,11 +2396,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c013da264767a749a9293d39ededb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIsBasket: 0
-  isHoldingCollectableObject: 0
+  robotDeadband: 0
   targetPos: {fileID: 0}
   everGrabbed: 0
   run: 0
+  stackingStage: 0
 --- !u!54 &1897405838
 Rigidbody:
   m_ObjectHideFlags: 0

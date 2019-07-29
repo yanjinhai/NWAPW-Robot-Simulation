@@ -53,7 +53,13 @@ public class RobotMovement : MonoBehaviour
                 else
                 {
                     // Moves the robot forward, toward the target
-                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                    if (relativePos.magnitude >= (Vector3.forward * moveSpeed * Time.deltaTime).magnitude)
+                    {
+                        this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                    } else
+                    {
+                        this.transform.Translate(relativePos);
+                    }
                 }
             }
 
@@ -72,9 +78,16 @@ public class RobotMovement : MonoBehaviour
 
                 // Else the robot is pointing away from the target
                 else
-                { 
+                {
                     // Moves the robot backward, toward the target
-                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
+                    if (relativePos.magnitude >= (Vector3.forward * moveSpeed * Time.deltaTime * -1).magnitude)
+                    {
+                        this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
+                    }
+                    else
+                    {
+                        this.transform.Translate(relativePos);
+                    }
                 }
             }
         }

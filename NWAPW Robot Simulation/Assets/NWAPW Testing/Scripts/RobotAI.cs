@@ -16,6 +16,7 @@ public class RobotAI : MonoBehaviour
     private bool justGrabbed;
     public bool everGrabbed;
     public bool run;
+    private bool movingBack;
     public int stackingStage;
 
     List<NavPoint> route = new List<NavPoint>();
@@ -28,6 +29,7 @@ public class RobotAI : MonoBehaviour
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
+        movingBack = false;
 
         // Non-bool set up
         layerMask = 1 << 8;
@@ -76,6 +78,7 @@ public class RobotAI : MonoBehaviour
         {
             List<NavPoint> crashRoute = new List<NavPoint>();
             crashRoute.Add(target);
+            Debug.Log("NoRoute");
             return crashRoute;
 
         }
@@ -247,7 +250,7 @@ public class RobotAI : MonoBehaviour
                     StackingAI();
                     return;
                 }
-                if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
+                if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
                 {
                     if (FollowRoute() && !justReleased)
                     {
@@ -395,9 +398,20 @@ public class RobotAI : MonoBehaviour
 
     void TossingAI()
     {
-        if (FollowRoute() && !justGrabbed)
+        if ((FollowRoute() && !justGrabbed) || movingBack)
         {
-            Toss();
+            float distance = (targetPos.point - GetComponent<NavPoint>().point).magnitude;
+            if (distance < 11.6f)
+            {
+                movingBack = true;
+                Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
+                Move(GetComponent<NavPoint>().point + neededMove, .05f, true);
+            }
+            else
+            {
+                movingBack = false;
+                Toss();
+            }
         }
         else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
         {
