@@ -76,7 +76,7 @@ public class RobotAI : MonoBehaviour
         // This loop runs if there is absolutly no route to target. In this case it rams headlong into a wall.
         // Under all normal circumstances this should never run. Unless a ball is spawned ontop of a wall or enclosed by obstacles there will be a way
         // If there's a will there's a way
-        if(!found)
+        if (!found)
         {
             List<NavPoint> crashRoute = new List<NavPoint>();
             crashRoute.Add(target);
@@ -99,7 +99,7 @@ public class RobotAI : MonoBehaviour
     bool CalculateRouteRecursion(NavPoint target, NavPoint root) {
 
         // Set up for the initaial raycast
-        Vector3 between = target.point-root.point;
+        Vector3 between = target.point - root.point;
         float relativeDistance = between.magnitude;
 
         // Set up for the offset on the raycasts
@@ -247,7 +247,7 @@ public class RobotAI : MonoBehaviour
 
             if (collectibles.Count > 0)
             {
-                if(stackingStage> 0)
+                if (stackingStage > 0)
                 {
                     StackingAI();
                     return;
@@ -450,7 +450,7 @@ public class RobotAI : MonoBehaviour
 
     void Move(Vector3 position, float deadBand, bool moveBack = false)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position,deadBand, moveBack);
+        gameObject.GetComponent<RobotMovement>().Move(position, deadBand, moveBack);
     }
 
     void Grab() {
@@ -473,8 +473,7 @@ public class RobotAI : MonoBehaviour
         gameObject.GetComponent<GrabRelease>().Release();
     }
     //to toss the ball
-    void Toss()
-    {
+    void Toss() {
         justReleased = true;
         if (!gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
