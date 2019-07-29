@@ -14,7 +14,7 @@ public class StackAreaScript : MonoBehaviour
 
     // Constants
     public float robotRadMin, robotRadMax, blockRadMin, blockRadMax, fixedDistance, allowedError;
-    int layerMask;
+    int layerMask, xCapacity, zCapacity;
 
     // Global Variables
     GameObject block;
@@ -27,6 +27,9 @@ public class StackAreaScript : MonoBehaviour
 
         layerMask = 11 << 8;
         layerMask = ~layerMask;
+
+        xCapacity = 4;
+        zCapacity = 4;
     }
 
 
@@ -72,12 +75,13 @@ public class StackAreaScript : MonoBehaviour
         float placementMargin = GetComponent<MeshCollider>().bounds.extents.x - blockRadMin - allowedError;
 
         // Find the displacement due to blocks already stacked.
-        int xDisplacement = (StackedBlocks.Count % 2) * (int)(2 * blockRadMin);
-        int zDisplacement = (StackedBlocks.Count / 2) * (int)(2 * blockRadMin);
-        Vector3 nextPosDisplacement = new Vector3(xDisplacement, 0 , zDisplacement);
+        int xDisplacement = (StackedBlocks.Count % xCapacity) * (int)(2 * blockRadMin);
+        int yDisplacement = (StackedBlocks.Count / xCapacity / zCapacity) * (int)(2 * blockRadMin);
+        int zDisplacement = (StackedBlocks.Count / zCapacity) * (int)(2 * blockRadMin);
+        Vector3 nextPosDisplacement = new Vector3(xDisplacement, yDisplacement, zDisplacement);
         
         // Calculate the next available position for the next block
-        nextPos = transform.position + new Vector3(placementMargin, blockRadMin, placementMargin) - nextPosDisplacement;
+        nextPos = transform.position + new Vector3(-placementMargin, blockRadMin, -placementMargin) + nextPosDisplacement;
 
         // Calculate all the reference points
         refPoints.Add(new Vector3(nextPos.x, robot.transform.position.y, transform.position.z + fixedDistance));
@@ -88,9 +92,11 @@ public class StackAreaScript : MonoBehaviour
         // Remove the obstructed reference points
         for (int i = 0; i < refPoints.Count; i++)
         {
+            // Linecast from nextPos to each of the reference points
             bool isObstructed = Physics.Linecast(nextPos, refPoints[i], layerMask);
             if (isObstructed)
             {
+                // Delete the reference point if the line is obstructed by another object
                 refPoints.Remove(refPoints[i]);
                 i--;
             }
@@ -102,8 +108,16 @@ public class StackAreaScript : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.tag == "CollectableObject")
         {
-            other.layer = 0;
-            StackedBlocks.Add(other);
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed)
+            {
+                other.layer = 0;
+                StackedBlocks.Add(other);
+            }
+            else
+            {
+                Destroy(other);
+                GameObject.FindGameObjectWithTag("CollectableParent").GetComponent<RandomSpawn>().newObj();
+            }
         }
     }
 

@@ -9,7 +9,7 @@ public class RobotMovement : MonoBehaviour
     Vector3 relativePos;
     public float positionDeadband = 0.05f;
     public float rotateSpeed = 50.0f;
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 3.0f;
     public bool isMoving;
     public bool moveBack;
 

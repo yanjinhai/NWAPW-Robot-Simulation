@@ -8,8 +8,8 @@ public class RandomSpawn : MonoBehaviour
     public GameObject CollectablePremade;
     void Awake()
     {
-
-        for (int i = 0; i < 3; i++) {
+        // Spawn initial collectable objects
+        for (int i = 0; i < 20; i++) {
             newObj();
         } 
     }

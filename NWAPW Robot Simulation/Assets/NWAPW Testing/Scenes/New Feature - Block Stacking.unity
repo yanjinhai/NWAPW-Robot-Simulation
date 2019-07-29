@@ -2087,7 +2087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionDeadband: 0.05
   rotateSpeed: 45
-  moveSpeed: 5
+  moveSpeed: 3
   isMoving: 0
   moveBack: 0
   run: 0

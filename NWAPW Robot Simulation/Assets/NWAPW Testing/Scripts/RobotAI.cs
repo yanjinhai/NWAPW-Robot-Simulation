@@ -323,9 +323,15 @@ public class RobotAI : MonoBehaviour
         return false;
     }
 
+    /**
+     *  Procedure for stacking blocks in the stacking areas
+     */
     void StackingAI()
     {
-        switch(stackingStage)
+        Vector3 targetBlockPos = FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos;
+        GameObject block = gameObject.GetComponent<GrabRelease>().grabbedObj;
+
+        switch (stackingStage)
         {
             case 0:
                 if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
@@ -346,14 +352,13 @@ public class RobotAI : MonoBehaviour
                 {
                     stackingStage++;
                     goto case 2;
-                } else
-                {
-                    layerMask = 11 << 8;
-                    layerMask = ~layerMask;
-                    FollowRoute();
-                    layerMask = 1 << 8;
-                    layerMask = ~layerMask;
-                }
+                } 
+                layerMask = 11 << 8;
+                layerMask = ~layerMask;
+                FollowRoute();
+                layerMask = 1 << 8;
+                layerMask = ~layerMask;
+                
                 if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
                     targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
@@ -388,16 +393,45 @@ public class RobotAI : MonoBehaviour
                     goto case 3;
                 }
                 break;
-                // Inbetween these cases add veticality
-            case 3:
+            /*case 3:
+                if (block.transform.position.y >= targetBlockPos.y) {
+                    stackingStage++;
+                    print("KKKKKKKKKKKKKKKKKkk");
+                    goto case 4;
+                }
+                block.transform.position += Vector3.up;// Broken>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                break;
+            case 4:
                 if(!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage++;
+                    Release();
+                    gameObject.GetComponent<RobotMovement>().isMoving = true;
+                    goto case 5;
+                }
+                Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
+                Move(targetBlockPos_XZ, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
+                break;
+            case 5:
+                if (!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage = 0;
+                    justReleased = true;
+                    break;
+                }
+                Move(referencePoint.point, .05f, true);
+                break;
+            */
+            case 3:
+                if (!gameObject.GetComponent<RobotMovement>().isMoving)
                 {
                     stackingStage++;
                     Release();
                     gameObject.GetComponent<RobotMovement>().isMoving = true;
                     goto case 4;
                 }
-                Move(FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos, robotDeadband + .05f + gameObject.GetComponent<GrabRelease>().grabbedObj.GetComponent<NavPoint>().deadBand);
+                Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
+                Move(targetBlockPos_XZ, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
                 break;
             case 4:
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
