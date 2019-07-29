@@ -1,23 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RobotAI : MonoBehaviour
 {
-
-    GameObject[] goalAreas;
     GameObject[] baskets;
+    GameObject[] stackAreas;
+    NavPoint referencePoint;
     private bool targetChanged;
-
-    public bool targetIsBasket;
-    public bool isHoldingCollectableObject;
+    public float robotDeadband;
     public NavPoint targetPos;
     private bool justReleased;
     private bool justGrabbed;
     public bool everGrabbed;
-    bool found = false;
     public bool run;
+    public int stackingStage;
 
     List<NavPoint> route = new List<NavPoint>();
     List<NavPoint> searchStack = new List<NavPoint>();
@@ -29,13 +28,19 @@ public class RobotAI : MonoBehaviour
         targetChanged = true;
         justReleased = false;
         justGrabbed = false;
-        isHoldingCollectableObject = false;
-        targetIsBasket = false;
+
         // Non-bool set up
         layerMask = 1 << 8;
         layerMask = ~layerMask;
-        goalAreas = GameObject.FindGameObjectsWithTag("Drop Area");
+        stackAreas = GameObject.FindGameObjectsWithTag("Stack Area");
         baskets = GameObject.FindGameObjectsWithTag("Basket");
+        robotDeadband = this.gameObject.GetComponentInChildren<Collider>().bounds.size.x / 2;
+        stackingStage = 0;
+        if (GameObject.FindGameObjectWithTag("Ref Point") != null)
+        {
+            referencePoint = GameObject.FindGameObjectWithTag("Ref Point").GetComponent<NavPoint>();
+        }
+
         // Initial route set up
         ResetNavPoints();
         GameObject[] collectableObjects = GameObject.FindGameObjectsWithTag("CollectableObject");
@@ -52,7 +57,9 @@ public class RobotAI : MonoBehaviour
         // Adds This object as the first NavPoint in the search stack.
         searchStack.Add(this.gameObject.GetComponent<NavPoint>());
 
-        while (searchStack.Count > 0 && !found) {
+        // Loops until a route is found or search stack is empty
+        while (!found && searchStack.Count > 0) {
+
             // Checks if it can reach the target and adds follow up points
             found = CalculateRouteRecursion(target, searchStack[0]);
             // Sorts list by fCost (Cost to point on current route + As the crow flies to Target)
@@ -61,8 +68,19 @@ public class RobotAI : MonoBehaviour
                 return (a.fCost).CompareTo(b.fCost);
             });
         }
+
+        // This loop runs if there is absolutly no route to target. In this case it rams headlong into a wall.
+        // Under all normal circumstances this should never run. Unless a ball is spawned ontop of a wall or enclosed by obstacles there will be a way
+        // If there's a will there's a way
+        if (!found)
+        {
+            List<NavPoint> crashRoute = new List<NavPoint>();
+            crashRoute.Add(target);
+            return crashRoute;
+
+        }
+
         // Goes back along the route from the target to This Object using NavPoint.from
-        // Crashes in this loop is no route is found
         NavPoint backTrack = target;
         List<NavPoint> route = new List<NavPoint>();
         do
@@ -76,22 +94,64 @@ public class RobotAI : MonoBehaviour
 
     bool CalculateRouteRecursion(NavPoint target, NavPoint root) {
 
-        float relativeDistance;
+        // Set up for the initaial raycast
+        Vector3 between = target.point - root.point;
+        float relativeDistance = between.magnitude;
+
+        // Set up for the offset on the raycasts
+        Vector3 perp = Vector3.Cross(Vector3.up, between).normalized;
 
         // If there is an obstacle between the current NavPoint and the Target (ball or drop area)
         // This ignores the player and collectables using the layerMask
-        if (Physics.Linecast(root.point, target.point, out RaycastHit hitInfo, layerMask))
+        bool testOne = Physics.Raycast(root.point + perp * 0.5f, between, out RaycastHit hitOne, relativeDistance, layerMask);
+        bool testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out RaycastHit hitTwo, relativeDistance, layerMask);
+        if (testOne || testTwo)
         {
-            // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
-            NavPoint[] obstVerts = hitInfo.transform.gameObject.GetComponentsInChildren<NavPoint>();
-            foreach (NavPoint current in obstVerts)
+
+            // List of objects with their vertices already being processed
+            List<GameObject> hitObjects = new List<GameObject>();
+
+            // Creates obstVerts with the verts around the obstacle(s) hit and adds the object(s) to hitObjects
+            NavPoint[] obstVerts;
+            if (testOne)
             {
-                relativeDistance = (current.point - root.point).magnitude;
-                // If G cost (distance to the NavPoint from the origin) is higher than existing, a more optimised route already exists to here
-                if (relativeDistance + root.gCost < current.gCost) 
+                obstVerts = hitOne.transform.gameObject.GetComponentsInChildren<NavPoint>();
+                hitObjects.Add(hitOne.transform.gameObject);
+                if (testTwo && hitTwo.transform != hitOne.transform)
                 {
+                    obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                    hitObjects.Add(hitTwo.transform.gameObject);
+                }
+            }
+            else
+            {
+                obstVerts = hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>();
+                hitObjects.Add(hitTwo.transform.gameObject);
+            }
+
+            // Loops through all the NavPoints from around the Obstacle (Currently the only thing that can be in the way)
+            NavPoint current;
+            for (int i = 0; i < obstVerts.Count(); i++)
+            {
+                current = obstVerts[i];
+
+                // Set up for the secondary raycasts and prepares relativeDistance
+                between = current.point - root.point;
+                relativeDistance = (between).magnitude;
+
+                // If G cost (distance to the NavPoint from the origin) is higher than existing, a more optimised route already exists to here
+                if (relativeDistance + root.gCost < current.gCost)
+                {
+
+                    // Set up for the offset on the raycasts
+                    perp = Vector3.Cross(Vector3.up, between).normalized;
+
                     // Checks Line of Sight to the NavPoint from the root 
-                    if (!Physics.Linecast(root.point, current.point, layerMask))
+                    testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
+                    testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
+
+                    // /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
+                    if (!(testOne || testTwo))
                     {
                         // Updates g, f, and from on the NavPoint with the better route
                         current.gCost = relativeDistance + root.gCost;
@@ -103,16 +163,34 @@ public class RobotAI : MonoBehaviour
                             searchStack.Add(current);
                         }
                     }
+
+                    // Else adds the NavPoints around this object to the array if that obstacle is not already being checked
+                    else
+                    {
+                        if (testOne && !hitObjects.Contains(hitOne.transform.gameObject))
+                        {
+                            obstVerts = obstVerts.Concat(hitOne.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                            hitObjects.Add(hitOne.transform.gameObject);
+                        }
+                        if (testTwo && !hitObjects.Contains(hitTwo.transform.gameObject))
+                        {
+                            obstVerts = obstVerts.Concat(hitTwo.transform.gameObject.GetComponentsInChildren<NavPoint>()).ToArray();
+                            hitObjects.Add(hitTwo.transform.gameObject);
+                        }
+                    }       
                 }
             }
+        }
 
-        } else // Else Line of Sight from the current NavPoint to the Target.
+        // Else there is Line of Sight from the current NavPoint to the Target.
+        else 
         {
             // Makes the Target 's from be the current NavPoint and set found to true to break the while loop
             target.from = root;
             return true;
         }
-        // Removes the curren NavPoint from the search stack
+
+        // Removes the current NavPoint from the search stack
         searchStack.Remove(root);
         return false;
     }
@@ -127,7 +205,7 @@ public class RobotAI : MonoBehaviour
         {
             Vector3 CurrPos = obj.transform.position;
             float relativeDistance = (CurrPos - this.transform.position).magnitude;
-
+            // Description
             if (relativeDistance < shortestDistance)
             {
                 shortestDistance = relativeDistance;
@@ -148,17 +226,41 @@ public class RobotAI : MonoBehaviour
 
         if (run)
         {
-            GameObject[] collectibles = GameObject.FindGameObjectsWithTag("CollectableObject");
-            if (collectibles.Length > 0)
+            // Description
+            List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
+            // Prevent the robot from going after blocks already stacked. 
+            GameObject collectible;
+            for (int i = 0; i < collectibles.Count; i++)
             {
-                if (!isHoldingCollectableObject)
+                collectible = collectibles[i];
+                // Check if the collectible is a block.
+                BlockScript blockScript = collectible.GetComponent<BlockScript>();
+                if (blockScript != null)
+                {
+                    // Check if the collectible is stacked already.
+                    if (blockScript.CheckState())
+                    {
+                        collectibles.Remove(collectible);
+                        i--;
+                    }
+                }
+            }
+
+            if (collectibles.Count > 0)
+            {
+                if (stackingStage > 0)
+                {
+                    StackingAI();
+                    return;
+                }
+                if (!GetComponent<GrabRelease>().isHoldingCollectableObject)
                 {
                     if (FollowRoute() && !justReleased)
                     {
                         Grab();
                     }
 
-                    GameObject closestCollectible = FindNearest(collectibles);
+                    GameObject closestCollectible = FindNearest(collectibles.ToArray());
                     NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
                     if (closestNavPoint != targetPos)
                     {
@@ -169,17 +271,15 @@ public class RobotAI : MonoBehaviour
                 }
                 else
                 {
-                    if (FollowRoute() && !justGrabbed)
+                    // Check if the grabbed object is a block.
+                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
-                        //Release();
-                        Toss();
+                        // If so, >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Finish doc here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        StackingAI();
                     }
-                    if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
+                    else
                     {
-                        targetPos = FindNearest(baskets).GetComponent<NavPoint>();
-                        targetIsBasket = true;
-                        targetChanged = true;
-                        justGrabbed = false;
+                        TossingAI();
                     }
                 }
             }
@@ -187,6 +287,7 @@ public class RobotAI : MonoBehaviour
     }
     bool FollowRoute()
     {
+        // Description here
         if (targetChanged)
         {
             route.Clear();
@@ -196,6 +297,7 @@ public class RobotAI : MonoBehaviour
             targetChanged = false;
             ResetNavPoints();
         }
+        // Description here
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
             if (route.Count == 1)
@@ -204,8 +306,112 @@ public class RobotAI : MonoBehaviour
             }
             route.RemoveAt(route.Count - 1);
         }
-        Move(route[route.Count - 1].point);
+
+        Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
+    }
+
+    void StackingAI()
+    {
+        switch(stackingStage)
+        {
+            case 0:
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
+                {
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                }
+                layerMask = 11 << 8;
+                layerMask = ~layerMask;
+                FollowRoute();
+                layerMask = 1 << 8;
+                layerMask = ~layerMask;
+                stackingStage++;
+                goto case 1;
+            case 1:
+                if ((route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving) || route.Count() < 2)
+                {
+                    stackingStage++;
+                    goto case 2;
+                } else
+                {
+                    layerMask = 11 << 8;
+                    layerMask = ~layerMask;
+                    FollowRoute();
+                    layerMask = 1 << 8;
+                    layerMask = ~layerMask;
+                }
+                if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
+                {
+                    targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
+                    targetChanged = true;
+                    justGrabbed = false;
+                }
+                break;
+            case 2:
+                List<Vector3> refPoints = FindNearest(stackAreas).GetComponent<StackAreaScript>().refPoints;
+                Vector3 closestRef = refPoints[0];
+                float shortestDistance = (refPoints[0] - this.transform.position).magnitude;
+                foreach (Vector3 refp in refPoints)
+                {
+                    float relativeDistance = (refp - this.transform.position).magnitude;
+                    if (relativeDistance < shortestDistance)
+                    {
+                        shortestDistance = relativeDistance;
+                        closestRef = refp;
+                    }
+                }
+                if (referencePoint != targetPos || closestRef != referencePoint.point)
+                {
+                    referencePoint.gameObject.transform.position = closestRef;
+                    referencePoint.point = closestRef;
+                    targetPos = referencePoint;
+                    targetChanged = true;
+                }
+                if (FollowRoute())
+                {
+                    stackingStage++;
+                    gameObject.GetComponent<RobotMovement>().isMoving = true;
+                    goto case 3;
+                }
+                break;
+                // Inbetween these cases add veticality
+            case 3:
+                if(!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage++;
+                    Release();
+                    gameObject.GetComponent<RobotMovement>().isMoving = true;
+                    goto case 4;
+                }
+                Move(FindNearest(stackAreas).GetComponent<StackAreaScript>().nextPos, robotDeadband + .05f + gameObject.GetComponent<GrabRelease>().grabbedObj.GetComponent<NavPoint>().deadBand);
+                break;
+            case 4:
+                if (!gameObject.GetComponent<RobotMovement>().isMoving)
+                {
+                    stackingStage = 0;
+                    justReleased = true;
+                    break;
+                }
+                Move(referencePoint.point, .05f, true);
+                break;
+        }
+    }
+
+    void TossingAI()
+    {
+        if (FollowRoute() && !justGrabbed)
+        {
+            Toss();
+        }
+        else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
+        {
+            targetPos = FindNearest(baskets).GetComponent<NavPoint>();
+            targetIsBasket = true;
+            targetChanged = true;
+            justGrabbed = false;
+        }
     }
 
     /**
@@ -232,60 +438,54 @@ public class RobotAI : MonoBehaviour
             collectible.GetComponent<NavPoint>().ResetValues();
         }
 
-        // GropAreas
-        foreach (GameObject goalArea in goalAreas)
+
+        // Stack Areas
+        foreach (GameObject area in stackAreas)
         {
-            goalArea.GetComponent<NavPoint>().ResetValues();
+            area.GetComponent<NavPoint>().ResetValues();
+        }
+        
+        // Basket Areas
+        foreach (GameObject basket in baskets)
+        {
+
+            basket.GetComponent<NavPoint>().ResetValues();
+
         }
 
-        // baskets
-        /*if (baskets != null)
-        {
-            foreach (GameObject basket in baskets)
-            {
-                if (basket != null)
-                {
-                    basket.GetComponent<NavPoint>().ResetValues();
-                }
-            }
-        }*/
     }
 
-    void Move(Vector3 position)
+    void Move(Vector3 position, float deadBand, bool moveBack = false)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position);
+        gameObject.GetComponent<RobotMovement>().Move(position, deadBand, moveBack);
     }
 
     void Grab() {
         everGrabbed = true;
-        if (isHoldingCollectableObject) {
+        if (gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject) {
             return;
         }
         if (gameObject.GetComponent<GrabRelease>().Grab())
         {
-            isHoldingCollectableObject = true;
             justGrabbed = true;
         }
     }
 
     void Release() {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Release();
     }
     //to toss the ball
-    void Toss()
-    {
+    void Toss() {
         justReleased = true;
-        if (!isHoldingCollectableObject)
+        if (!gameObject.GetComponent<GrabRelease>().isHoldingCollectableObject)
         {
             return;
         }
-        isHoldingCollectableObject = false;
         gameObject.GetComponent<GrabRelease>().Toss();
     }
 }

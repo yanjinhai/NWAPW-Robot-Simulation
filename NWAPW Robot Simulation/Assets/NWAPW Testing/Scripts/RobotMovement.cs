@@ -5,91 +5,89 @@ using UnityEngine;
 
 public class RobotMovement : MonoBehaviour
 {
+    // Variables, some with default values
     Vector3 targetPos;
-    Vector3 prevTargetPos;
     Vector3 relativePos;
-    public float positionDeadband = 1.05f;
-    public float basketDistLim;
+    public float positionDeadband = 0.05f;
     public float rotateSpeed = 50.0f;
     public float moveSpeed = 5.0f;
-
-    public GameObject shootCamera;
     public bool isMoving;
+    public bool moveBack;
+
+    // Run is used to swap between teleop and auto
     public bool run;
-    public bool needsToGoBack = true;
-    bool goingBack = false;
+
     void Start()
     {
+        // Robot set to be "moving" intialy to properly go through if statements
         isMoving = true;
-        basketDistLim = 12.224f;
     }
 
     void Update()
     {
-    
-        float relativeAngle;
-        float relativeRotationDir;
+        // Runs if the robot is set to auto and has not reached its target
         if (isMoving && run)
         {
+            // Checks whether the robot is within the deadband this varies by target
             relativePos = targetPos - this.transform.position;
-            if (relativePos.magnitude <= positionDeadband || (GetComponent<RobotAI>().targetIsBasket && Mathf.Abs(relativePos.magnitude - basketDistLim) <= 1.0f))
+            if (relativePos.magnitude <= positionDeadband)
             {
-                if (GetComponent<RobotAI>().targetIsBasket && Mathf.Abs(relativePos.magnitude - basketDistLim) <= 1.0f || goingBack)
+                // Sets the robot to not moving and ends the update
+                isMoving = false;
+                return;
+            }
+
+            // If backwards movement is not enabled
+            if (!moveBack)
+            {
+                // Checks if the robot is pointing at the target
+                float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
+                float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+                if (Mathf.Abs(relativeAngle) > 1)
                 {
-                    //Shoot in the right direction
-                    relativeAngle = Vector3.SignedAngle(prevTargetPos - this.transform.position, this.transform.forward, this.transform.up);
-                    float otherAngle = Mathf.Abs(Vector3.SignedAngle(targetPos - this.transform.position, this.transform.forward, this.transform.up));
-                    print(relativeAngle);
-                    print(otherAngle);
-                    print(goingBack);
-                    if ((Mathf.Abs(relativeAngle) < 1 && goingBack) || 
-                        (otherAngle < 1 && !goingBack))
-                    {
-                        isMoving = false;
-                        goingBack = false;
-                    }
-                    else
-                    { 
-                        print("needs rotate :)"); 
-                    }  
+                    // Rotates the robot towards the target
+                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
                 }
+
+                // Else the robot is pointing at the target
                 else
                 {
-                    isMoving = false;
-                    goingBack = false;
+                    // Moves the robot forward, toward the target
+                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                 }
             }
-            else if(GetComponent<RobotAI>().targetIsBasket && relativePos.magnitude < basketDistLim && needsToGoBack)
-            {
-                print("going back");
-                Vector3 tempPos = targetPos;
-                prevTargetPos = targetPos;
-                targetPos.Normalize();
-                targetPos = tempPos - targetPos * basketDistLim * 1.1f;
-                targetPos.y = .5f;
-                needsToGoBack = false;
-                goingBack = true;
-                //GetComponent<RobotAI>().targetIsBasket = false;
-            }
-            relativePos = targetPos - this.transform.position;
 
-            relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
-            relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
-            if (Mathf.Abs(relativeAngle) > 1)
-            {
-                this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
-            }
+            // Else the robot is moving backwards
             else
             {
-                this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                // Checks if the robot is pointing away from the target
+                float relativeAngle = Vector3.SignedAngle(relativePos, -this.transform.forward, this.transform.up);
+                float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+                if (Mathf.Abs(relativeAngle) > 1)
+                {
+
+                    // Rotates the robot away from the target
+                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                }
+
+                // Else the robot is pointing away from the target
+                else
+                { 
+                    // Moves the robot backward, toward the target
+                    this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * -1);
+                }
             }
         }
     }
-    public void Move(Vector3 position)
-    {
-        if(!goingBack) targetPos = position;
-        isMoving = true;
 
+    // Move function which is used as an interface by the AI
+    public void Move(Vector3 position, float deadBand, bool backwards = false)
+    {
+        // Sets the target, sets the robot to moving, and sets the deadband
+        targetPos = position;
+        isMoving = true;
+        positionDeadband = deadBand;
+        moveBack = backwards;
     }
 }
 
