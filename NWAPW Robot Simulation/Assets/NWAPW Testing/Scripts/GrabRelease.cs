@@ -7,18 +7,42 @@ public class GrabRelease : MonoBehaviour
     public GameObject Collectables;
     public GameObject grabbedObj;
     private GameObject[] grabbableObjs;
-    public Camera camera;
+    public Camera firstPersonCamera;
     public Camera shootCamera;
 
-    public float shootVelocity = 15.0f;
+    public bool isHoldingCollectableObject;
     public bool everGrabbed;
     Vector3 offset = new Vector3(0, 0.1f, 1.05f);
 
+    int originalChildCount;
+
+    void Awake()
+    {
+        isHoldingCollectableObject = false;
+
+        /*
+         * I've come up with an alternative method of keeping track of isHoldingCollectableObject.
+         * Because all grabbed objects are children objects of the robot, the value of isHoldingCollectableObject
+         * will be true if the current child count is greater than the child count at the start of the simulation,
+         * because the robot isn't grabbing any objects at that time.
+         * 
+         * I tested this method and it works!
+         * 
+         * Jinhai
+         */
+        originalChildCount = gameObject.transform.childCount;
+    }
+
+
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject)
+        // Update value.
+        isHoldingCollectableObject = gameObject.transform.childCount > originalChildCount;
+
+        if (isHoldingCollectableObject)
         {
             grabbedObj.transform.localPosition = offset;
+            grabbedObj.transform.localRotation = new Quaternion();
         }
     }
 
@@ -33,7 +57,9 @@ public class GrabRelease : MonoBehaviour
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
                 grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = true;
+                //grabbedObj.transform.rotation = new Quaternion();
+                //grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                //isHoldingCollectableObject = true;
                 return true;
             }
         }
@@ -59,27 +85,27 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
-        grabbedObj.GetComponent<Rigidbody>().useGravity = true;
+        //isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
+        grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        grabbedObj.GetComponent<Rigidbody>().useGravity = true;
         grabbedObj = null;
-
     }
+
     //toss the ball
-    public void Toss()
-    {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<RobotAI>().isHoldingCollectableObject = false;
+    public void Toss() {
+        //isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
         
         grabbedObj.transform.position = transform.position + shootCamera.transform.forward * 2;
-        rb.velocity = shootCamera.transform.forward * shootVelocity;
+        rb.velocity = shootCamera.transform.forward * 15;
         grabbedObj = null;
     }
     public bool infront(Transform target)
     {
-        Vector3 visTest = camera.WorldToViewportPoint(target.position);
+        Vector3 visTest = firstPersonCamera.WorldToViewportPoint(target.position);
         return (visTest.x >= 0 && visTest.y >= 0) && (visTest.x <= 1 && visTest.y <= 1) && visTest.z >= 0;
     }
 }

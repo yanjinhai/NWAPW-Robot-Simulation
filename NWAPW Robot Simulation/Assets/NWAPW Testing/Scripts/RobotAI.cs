@@ -218,12 +218,6 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(targetPos != null && targetPos.gameObject.tag != "Basket")
-        {
-            targetIsBasket = false;
-            GetComponent<RobotMovement>().needsToGoBack = true;
-        }
-
         if (run)
         {
             // Description
@@ -408,7 +402,6 @@ public class RobotAI : MonoBehaviour
         else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
         {
             targetPos = FindNearest(baskets).GetComponent<NavPoint>();
-            targetIsBasket = true;
             targetChanged = true;
             justGrabbed = false;
         }
