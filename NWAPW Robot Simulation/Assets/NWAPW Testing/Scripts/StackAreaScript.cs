@@ -102,6 +102,7 @@ public class StackAreaScript : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.tag == "CollectableObject")
         {
+            other.layer = 0;
             StackedBlocks.Add(other);
         }
     }
@@ -111,6 +112,7 @@ public class StackAreaScript : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.tag == "CollectableObject")
         {
+            other.layer = 8;
             StackedBlocks.Remove(other);
         }
     }
