@@ -56,10 +56,7 @@ public class GrabRelease : MonoBehaviour
             {
                 everGrabbed = true;
                 grabbedObj.transform.parent = this.transform;
-                grabbedObj.GetComponent<Rigidbody>().useGravity = false;
-                //grabbedObj.transform.rotation = new Quaternion();
-                //grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-                //isHoldingCollectableObject = true;
+                grabbedObj.GetComponent<Rigidbody>().isKinematic = true;
                 return true;
             }
         }
@@ -85,16 +82,13 @@ public class GrabRelease : MonoBehaviour
     }
     public void Release()
     {
-        //isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
-        grabbedObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        grabbedObj.GetComponent<Rigidbody>().useGravity = true;
+        grabbedObj.GetComponent<Rigidbody>().isKinematic = false;
         grabbedObj = null;
     }
 
     //toss the ball
     public void Toss() {
-        //isHoldingCollectableObject = false;
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
