@@ -6,7 +6,16 @@ public class CameraSwitch : MonoBehaviour
 {
     public GameObject[] Cameras;
     public GameObject CurrentCam;
+<<<<<<< Updated upstream
 
+=======
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            switchCamera();
+        }
+    }
+>>>>>>> Stashed changes
     void Start()
     {
         CurrentCam = Cameras[0];
@@ -18,6 +27,7 @@ public class CameraSwitch : MonoBehaviour
     }
 
     public void switchCamera() {
+<<<<<<< Updated upstream
         int index = System.Array.IndexOf(Cameras, CurrentCam);
         if (index == Cameras.Length - 1) {
             index = -1;
@@ -27,5 +37,16 @@ public class CameraSwitch : MonoBehaviour
             cam.SetActive(false);
         }
         Cameras[index + 1].SetActive(true);
+=======
+            int index = System.Array.IndexOf(Cameras, CurrentCam);
+            if (index == Cameras.Length - 1) {
+                index = -1;
+            }
+            CurrentCam = Cameras[index + 1];
+            foreach (GameObject cam in Cameras) {
+                cam.SetActive(false);
+            }
+            Cameras[index + 1].SetActive(true);
+>>>>>>> Stashed changes
     }
 }
