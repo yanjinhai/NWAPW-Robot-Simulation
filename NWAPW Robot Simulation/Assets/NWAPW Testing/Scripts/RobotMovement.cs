@@ -46,7 +46,14 @@ public class RobotMovement : MonoBehaviour
                 if (Mathf.Abs(relativeAngle) > 1)
                 {
                     // Rotates the robot towards the target
-                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                    if (relativeAngle * relativeRotationDir > rotateSpeed * Time.deltaTime)
+                    {
+                        this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                    } else
+                    {
+                        // If movement is greater then needed only do needed
+                        this.transform.Rotate(0, relativeAngle * -1, 0);
+                    }
                 }
 
                 // Else the robot is pointing at the target
@@ -58,6 +65,7 @@ public class RobotMovement : MonoBehaviour
                         this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                     } else
                     {
+                        // If movement is greater then needed only do needed
                         this.transform.Translate(relativePos);
                     }
                 }
@@ -73,7 +81,15 @@ public class RobotMovement : MonoBehaviour
                 {
 
                     // Rotates the robot away from the target
-                    this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                    if (relativeAngle * relativeRotationDir > rotateSpeed * Time.deltaTime)
+                    {
+                        this.transform.Rotate(0, rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
+                    }
+                    else
+                    {
+                        // If movement is greater then needed only do needed
+                        this.transform.Rotate(0, relativeAngle * -1, 0);
+                    }
                 }
 
                 // Else the robot is pointing away from the target
@@ -86,6 +102,7 @@ public class RobotMovement : MonoBehaviour
                     }
                     else
                     {
+                        // If movement is greater then needed only do needed
                         this.transform.Translate(relativePos);
                     }
                 }
