@@ -89,7 +89,6 @@ public class GrabRelease : MonoBehaviour
 
     //toss the ball
     public void Toss() {
-
         grabbedObj.transform.parent = Collectables.transform;
         Rigidbody rb = grabbedObj.GetComponent<Rigidbody>();
         rb.useGravity = true;
