@@ -32,12 +32,14 @@ public class StackAreaScript : MonoBehaviour
         zCapacity = 4;
     }
 
+    void Start() {
+        block = GameObject.FindObjectOfType<BlockScript>().gameObject;
+        CalculateConstants();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        block = robot.GetComponent<GrabRelease>().grabbedObj;
-        CalculateConstants();
         CalculatePoints();
     }
 
