@@ -41,6 +41,13 @@ public class StackAreaScript : MonoBehaviour
     void Update()
     {
         CalculatePoints();
+        
+        for (int i = 0; i < StackedBlocks.Count; i++) {
+            if (!StackedBlocks[i].GetComponent<BlockScript>().CheckState()) {
+                StackedBlocks.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     /*
@@ -49,10 +56,10 @@ public class StackAreaScript : MonoBehaviour
     private void CalculateConstants()
     {
         // Set the allowed error margin for the block placing
-        allowedError = 0.2f;
+        allowedError = 0.5f;
 
         // Set the spacing between blocks
-        blockSpacing = 0.5f;
+        blockSpacing = 1f;
 
         // Find the minimum radius of the robot body (half the side length of the cube)
         robotRadMin = robot.transform.Find("Body").GetComponent<Collider>().bounds.extents.x;
@@ -80,9 +87,9 @@ public class StackAreaScript : MonoBehaviour
         float placementMargin = GetComponent<MeshCollider>().bounds.extents.x - blockRadMin - allowedError;
 
         // Find the displacement due to blocks already stacked.
-        float xDisplacement = (StackedBlocks.Count % xCapacity) * (2 * blockRadMin + allowedError);
+        float xDisplacement = (StackedBlocks.Count % xCapacity) * (2 * blockRadMin/* + allowedError*/);
         float yDisplacement = (StackedBlocks.Count / xCapacity / zCapacity) * (2 * blockRadMin);
-        float zDisplacement = (int)(StackedBlocks.Count / zCapacity) * (2 * blockRadMin + allowedError);
+        float zDisplacement = (int)(StackedBlocks.Count / zCapacity) * (2 * blockRadMin/* + allowedError*/);
         Vector3 nextPosDisplacement = new Vector3(xDisplacement, yDisplacement, zDisplacement);
         
         // Calculate the next available position for the next block
