@@ -367,7 +367,7 @@ public class RobotAI : MonoBehaviour
                 FollowRoute();
                 layerMask = 1 << 8;
                 layerMask = ~layerMask;
-                
+
                 if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
                     targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
@@ -388,8 +388,7 @@ public class RobotAI : MonoBehaviour
                         closestRef = refp;
                     }
                 }
-                print(closestRef);
-                if (referencePoint != targetPos || closestRef != referencePoint.point)
+                    if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
                     referencePoint.gameObject.transform.position = closestRef;
                     referencePoint.point = closestRef;
