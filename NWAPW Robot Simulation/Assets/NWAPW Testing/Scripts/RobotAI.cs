@@ -309,7 +309,7 @@ public class RobotAI : MonoBehaviour
             route.RemoveAt(route.Count - 1);
         }
 
-        Move(route[route.Count - 1].point, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
+        Move(route[route.Count - 1].point, 5, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }
 
@@ -400,7 +400,7 @@ public class RobotAI : MonoBehaviour
                     goto case 5;
                 }
                 Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
-                Move(targetBlockPos_XZ, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
+                Move(targetBlockPos_XZ, moveSpeed, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
                 break;
             case 5:
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
@@ -409,7 +409,7 @@ public class RobotAI : MonoBehaviour
                     justReleased = true;
                     break;
                 }
-                Move(referencePoint.point, .05f, true);
+                Move(referencePoint.point, moveSpeed, .05f, true);
                 break;
             */
             case 3:
@@ -421,7 +421,7 @@ public class RobotAI : MonoBehaviour
                     goto case 4;
                 }
                 Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
-                Move(targetBlockPos_XZ, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
+                Move(targetBlockPos_XZ, 2, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
                 break;
             case 4:
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
@@ -430,7 +430,7 @@ public class RobotAI : MonoBehaviour
                     justReleased = true;
                     break;
                 }
-                Move(referencePoint.point, .05f, true);
+                Move(referencePoint.point, 2, .05f, true);
                 break;
         }
     }
@@ -444,7 +444,7 @@ public class RobotAI : MonoBehaviour
             {
                 movingBack = true;
                 Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
-                Move(GetComponent<NavPoint>().point + neededMove, .05f, true);
+                Move(GetComponent<NavPoint>().point + neededMove, 5, .05f, true);
             }
             else
             {
@@ -500,9 +500,9 @@ public class RobotAI : MonoBehaviour
 
     }
 
-    void Move(Vector3 position, float deadBand, bool moveBack = false)
+    void Move(Vector3 position, float moveSpeed, float deadBand, bool moveBack = false)
     {
-        gameObject.GetComponent<RobotMovement>().Move(position, deadBand, moveBack);
+        gameObject.GetComponent<RobotMovement>().Move(position, moveSpeed, deadBand, moveBack);
     }
 
     void Grab() {

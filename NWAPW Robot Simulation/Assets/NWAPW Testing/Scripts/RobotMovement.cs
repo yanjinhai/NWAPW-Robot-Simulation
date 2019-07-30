@@ -9,9 +9,10 @@ public class RobotMovement : MonoBehaviour
     Vector3 relativePos;
     public float positionDeadband = 0.05f;
     public float rotateSpeed = 50.0f;
-    public float moveSpeed = 3.0f;
     public bool isMoving;
     public bool moveBack;
+
+    float moveSpeed = 3.0f;
 
     // Run is used to swap between teleop and auto
     public bool run;
@@ -110,13 +111,14 @@ public class RobotMovement : MonoBehaviour
     }
 
     // Move function which is used as an interface by the AI
-    public void Move(Vector3 position, float deadBand, bool backwards = false)
+    public void Move(Vector3 position, float moveSpeed, float deadBand, bool backwards = false)
     {
         // Sets the target, sets the robot to moving, and sets the deadband
         targetPos = position;
         isMoving = true;
         positionDeadband = deadBand;
         moveBack = backwards;
+        this.moveSpeed = moveSpeed;
     }
 }
 
