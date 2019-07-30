@@ -44,6 +44,7 @@ public class StackAreaScript : MonoBehaviour
         
         for (int i = 0; i < StackedBlocks.Count; i++) {
             if (!StackedBlocks[i].GetComponent<BlockScript>().CheckState()) {
+                StackedBlocks[i].layer = 8;
                 StackedBlocks.RemoveAt(i);
                 i--;
             }
@@ -115,29 +116,35 @@ public class StackAreaScript : MonoBehaviour
         }
     }
 
+    // Handles collisions
     private void OnCollisionEnter(Collision collision)
     {
         GameObject other = collision.gameObject;
-        if (other.tag == "CollectableObject")
+        if (other.tag == "CollectableObject" && other.GetComponent<BlockScript>() != null)
         {
+            // If the colliding gameobject is a block
             if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed)
             {
+                // If the block was moved there by means other than spawning there, change its layer to the defualt layer and add it to the list of stacked blocks
                 other.layer = 0;
                 StackedBlocks.Add(other);
             }
             else
             {
+                // If the colliding gameobject spawned on this stack area, destroy it and create a new one
                 Destroy(other);
                 GameObject.FindGameObjectWithTag("CollectableParent").GetComponent<RandomSpawn>().newObj();
             }
         }
     }
 
+    // Handles collisions
     private void OnCollisionExit(Collision collision)
     {
         GameObject other = collision.gameObject;
-        if (other.tag == "CollectableObject")
+        if (other.tag == "CollectableObject" && other.GetComponent<BlockScript>() != null)
         {
+            // If the colliding object is a block, change its layer to layer 8 and remove it from the list of stacked blocks.
             other.layer = 8;
             StackedBlocks.Remove(other);
         }
