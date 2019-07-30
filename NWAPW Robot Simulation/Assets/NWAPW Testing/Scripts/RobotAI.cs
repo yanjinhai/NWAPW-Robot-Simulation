@@ -453,31 +453,33 @@ public class RobotAI : MonoBehaviour
             {
                 movingBack = true;
                 Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
-                Move(GetComponent<NavPoint>().point + neededMove, 5, .05f, true);
+                Move(GetComponent<NavPoint>().point + neededMove, 5, .025f, true);
+                Debug.Log("1");
+                return;
             }
-            else
+            // Checks if the robot is pointing at the target Taken from Robot Movement as Move can only turn and move and it might just need to turn
+            float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
+            float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
+            if (Mathf.Abs(relativeAngle) > 5)
             {
-                // Checks if the robot is pointing at the target Taken from Robot Movement as Move can only turn and move and it might just need to turn
-                float relativeAngle = Vector3.SignedAngle(relativePos, this.transform.forward, this.transform.up);
-                float relativeRotationDir = relativeAngle / (Mathf.Abs(relativeAngle));
-                if (Mathf.Abs(relativeAngle) > 1)
+                // Rotates the robot towards the target
+                if (relativeAngle * relativeRotationDir > gameObject.GetComponent<RobotMovement>().rotateSpeed * Time.deltaTime)
                 {
-                    // Rotates the robot towards the target
-                    if (relativeAngle * relativeRotationDir > gameObject.GetComponent<RobotMovement>().rotateSpeed * Time.deltaTime)
-                    {
-                        this.transform.Rotate(0, gameObject.GetComponent<RobotMovement>().rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
-                    }
-                    else
-                    {
-                        // If movement is greater then needed only do needed
-                        this.transform.Rotate(0, relativeAngle * -1, 0);
-                    }
-                } else
-                {
-                    movingBack = false;
-                    Toss();
+                    this.transform.Rotate(0, gameObject.GetComponent<RobotMovement>().rotateSpeed * Time.deltaTime * relativeRotationDir * -1, 0);
                 }
+                else
+                {
+                    // If movement is greater then needed only do needed
+                    this.transform.Rotate(0, relativeAngle * -1, 0);
+                }
+                Debug.Log("2");
+                return;
             }
+            Debug.Log("3");
+            movingBack = false;
+            Toss();
+            justReleased = true;
+
         }
         else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
         {
