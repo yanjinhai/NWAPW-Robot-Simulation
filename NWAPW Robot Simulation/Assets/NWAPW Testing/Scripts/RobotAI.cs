@@ -25,7 +25,6 @@ public class RobotAI : MonoBehaviour
 
     void Start()
     {
-
         // Bool set up
         targetChanged = true;
         justReleased = false;

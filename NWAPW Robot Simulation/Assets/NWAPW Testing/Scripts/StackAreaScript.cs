@@ -49,7 +49,7 @@ public class StackAreaScript : MonoBehaviour
     private void CalculateConstants()
     {
         // Set the allowed error margin for the block placing.
-        allowedError = 0.1f;
+        allowedError = 0.3f;
 
         // Find the minimum radius of the robot body (half the side length of the cube)
         robotRadMin = robot.transform.Find("Body").GetComponent<Collider>().bounds.extents.x;
