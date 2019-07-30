@@ -13,7 +13,7 @@ public class StackAreaScript : MonoBehaviour
     public List<Vector3> refPoints;
 
     // Constants
-    public float robotRadMin, robotRadMax, blockRadMin, blockRadMax, fixedDistance, allowedError;
+    public float robotRadMin, robotRadMax, blockRadMin, blockRadMax, fixedDistance, allowedError, blockSpacing;
     int layerMask, xCapacity, zCapacity;
 
     // Global Variables
@@ -48,8 +48,11 @@ public class StackAreaScript : MonoBehaviour
      */
     private void CalculateConstants()
     {
-        // Set the allowed error margin for the block placing.
-        allowedError = 0.3f;
+        // Set the allowed error margin for the block placing
+        allowedError = 0.2f;
+
+        // Set the spacing between blocks
+        blockSpacing = 0.5f;
 
         // Find the minimum radius of the robot body (half the side length of the cube)
         robotRadMin = robot.transform.Find("Body").GetComponent<Collider>().bounds.extents.x;
@@ -77,10 +80,10 @@ public class StackAreaScript : MonoBehaviour
         float placementMargin = GetComponent<MeshCollider>().bounds.extents.x - blockRadMin - allowedError;
 
         // Find the displacement due to blocks already stacked.
-        int xDisplacement = (StackedBlocks.Count % xCapacity) * (int)(2 * blockRadMin);
-        int yDisplacement = (StackedBlocks.Count / xCapacity / zCapacity) * (int)(2 * blockRadMin);
-        int zDisplacement = (StackedBlocks.Count / zCapacity) * (int)(2 * blockRadMin);
-        Vector3 nextPosDisplacement = new Vector3(xDisplacement + allowedError, yDisplacement, zDisplacement + allowedError);
+        float xDisplacement = (StackedBlocks.Count % xCapacity) * (2 * blockRadMin + allowedError);
+        float yDisplacement = (StackedBlocks.Count / xCapacity / zCapacity) * (2 * blockRadMin);
+        float zDisplacement = (int)(StackedBlocks.Count / zCapacity) * (2 * blockRadMin + allowedError);
+        Vector3 nextPosDisplacement = new Vector3(xDisplacement, yDisplacement, zDisplacement);
         
         // Calculate the next available position for the next block
         nextPos = transform.position + new Vector3(-placementMargin, blockRadMin, -placementMargin) + nextPosDisplacement;
