@@ -126,7 +126,7 @@ public class StackAreaScript : MonoBehaviour
             if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed)
             {
                 // If the block was moved there by means other than spawning there, change its layer to the defualt layer and add it to the list of stacked blocks
-                other.layer = 0;
+                other.layer = 10;
                 StackedBlocks.Add(other);
             }
             else
