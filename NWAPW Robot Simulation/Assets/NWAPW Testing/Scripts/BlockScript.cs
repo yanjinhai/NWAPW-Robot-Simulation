@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockScript : MonoBehaviour
-{ 
+{
+    float allowedError = 0.3f;
+
     /**
      * This works for cube shapes, not sure about anything else.
      */
@@ -39,7 +41,7 @@ public class BlockScript : MonoBehaviour
                 Vector3 relativePosition = blockCornerPositions[i] - currArea.position;
                 // If the corner's x or z coordinates relative the center of the stack area is greater than the extents of the stack area in the respective dimensions,
                 // then the block is not in the bounds of the currently considered stack area.
-                if (Mathf.Abs((relativePosition.x)) > areaExtents.x || Mathf.Abs((relativePosition.z)) > areaExtents.z)
+                if (Mathf.Abs(relativePosition.x) > areaExtents.x + allowedError || Mathf.Abs(relativePosition.z) > areaExtents.z + allowedError)
                 {
                     inAreaBounds = false;
                 }

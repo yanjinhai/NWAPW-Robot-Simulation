@@ -369,6 +369,7 @@ public class RobotAI : MonoBehaviour
                         closestRef = refp;
                     }
                 }
+                print(closestRef);
                 if (referencePoint != targetPos || closestRef != referencePoint.point)
                 {
                     referencePoint.gameObject.transform.position = closestRef;

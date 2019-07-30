@@ -78,7 +78,7 @@ public class StackAreaScript : MonoBehaviour
         int xDisplacement = (StackedBlocks.Count % xCapacity) * (int)(2 * blockRadMin);
         int yDisplacement = (StackedBlocks.Count / xCapacity / zCapacity) * (int)(2 * blockRadMin);
         int zDisplacement = (StackedBlocks.Count / zCapacity) * (int)(2 * blockRadMin);
-        Vector3 nextPosDisplacement = new Vector3(xDisplacement, yDisplacement, zDisplacement);
+        Vector3 nextPosDisplacement = new Vector3(xDisplacement + allowedError, yDisplacement, zDisplacement + allowedError);
         
         // Calculate the next available position for the next block
         nextPos = transform.position + new Vector3(-placementMargin, blockRadMin, -placementMargin) + nextPosDisplacement;
