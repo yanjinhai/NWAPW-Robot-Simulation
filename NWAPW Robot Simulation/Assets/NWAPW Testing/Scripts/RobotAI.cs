@@ -452,8 +452,8 @@ public class RobotAI : MonoBehaviour
             if (distance < 11.67f)
             {
                 movingBack = true;
-                Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.68f - distance);
-                Move(GetComponent<NavPoint>().point + neededMove, 5, .025f, true);
+                Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.67f - distance);
+                Move(GetComponent<NavPoint>().point + neededMove, 5, .00f, true);
                 Debug.Log("1");
                 return;
             }
