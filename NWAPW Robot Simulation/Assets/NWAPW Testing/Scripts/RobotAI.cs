@@ -433,8 +433,6 @@ public class RobotAI : MonoBehaviour
                 {
                     stackingStage = 0;
                     justReleased = true;
-                    layerMask = 1 << 8;
-                    layerMask = ~layerMask;
                     break;
                 }
                 Move(referencePoint.point, 2, .05f, true);
