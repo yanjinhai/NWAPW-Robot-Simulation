@@ -453,7 +453,7 @@ public class RobotAI : MonoBehaviour
             {
                 movingBack = true;
                 Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.674f - distance);
-                Move(GetComponent<NavPoint>().point + neededMove, 5, .00f, true);
+                Move(GetComponent<NavPoint>().point + neededMove, 5, .025f, true);
                 Debug.Log("1");
                 return;
             }
@@ -478,6 +478,7 @@ public class RobotAI : MonoBehaviour
             Debug.Log("3");
             movingBack = false;
             Toss();
+            justReleased = true;
 
         }
         else if (FindNearest(baskets).GetComponent<NavPoint>() != targetPos)
