@@ -155,7 +155,7 @@ public class RobotAI : MonoBehaviour
                     testOne = Physics.Raycast(root.point + perp * 0.5f, between, out hitOne, relativeDistance, layerMask);
                     testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out hitTwo, relativeDistance, layerMask);
 
-                    // /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
+                     /*For debug draw rays */Debug.DrawRay(root.point, between, Color.white, 10.0f);
                     if (!(testOne || testTwo))
                     {
 
@@ -287,11 +287,12 @@ public class RobotAI : MonoBehaviour
                     // Check if the grabbed object is a block.
                     if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
                     {
-                        // If so, >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Finish doc here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        // If so, run stacking AI
                         StackingAI();
                     }
                     else
                     {
+                        // Else run tossing AI
                         TossingAI();
                     }
                 }
@@ -301,7 +302,7 @@ public class RobotAI : MonoBehaviour
 
     bool FollowRoute()
     {
-        // Description here
+        // If the target is changed, find a new route to it
         if (targetChanged)
         {
             route.Clear();
@@ -311,7 +312,7 @@ public class RobotAI : MonoBehaviour
             targetChanged = false;
             ResetNavPoints();
         }
-        // Description here
+        // If the robot has reached its current waypoint, move on to the next waypoint, or return true if that was the final destination
         if (!gameObject.GetComponent<RobotMovement>().isMoving)
         {
             if (route.Count == 1)
@@ -320,7 +321,7 @@ public class RobotAI : MonoBehaviour
             }
             route.RemoveAt(route.Count - 1);
         }
-
+        // Move to the current waypoint, then end the function
         Move(route[route.Count - 1].point, 5, route[route.Count - 1].deadBand + robotDeadband + 0.05f);
         return false;
     }
