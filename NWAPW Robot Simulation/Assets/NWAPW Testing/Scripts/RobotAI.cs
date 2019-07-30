@@ -441,7 +441,7 @@ public class RobotAI : MonoBehaviour
                     goto case 4;
                 }
                 Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
-                Move(targetBlockPos_XZ, 2, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
+                Move(targetBlockPos_XZ, 2, robotDeadband + .025f + block.GetComponent<NavPoint>().deadBand);
                 break;
             case 4:
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
