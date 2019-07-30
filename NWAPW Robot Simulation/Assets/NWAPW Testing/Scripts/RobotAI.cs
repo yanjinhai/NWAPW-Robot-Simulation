@@ -333,7 +333,8 @@ public class RobotAI : MonoBehaviour
                     targetChanged = true;
                     justGrabbed = false;
                 }
-                layerMask = 11 << 8;
+                layerMask = 3;
+                layerMask = layerMask << 8;
                 layerMask = ~layerMask;
                 FollowRoute();
                 layerMask = 1 << 8;
@@ -345,8 +346,9 @@ public class RobotAI : MonoBehaviour
                 {
                     stackingStage++;
                     goto case 2;
-                } 
-                layerMask = 11 << 8;
+                }
+                layerMask = 3;
+                layerMask = layerMask << 8;
                 layerMask = ~layerMask;
                 FollowRoute();
                 layerMask = 1 << 8;
@@ -432,6 +434,8 @@ public class RobotAI : MonoBehaviour
                 {
                     stackingStage = 0;
                     justReleased = true;
+                    layerMask = 1 << 8;
+                    layerMask = ~layerMask;
                     break;
                 }
                 Move(referencePoint.point, 2, .05f, true);
