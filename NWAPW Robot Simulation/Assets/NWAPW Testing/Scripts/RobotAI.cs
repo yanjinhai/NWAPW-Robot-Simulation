@@ -324,6 +324,10 @@ public class RobotAI : MonoBehaviour
         switch (stackingStage)
         {
             case 0:
+                if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
+                {
+                    return;
+                }
                 if (FindNearest(stackAreas).GetComponent<NavPoint>() != targetPos)
                 {
                     targetPos = FindNearest(stackAreas).GetComponent<NavPoint>();
@@ -338,7 +342,7 @@ public class RobotAI : MonoBehaviour
                 stackingStage++;
                 goto case 1;
             case 1:
-                if ((route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving) || route.Count() < 2)
+                if (/*(route.Count() == 2 && !gameObject.GetComponent<RobotMovement>().isMoving) || */route.Count() < 2)
                 {
                     stackingStage++;
                     goto case 2;

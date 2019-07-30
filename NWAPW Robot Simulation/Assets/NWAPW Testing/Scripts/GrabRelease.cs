@@ -60,6 +60,7 @@ public class GrabRelease : MonoBehaviour
                 return true;
             }
         }
+        grabbedObj = null;
         return false;
     }
     GameObject FindNearest(GameObject[] gameObjects)
