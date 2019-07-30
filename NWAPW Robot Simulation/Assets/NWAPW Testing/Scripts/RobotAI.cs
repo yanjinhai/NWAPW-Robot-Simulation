@@ -202,30 +202,35 @@ public class RobotAI : MonoBehaviour
         return false;
     }
 
-
+    // Finds the nearest game object in an array to this object
     GameObject FindNearest(GameObject[] gameObjects)
     {
+        // Sets results as default to the first gameobject
         GameObject Closest = gameObjects[0];
-        float shortestDistance = (gameObjects[0].transform.position - this.transform.position).magnitude;
+        float shortestDistance = (RemoveY(gameObjects[0].transform.position) - RemoveY(this.transform.position)).magnitude;
+        // Loops through all the game objects
         foreach (GameObject obj in gameObjects)
         {
+            // Finds the distance between this and the current gameobject
             Vector3 CurrPos = obj.transform.position;
-            float relativeDistance = (CurrPos - this.transform.position).magnitude;
-            // Description
+            float relativeDistance = (RemoveY(CurrPos) - RemoveY(this.transform.position)).magnitude;
+            // Compares that distance to the current best
             if (relativeDistance < shortestDistance)
             {
                 shortestDistance = relativeDistance;
                 Closest = obj;
             }
         }
+        // Returns the closest gameobject
         return Closest;
     }
 
     void FixedUpdate()
     {
+        // This script works if run is activated, which is controlled by the toggling between Auto and Teleop
         if (run)
         {
-            // Description
+            // Creates a list of all collectables
             List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
             // Prevent the robot from going after blocks already stacked. 
             GameObject collectible;
@@ -245,21 +250,27 @@ public class RobotAI : MonoBehaviour
                 }
             }
 
+            // If there are still collectables (which are not stacked)
             if (collectibles.Count > 0)
             {
+                // Activates stacking AI if it is in the middle of it
                 if (stackingStage > 0)
                 {
                     StackingAI();
                     return;
                 }
+
+                // If the robot is not holding a collectable object
                 if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
 
                 {
+                    // Runs follow route, which returns true if it has reached its destination
                     if (FollowRoute() && !justReleased)
                     {
                         Grab();
                     }
 
+                    // Makes sure the robot is moving towards the nearest collectible
                     GameObject closestCollectible = FindNearest(collectibles.ToArray());
                     NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
                     if (closestNavPoint != targetPos)
@@ -269,6 +280,8 @@ public class RobotAI : MonoBehaviour
                         justReleased = false;
                     }
                 }
+
+                // If it is holding a collectable object
                 else
                 {
                     // Check if the grabbed object is a block.
@@ -562,4 +575,12 @@ public class RobotAI : MonoBehaviour
         }
         gameObject.GetComponent<GrabRelease>().Toss();
     }
+
+    // Sets y to .5
+    Vector3 RemoveY(Vector3 original)
+    {
+        return new Vector3(original.x, .5f, original.z);
+    }
 }
+
+
