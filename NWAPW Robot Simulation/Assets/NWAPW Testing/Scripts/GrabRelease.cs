@@ -50,7 +50,7 @@ public class GrabRelease : MonoBehaviour
     {
         grabbableObjs = GameObject.FindGameObjectsWithTag("CollectableObject");
         grabbedObj = FindNearest(grabbableObjs);
-        if ((grabbedObj.transform.position - this.transform.position).magnitude <= 1.2f)
+        if ((grabbedObj.transform.position - this.transform.position).magnitude <= 1.25f)
         {
             if (infront(grabbedObj.transform))
             {
