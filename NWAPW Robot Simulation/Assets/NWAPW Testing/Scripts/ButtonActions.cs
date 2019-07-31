@@ -54,6 +54,11 @@ public class ButtonActions : MonoBehaviour
 
     }
 
+    public void StartGame()
+    {
+        SceneManager.LoadScene("TeleopAutonomous");
+    }
+
     public GameObject[] Cameras;
     public GameObject CurrentCam;
 
