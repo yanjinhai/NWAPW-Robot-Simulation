@@ -15,9 +15,9 @@ public class ButtonActions : MonoBehaviour
         teleop = !teleop;
         autonomous = !autonomous;
         GameObject Player = GameObject.FindGameObjectWithTag("Player");
-        Player.GetComponent<RobotAI>().run = autonomous;
-        Player.GetComponent<RobotMovement>().run = autonomous;
-        Player.GetComponent<PlayerMovement>().run = teleop;
+        Player.GetComponent<RobotAI>().enabled = autonomous;
+        Player.GetComponent<RobotMovement>().enabled = autonomous;
+        Player.GetComponent<PlayerMovement>().enabled = teleop;
     }
 
     public void TogglePlace()

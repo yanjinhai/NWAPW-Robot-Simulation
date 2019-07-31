@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (run)
-        {
+        //if (run)
+        //{
             if (Input.GetKey("right"))
             {
                 transform.Rotate(0, 1.5f, 0);
@@ -48,6 +48,6 @@ public class PlayerMovement : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().Toss();
 
             }
-        }
+        //}
     }
 }

@@ -227,8 +227,8 @@ public class RobotAI : MonoBehaviour
     void FixedUpdate()
     {
         // This script works if run is activated, which is controlled by the toggling between Auto and Teleop
-        if (run)
-        {
+        //if (run)
+        //{
             // Creates a list of all collectables
             List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
             // Prevent the robot from going after blocks already stacked. 
@@ -296,7 +296,7 @@ public class RobotAI : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
     }
 
     bool FollowRoute()
