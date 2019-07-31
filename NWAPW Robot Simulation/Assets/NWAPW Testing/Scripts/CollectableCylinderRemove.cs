@@ -9,7 +9,7 @@ public class CollectableCylinderRemove : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.tag == "CollectableObject" && obj.transform.position.y > transform.position.y + GetComponent<CapsuleCollider>().bounds.extents.y && other.GetComponent<BlockScript>() != null)
+        if (obj.tag == "CollectableObject" && obj.transform.position.y > transform.position.y + GetComponent<CapsuleCollider>().bounds.extents.y && obj.GetComponent<BlockScript>() == null)
         {
             obj.SetActive(false);
             Destroy(obj);
