@@ -466,7 +466,6 @@ public class RobotAI : MonoBehaviour
                 movingBack = true;
                 Vector3 neededMove = (targetPos.point - GetComponent<NavPoint>().point).normalized * -1f * (11.71f - distance);
                 Move(GetComponent<NavPoint>().point + neededMove, 5, .040f, true);
-                Debug.Log(.71f - .669);
                 return;
             }
             // Checks if the robot is pointing at the target Taken from Robot Movement as Move can only turn and move and it might just need to turn
