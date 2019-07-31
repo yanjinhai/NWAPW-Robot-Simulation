@@ -30,7 +30,7 @@ public class BlockScript : MonoBehaviour
             // Get the current stack area being considered.
             Transform currArea = stackAreaParent.transform.GetChild(j); 
             // Get the extents of the area.
-            Vector3 areaExtents = currArea.gameObject.GetComponent<Collider>().bounds.extents;
+            Vector3 areaExtents = currArea.gameObject.GetComponent<MeshCollider>().bounds.extents;
             // Check if the block is in the bounds of the stack area being considered, corner by corner.
             bool inAreaBounds = true;
             for (int i = 0; i < blockCornerPositions.Length; i++)

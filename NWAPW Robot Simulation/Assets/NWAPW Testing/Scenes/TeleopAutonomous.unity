@@ -1711,7 +1711,12 @@ PrefabInstance:
     - target: {fileID: 9180019200590855254, guid: 41537766c9852824cac67ea738925e2c,
         type: 3}
       propertyPath: m_TagString
-      value: DropObject
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180019200590855254, guid: 41537766c9852824cac67ea738925e2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9180019200590855249, guid: 41537766c9852824cac67ea738925e2c,
         type: 3}

@@ -226,77 +226,71 @@ public class RobotAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        // This script works if run is activated, which is controlled by the toggling between Auto and Teleop
-        //if (run)
-        //{
-            // Creates a list of all collectables
-            List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
-            // Prevent the robot from going after blocks already stacked. 
-            GameObject collectible;
-            for (int i = 0; i < collectibles.Count; i++)
+        // Creates a list of all collectables
+        List<GameObject> collectibles = GameObject.FindGameObjectsWithTag("CollectableObject").ToList();
+        // Prevent the robot from going after blocks already stacked. 
+        GameObject collectible;
+        for (int i = 0; i < collectibles.Count; i++)
+        {
+            collectible = collectibles[i];
+            // Check if the collectible is a block.
+            BlockScript blockScript = collectible.GetComponent<BlockScript>();
+            if (blockScript != null)
             {
-                collectible = collectibles[i];
-                // Check if the collectible is a block.
-                BlockScript blockScript = collectible.GetComponent<BlockScript>();
-                if (blockScript != null)
+                // Check if the collectible is stacked already.
+                if (blockScript.CheckState())
                 {
-                    // Check if the collectible is stacked already.
-                    if (blockScript.CheckState())
-                    {
-                        collectibles.Remove(collectible);
-                        i--;
-                    }
+                    collectibles.Remove(collectible);
+                    i--;
                 }
             }
+        }
 
-            // If there are still collectables (which are not stacked)
-            if (collectibles.Count > 0)
+        // If there are still collectables (which are not stacked)
+        if (collectibles.Count > 0)
+        {
+            // Activates stacking AI if it is in the middle of it
+            if (stackingStage > 0)
             {
-                // Activates stacking AI if it is in the middle of it
-                if (stackingStage > 0)
+                StackingAI();
+                return;
+            }
+
+            // If the robot is not holding a collectable object
+            if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
+            {
+                // Runs follow route, which returns true if it has reached its destination
+                if (FollowRoute() && !justReleased)
                 {
+                    Grab();
+                }
+
+                // Makes sure the robot is moving towards the nearest collectible
+                GameObject closestCollectible = FindNearest(collectibles.ToArray());
+                NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
+                if (closestNavPoint != targetPos)
+                {
+                    targetPos = closestNavPoint;
+                    targetChanged = true;
+                    justReleased = false;
+                }
+            }
+            // If it is holding a collectable object
+            else
+            {
+                // Check if the grabbed object is a block.
+                if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
+                {
+                    // If so, run stacking AI
                     StackingAI();
-                    return;
                 }
-
-                // If the robot is not holding a collectable object
-                if (!GetComponent<GrabRelease>().isHoldingCollectableObject && GetComponent<GrabRelease>().grabbedObj == null)
-
-                {
-                    // Runs follow route, which returns true if it has reached its destination
-                    if (FollowRoute() && !justReleased)
-                    {
-                        Grab();
-                    }
-
-                    // Makes sure the robot is moving towards the nearest collectible
-                    GameObject closestCollectible = FindNearest(collectibles.ToArray());
-                    NavPoint closestNavPoint = closestCollectible.GetComponent<NavPoint>();
-                    if (closestNavPoint != targetPos)
-                    {
-                        targetPos = closestNavPoint;
-                        targetChanged = true;
-                        justReleased = false;
-                    }
-                }
-
-                // If it is holding a collectable object
                 else
                 {
-                    // Check if the grabbed object is a block.
-                    if (GetComponent<GrabRelease>().grabbedObj.GetComponent<BlockScript>() != null)
-                    {
-                        // If so, run stacking AI
-                        StackingAI();
-                    }
-                    else
-                    {
-                        // Else run tossing AI
-                        TossingAI();
-                    }
+                    // Else run tossing AI
+                    TossingAI();
                 }
             }
-        //}
+        }
     }
 
     bool FollowRoute()
