@@ -6,7 +6,7 @@ public class DeleteObject : MonoBehaviour
 {
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1) && GameObject.FindGameObjectWithTag("TogglePlace").GetComponent<TogglePlace>().place && gameObject.transform.parent.name == "Collectables")
+        if (Input.GetMouseButtonDown(1) && GameObject.FindGameObjectWithTag("ActionHandler").GetComponent<ButtonActions>().place && gameObject.transform.parent.name == "Collectables")
         {
             Destroy(gameObject);
         }

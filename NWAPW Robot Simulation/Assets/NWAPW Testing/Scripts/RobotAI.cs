@@ -112,7 +112,6 @@ public class RobotAI : MonoBehaviour
         bool testTwo = Physics.Raycast(root.point + perp * -0.5f, between, out RaycastHit hitTwo, relativeDistance, layerMask);
         if (testOne || testTwo)
         {
-
             // List of objects with their vertices already being processed
             List<GameObject> hitObjects = new List<GameObject>();
 

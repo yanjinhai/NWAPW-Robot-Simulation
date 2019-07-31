@@ -57,7 +57,7 @@ public class StackAreaScript : MonoBehaviour
     private void CalculateConstants()
     {
         // Set the allowed error margin for the block placing
-        allowedError = 1f;
+        allowedError = 0.5f;
 
         // Set the spacing between blocks
         blockSpacing = 1f;
