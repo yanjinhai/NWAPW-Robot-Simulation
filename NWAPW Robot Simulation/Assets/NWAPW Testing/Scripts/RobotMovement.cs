@@ -26,7 +26,7 @@ public class RobotMovement : MonoBehaviour
     void Update()
     {
         // Runs if the robot is set to auto and has not reached its target
-        if (isMoving/* && run*/)
+        if (isMoving)
         {
             // Checks whether the robot is within the deadband this varies by target
             relativePos = targetPos - this.transform.position;
