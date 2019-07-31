@@ -529,13 +529,20 @@ public class RobotAI : MonoBehaviour
         {
             area.GetComponent<NavPoint>().ResetValues();
         }
-        
+
         // Basket Areas
         foreach (GameObject basket in baskets)
         {
 
             basket.GetComponent<NavPoint>().ResetValues();
 
+        }
+
+        // Ref points
+        GameObject[] refPoints = GameObject.FindGameObjectsWithTag("Ref Point");
+        foreach (GameObject refPoint in refPoints)
+        {
+            refPoint.GetComponent<NavPoint>().ResetValues();
         }
 
     }
