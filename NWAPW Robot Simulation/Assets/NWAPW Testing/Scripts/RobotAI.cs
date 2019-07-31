@@ -477,10 +477,8 @@ public class RobotAI : MonoBehaviour
                     // If movement is greater then needed only do needed
                     this.transform.Rotate(0, relativeAngle * -1, 0);
                 }
-                Debug.Log("2");
                 return;
             }
-            Debug.Log("3");
             movingBack = false;
             Toss();
             justReleased = true;
