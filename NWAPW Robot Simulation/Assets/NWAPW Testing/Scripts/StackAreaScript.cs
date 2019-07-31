@@ -142,7 +142,7 @@ public class StackAreaScript : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         GameObject other = collision.gameObject;
-        if (other.tag == "CollectableObject" && other.GetComponent<BlockScript>() != null)
+        if (other.tag == "CollectableObject"/*&& other.GetComponent<BlockScript>() != null*/)
         {
             // If the colliding object is a block, change its layer to layer 8 and remove it from the list of stacked blocks.
             other.layer = 8;

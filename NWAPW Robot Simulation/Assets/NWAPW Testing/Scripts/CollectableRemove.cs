@@ -14,7 +14,7 @@ public class CollectableRemove : MonoBehaviour
             Destroy(obj);
             if (GameObject.FindGameObjectWithTag("Player").GetComponent<GrabRelease>().everGrabbed) 
             {
-                GameObject.FindGameObjectWithTag("DropObject").GetComponent<Increment>().increase(1);
+                //GameObject.FindGameObjectWithTag("DropObject").GetComponent<Increment>().increase(1);
             }
             else {
                 print("Redirected Block");

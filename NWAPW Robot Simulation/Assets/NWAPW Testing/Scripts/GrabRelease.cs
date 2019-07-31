@@ -33,7 +33,6 @@ public class GrabRelease : MonoBehaviour
         originalChildCount = gameObject.transform.childCount;
     }
 
-
     void Update()
     {
         // Update value.

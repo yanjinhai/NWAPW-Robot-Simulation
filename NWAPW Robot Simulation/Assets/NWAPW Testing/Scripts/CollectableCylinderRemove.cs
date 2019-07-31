@@ -5,19 +5,15 @@ using UnityEngine.UI;
 
 public class CollectableCylinderRemove : MonoBehaviour
 {
-    public Text text;
-    GameObject obj = null;
+    public GameObject scoreHandler;
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "CollectableObject" &&
-            collision.gameObject.transform.position.y > transform.position.y +
-            GetComponent<CapsuleCollider>().bounds.extents.y)
+        GameObject obj = collision.gameObject;
+        if (obj.tag == "CollectableObject" && obj.transform.position.y > transform.position.y + GetComponent<CapsuleCollider>().bounds.extents.y && other.GetComponent<BlockScript>() != null)
         {
-            collision.gameObject.SetActive(false);
-            Destroy(collision.gameObject);
-            int score = int.Parse(text.text.Substring(6));
-            score++;
-            text.text = "Score: " + score;
+            obj.SetActive(false);
+            Destroy(obj);
+            scoreHandler.GetComponent<ScoreTracking>().scoreBasket();
         }
     }
 }
