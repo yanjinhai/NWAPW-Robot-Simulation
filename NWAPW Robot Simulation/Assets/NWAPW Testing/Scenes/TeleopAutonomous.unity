@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1244,16 +1244,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5185413912609061472, guid: 084d3118ea1a59f40b94693ff6ccbbea,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: aaf7c7b8cecc39f4097503dd9a8d0fe9, type: 2}
     - target: {fileID: 5185413912609061477, guid: 084d3118ea1a59f40b94693ff6ccbbea,
         type: 3}
       propertyPath: text
       value: 
       objectReference: {fileID: 441941965}
+    - target: {fileID: 5185413912609061472, guid: 084d3118ea1a59f40b94693ff6ccbbea,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aaf7c7b8cecc39f4097503dd9a8d0fe9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084d3118ea1a59f40b94693ff6ccbbea, type: 3}
 --- !u!4 &473451211 stripped
@@ -2204,16 +2204,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5185413912609061472, guid: 084d3118ea1a59f40b94693ff6ccbbea,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: aaf7c7b8cecc39f4097503dd9a8d0fe9, type: 2}
     - target: {fileID: 5185413912609061477, guid: 084d3118ea1a59f40b94693ff6ccbbea,
         type: 3}
       propertyPath: text
       value: 
       objectReference: {fileID: 441941965}
+    - target: {fileID: 5185413912609061472, guid: 084d3118ea1a59f40b94693ff6ccbbea,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aaf7c7b8cecc39f4097503dd9a8d0fe9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084d3118ea1a59f40b94693ff6ccbbea, type: 3}
 --- !u!4 &1010173747 stripped
@@ -4205,7 +4205,7 @@ Transform:
   m_GameObject: {fileID: 5523010576805954683}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: -25}
-  m_LocalScale: {x: 50, y: 8, z: 0.5}
+  m_LocalScale: {x: 50, y: 20, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5523010577263220299}
   m_RootOrder: 0
@@ -4223,7 +4223,7 @@ GameObject:
   - component: {fileID: 5523010576805954680}
   - component: {fileID: 5523010576805954681}
   - component: {fileID: 1424336355}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall 1
   m_TagString: Enviorment
   m_Icon: {fileID: 0}
@@ -4257,7 +4257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5523010577263220299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4331,7 +4331,7 @@ Transform:
   m_GameObject: {fileID: 5523010577348215534}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 25, y: 2, z: 0}
-  m_LocalScale: {x: 50.00003, y: 8, z: 0.50000024}
+  m_LocalScale: {x: 50.00003, y: 20, z: 0.50000024}
   m_Children: []
   m_Father: {fileID: 5523010577263220299}
   m_RootOrder: 2
@@ -4349,7 +4349,7 @@ GameObject:
   - component: {fileID: 5523010577348215531}
   - component: {fileID: 5523010577348215532}
   - component: {fileID: 300758057}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall 3
   m_TagString: Enviorment
   m_Icon: {fileID: 0}
@@ -4423,7 +4423,7 @@ Transform:
   m_GameObject: {fileID: 5523010577578330406}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -25, y: 2, z: 0}
-  m_LocalScale: {x: 50.00003, y: 8, z: 0.50000024}
+  m_LocalScale: {x: 50.00003, y: 20, z: 0.50000024}
   m_Children: []
   m_Father: {fileID: 5523010577263220299}
   m_RootOrder: 3
@@ -4441,7 +4441,7 @@ GameObject:
   - component: {fileID: 5523010577578330403}
   - component: {fileID: 5523010577578330404}
   - component: {fileID: 1322401009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall 4
   m_TagString: Enviorment
   m_Icon: {fileID: 0}
@@ -4642,7 +4642,7 @@ Transform:
   m_GameObject: {fileID: 5523010578112329961}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 25}
-  m_LocalScale: {x: 50, y: 8, z: 0.5}
+  m_LocalScale: {x: 50, y: 20, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5523010577263220299}
   m_RootOrder: 1
@@ -4660,7 +4660,7 @@ GameObject:
   - component: {fileID: 5523010578112329958}
   - component: {fileID: 5523010578112329959}
   - component: {fileID: 951726493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall 2
   m_TagString: Enviorment
   m_Icon: {fileID: 0}
