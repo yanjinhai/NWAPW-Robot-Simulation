@@ -8,30 +8,16 @@ public class TriggerChangeMaterial : MonoBehaviour
     Material tempMat;
     GameObject tempBlocked;
     bool flag = false;
+    int layerMask;
 
-   /* void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        Debug.Log("Player has entered the trigger");
-
-        if (other.gameObject.tag == "Player")
-        {
-            GetComponent<Renderer>().material = fadeMaterial;
-        }
+        layerMask = 1 << 9;
+        layerMask = ~layerMask;
     }
-
-    void OnTriggerExit(Collider other)
-    {
-        Debug.Log("Player has exited the trigger");
-
-        if (other.gameObject.tag == "Player")
-        {
-            GetComponent<Renderer>().material = baseMaterial;
-        }
-    }*/
 
     private void Update()
     {
-        RaycastHit rayInfo;
 
         if (!cam.activeSelf && flag)
         {
@@ -41,7 +27,7 @@ public class TriggerChangeMaterial : MonoBehaviour
             flag = false;
         } 
 
-        else if (cam.activeSelf && Physics.Raycast(cam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height/4, 0)), out rayInfo))
+        else if (cam.activeSelf && Physics.Raycast(cam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height/4, 0)), out RaycastHit rayInfo,999, layerMask))
         {
             if (rayInfo.transform.gameObject.tag != "Player" && tempMat == null)
             {
