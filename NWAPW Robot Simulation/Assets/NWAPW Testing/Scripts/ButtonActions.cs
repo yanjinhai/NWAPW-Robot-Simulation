@@ -40,26 +40,6 @@ public class ButtonActions : MonoBehaviour
         Application.Quit();
     }
 
-    public void ChangeTexturesButton()
-    {
-        GameObject[] enviorments = GameObject.FindGameObjectsWithTag("Enviorment");
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        GameObject[] dropAreas = GameObject.FindGameObjectsWithTag("Drop Area");
-        foreach (GameObject enviorment in enviorments)
-        {
-            enviorment.GetComponent<ChangeTextures>().ChangeTexture();
-        }
-        foreach (GameObject obstacle in obstacles)
-        {
-            obstacle.GetComponent<ChangeTextures>().ChangeTexture();
-        }
-        foreach (GameObject dropArea in dropAreas)
-        {
-            dropArea.GetComponent<ChangeTextures>().ChangeTexture();
-        }
-
-    }
-
     public void StartGame()
     {
         SceneManager.LoadScene("TeleopAutonomous");
