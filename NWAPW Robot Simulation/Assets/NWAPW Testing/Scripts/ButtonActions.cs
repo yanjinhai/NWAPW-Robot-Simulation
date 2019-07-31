@@ -9,6 +9,7 @@ public class ButtonActions : MonoBehaviour
     bool autonomous = false;
 
     public bool place = true;
+    public bool spawnSecond = false;
 
     public void SwitchScene()
     {
@@ -23,6 +24,11 @@ public class ButtonActions : MonoBehaviour
     public void TogglePlace()
     {
         place = !place;
+    }
+
+    public void PlaceSecondary()
+    {
+        spawnSecond = !spawnSecond;
     }
 
     public void restart()

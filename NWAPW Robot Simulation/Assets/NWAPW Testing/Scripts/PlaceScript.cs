@@ -5,10 +5,10 @@ public class PlaceScript : MonoBehaviour
 {
 
     public GameObject collectable;
+    public GameObject collectable2;
     public GameObject collectablesParent;
     public GameObject cameraSwitcher;
     GameObject currentCam;
-
     
     void Update()
      {
@@ -21,8 +21,16 @@ public class PlaceScript : MonoBehaviour
             {
                 Vector3 vectorHit = rayInfo.point;
                 vectorHit = new Vector3(vectorHit.x, vectorHit.y + 0.5f, vectorHit.z);
-                GameObject newBall = Instantiate(collectable, vectorHit, Quaternion.identity);
-                newBall.transform.parent = collectablesParent.transform;
+                if (!GameObject.FindGameObjectWithTag("ActionHandler").GetComponent<ButtonActions>().spawnSecond)
+                {
+                    GameObject newBall = Instantiate(collectable, vectorHit, Quaternion.identity);
+                    newBall.transform.parent = collectablesParent.transform;
+                }
+                else
+                {
+                    GameObject newBlock = Instantiate(collectable2, vectorHit, Quaternion.identity);
+                    newBlock.transform.parent = collectablesParent.transform;
+                }
             }
         }
 
