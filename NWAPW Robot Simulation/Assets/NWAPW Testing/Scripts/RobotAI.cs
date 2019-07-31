@@ -403,26 +403,6 @@ public class RobotAI : MonoBehaviour
                 }
                 block.transform.position += Vector3.up;// Broken>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 break;
-            case 4:
-                if(!gameObject.GetComponent<RobotMovement>().isMoving)
-                {
-                    stackingStage++;
-                    Release();
-                    gameObject.GetComponent<RobotMovement>().isMoving = true;
-                    goto case 5;
-                }
-                Vector3 targetBlockPos_XZ = new Vector3(targetBlockPos.x, 0.5f, targetBlockPos.z);
-                Move(targetBlockPos_XZ, moveSpeed, robotDeadband + .05f + block.GetComponent<NavPoint>().deadBand);
-                break;
-            case 5:
-                if (!gameObject.GetComponent<RobotMovement>().isMoving)
-                {
-                    stackingStage = 0;
-                    justReleased = true;
-                    break;
-                }
-                Move(referencePoint.point, moveSpeed, .05f, true);
-                break;
             */
             case 3:
                 if (!gameObject.GetComponent<RobotMovement>().isMoving)
