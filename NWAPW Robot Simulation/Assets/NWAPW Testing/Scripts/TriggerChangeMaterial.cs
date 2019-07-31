@@ -32,8 +32,6 @@ public class TriggerChangeMaterial : MonoBehaviour
 
     private void Update()
     {
-        print(gameObject);
-
         RaycastHit rayInfo;
 
         if (!cam.activeSelf && flag)
