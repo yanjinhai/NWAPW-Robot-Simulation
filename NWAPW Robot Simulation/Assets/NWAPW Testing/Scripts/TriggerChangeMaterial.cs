@@ -32,8 +32,6 @@ public class TriggerChangeMaterial : MonoBehaviour
 
     private void Update()
     {
-        print(gameObject);
-
         RaycastHit rayInfo;
 
         if (!cam.activeSelf && flag)
@@ -41,23 +39,24 @@ public class TriggerChangeMaterial : MonoBehaviour
             tempBlocked.GetComponent<Renderer>().material = tempMat;
             tempBlocked = null;
             tempMat = null;
-        }
+            flag = false;
+        } 
 
-        else if (Physics.Raycast(cam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, 200, 0)), out rayInfo))
+        else if (cam.activeSelf && Physics.Raycast(cam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height/4, 0)), out rayInfo))
         {
             if (rayInfo.transform.gameObject.tag != "Player" && tempMat == null)
             {
-                print("blocked");
                 tempBlocked = rayInfo.transform.gameObject;
                 tempMat = tempBlocked.GetComponent<Renderer>().material;
                 tempBlocked.GetComponent<Renderer>().material = fadeMaterial;
                 flag = true;
             }
-            else if (rayInfo.transform.gameObject.tag == "Player")
+            else if (rayInfo.transform.gameObject.tag == "Player" && flag)
             {
                 tempBlocked.GetComponent<Renderer>().material = tempMat;
                 tempBlocked = null;
                 tempMat = null;
+                flag = false;
             }
         }
     }
