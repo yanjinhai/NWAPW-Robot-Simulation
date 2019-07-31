@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TriggerChangeMaterial : MonoBehaviour
 {
-
     public Material fadeMaterial;
     public GameObject cam;
     Material tempMat;
