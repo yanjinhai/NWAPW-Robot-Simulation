@@ -1,7 +1,20 @@
- ________________________
+﻿ ________________________
 /                        \
 |NWAPW - Robot Simulation|
 \________________________/
+
+    /\
+   /  \
+  /    \
+ /      \
+|\      /|
+| \    / |
+|  \  /  |
+|   \/   |
+ \  []  /
+  \ [] /
+   \[]/
+    \/
 
 Autonomous and Teleoperated Robot Simulation in Unity
 
