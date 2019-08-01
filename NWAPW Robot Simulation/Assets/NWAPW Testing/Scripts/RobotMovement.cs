@@ -23,7 +23,7 @@ public class RobotMovement : MonoBehaviour
         isMoving = true;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Runs if the robot is set to auto and has not reached its target
         if (isMoving)
