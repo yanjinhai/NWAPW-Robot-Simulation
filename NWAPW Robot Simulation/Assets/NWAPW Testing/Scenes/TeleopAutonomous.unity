@@ -175,6 +175,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: de36b6635a161434594e7ee27f051a5e, type: 2}
   mat2: {fileID: 2100000, guid: 681e525d0bcd7c048882cf869c20ebc5, type: 2}
   matType: 0
@@ -395,6 +403,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: bd17f3c3bd6fc8642b7cc43a0d09fdec, type: 2}
@@ -645,6 +661,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: d7483089bc2c2f94895decd75d69e7c9, type: 2}
@@ -2090,6 +2114,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: bd17f3c3bd6fc8642b7cc43a0d09fdec, type: 2}
   mat2: {fileID: 2100000, guid: d9e6a8c3b79a0ac4d8e9776bb25bfa16, type: 2}
   matType: 0
@@ -2388,6 +2420,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: d7483089bc2c2f94895decd75d69e7c9, type: 2}
@@ -3120,6 +3160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: d7483089bc2c2f94895decd75d69e7c9, type: 2}
   mat2: {fileID: 2100000, guid: d9e6a8c3b79a0ac4d8e9776bb25bfa16, type: 2}
   matType: 0
@@ -3262,6 +3310,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: d7483089bc2c2f94895decd75d69e7c9, type: 2}
@@ -3782,6 +3838,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: bd17f3c3bd6fc8642b7cc43a0d09fdec, type: 2}
   mat2: {fileID: 2100000, guid: d9e6a8c3b79a0ac4d8e9776bb25bfa16, type: 2}
   matType: 0
@@ -3896,6 +3960,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287e8f2f9862fe04596408d91cd89840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   mat1: {fileID: 2100000, guid: bd17f3c3bd6fc8642b7cc43a0d09fdec, type: 2}
@@ -5033,7 +5105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5173397963504247356}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 22.36, z: 0}
+  m_LocalPosition: {x: 0, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
