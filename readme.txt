@@ -42,7 +42,7 @@ Quit - Closes the simulation
 
 Restart - Restarts the simulation
 
-(For these instructions with formating, open InstructionManual.rtf)
+(For these instructions with formating, open Instruction_Manual.rtf)
 
 Developers:
 
