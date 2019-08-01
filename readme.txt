@@ -1,6 +1,7 @@
-/------------------------\
+ ________________________
+/                        \
 |NWAPW - Robot Simulation|
-\------------------------/
+\________________________/
 
 Autonomous and Teleoperated Robot Simulation in Unity
 
@@ -36,7 +37,7 @@ Change Mode - Toggles between Teleoperated and Autonomous
 
 Toggle Place - Toggles the ability to place and destroy collectables 
 
-Ball/Block – Toggles between placing balls and blocks
+Ball/Block â€“ Toggles between placing balls and blocks
 
 Quit - Closes the simulation
 
