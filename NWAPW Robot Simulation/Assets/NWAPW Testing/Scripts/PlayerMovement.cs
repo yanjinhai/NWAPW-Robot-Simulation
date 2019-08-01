@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
         //rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey("right"))
         {
