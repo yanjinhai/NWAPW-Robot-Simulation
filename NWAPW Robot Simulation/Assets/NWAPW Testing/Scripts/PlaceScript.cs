@@ -9,7 +9,15 @@ public class PlaceScript : MonoBehaviour
     public GameObject collectablesParent;
     public GameObject cameraSwitcher;
     GameObject currentCam;
-    
+    int layerMask;
+
+    void Start()
+    {
+        layerMask = 1 << 8;
+        layerMask = ~layerMask;
+    }
+
+
     void Update()
      {
         currentCam = cameraSwitcher.GetComponent<ButtonActions>().CurrentCam;
@@ -17,7 +25,7 @@ public class PlaceScript : MonoBehaviour
          {
             RaycastHit rayInfo;
 
-            if (Physics.Raycast(currentCam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), out rayInfo))
+            if (Physics.Raycast(currentCam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), out rayInfo,500, layerMask))
             {
                 Vector3 vectorHit = rayInfo.point;
                 vectorHit = new Vector3(vectorHit.x, vectorHit.y + 0.5f, vectorHit.z);
