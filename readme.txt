@@ -2,7 +2,7 @@
 /                        \
 |NWAPW - Robot Simulation|
 \________________________/
-                
+
     /\          _
    /  \      .<' '>.
   /    \    /       \
@@ -19,6 +19,7 @@
 Autonomous and Teleoperated Robot Simulation in Unity
 
 The Simulation:
+
 	The goal of the simulation is to score points, and this is done shooting balls 
 into baskets and placing blocks in the stack areas. This can be done by the user using
 the keyboard controls, or by the computer by using the toggle mode button to switch 
